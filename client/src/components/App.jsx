@@ -4,7 +4,7 @@ import Homepage from './homepage/Homepage.jsx';
 const App = () => {
   return (
     <Fragment>
-      <h1>Town Square</h1>
+      {/* <h1>Town Square</h1> */}
       <Homepage />
     </Fragment>
   );

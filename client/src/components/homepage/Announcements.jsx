@@ -11,11 +11,15 @@ class Announcements extends Component {
 
   render() {
     return (
-      <Fragment>
-        <div>Announcements</div>
+      <div className="col ml-5">
+        <div className="row">
+          <div className="col align-self-center text-center text-white bg-primary pt-2">
+            <h5>RECENT ANNOUNCEMENTS</h5>
+          </div>
+        </div>
         <AnnouncementItem />
         <AnnouncementItem />
-      </Fragment>
+      </div>
     );
   }
 }

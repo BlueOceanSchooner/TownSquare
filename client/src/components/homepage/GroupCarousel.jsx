@@ -10,11 +10,18 @@ class GroupCarousel extends Component {
   }
 
   render() {
+
     return (
-      <div className="container">
-        <div className="w-100 text-center text-white font-weight-bold bg-primary">MY GROUPS</div>
-        <GroupItem />
-        <GroupItem />
+      <div className="row mb-3 mt-3">
+        <div className="col-12 text-center text-white bg-primary pt-2">
+          <h5>MY GROUPS</h5>
+        </div>
+          <GroupItem />
+          <GroupItem />
+          <GroupItem />
+          <GroupItem />
+          <GroupItem />
+          <GroupItem />
       </div>
     );
   }

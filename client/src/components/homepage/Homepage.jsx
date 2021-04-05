@@ -13,12 +13,13 @@ class Homepage extends Component {
 
   render() {
     return (
-      <Fragment>
-        <div>Homepage</div>
+      <div className="container">
         <GroupCarousel />
-        <Events />
-        <Announcements />
-      </Fragment>
+        <div className="row">
+          <Events />
+          <Announcements />
+        </div>
+      </div>
     );
   }
 }

@@ -11,11 +11,15 @@ class Events extends Component {
 
   render() {
     return (
-      <Fragment>
-        <div>Events</div>
+      <div className="col mr-5">
+        <div className="row">
+          <div className="col align-self-center text-center text-white bg-primary pt-2">
+            <h5>UPCOMING EVENTS</h5>
+          </div>
+        </div>
         <EventItem />
         <EventItem />
-      </Fragment>
+      </div>
 
     );
   }
