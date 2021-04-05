@@ -46,10 +46,10 @@ const getConversations = (req, res) => {
     FROM dms d
       INNER JOIN users us ON d.sender = us.user_id
       INNER JOIN users ur ON d.receiver = ur.user_id
-    WHERE sender = ?
+    WHERE sender = ? OR receiver = ?
     ORDER BY d.sent ASC
   `;
-  connection.query(sql, [user_id], (err, results) => {
+  connection.query(sql, [user_id, user_id], (err, results) => {
     if (err) {
       return res.json({
         error: err
@@ -74,11 +74,11 @@ const getConversations = (req, res) => {
     });
     const conversations = {};
     rows.forEach((row) => {
-      const receiver_id = row.receiver.user_id;
-      if (!conversations.hasOwnProperty(receiver_id)) {
-        conversations[receiver_id] = [];
+      var ID = row.receiver.user_id === Number(user_id) ? row.sender.user_id : row.receiver.user_id;
+      if (!conversations.hasOwnProperty(ID)) {
+        conversations[ID] = [];
       }
-      conversations[receiver_id].push(row);
+      conversations[ID].push(row);
     });
     res.json(conversations);
   });
