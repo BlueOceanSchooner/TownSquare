@@ -1,8 +1,12 @@
 import React from 'react';
+import { Button } from 'reactstrap';
 
 const App = () => {
   return (
-    <h1>Town Square</h1>
+    <div>
+      <h1>Town Square</h1>
+      <Button color="danger">Danger!</Button>
+    </div>
   );
 };
 
