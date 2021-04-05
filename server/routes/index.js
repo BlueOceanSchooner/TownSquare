@@ -32,6 +32,7 @@ router.post('/groups/:group_id/forum', forum.postOnForum);
 router.post('/groups/:group_id/forum-reply', forum.replyOnForum);
 
 router.get('/events', events.getAllEvents);
+router.get('/events/category/:category', events.getEventsByGroupCategory);
 router.get('/events/:event_id', events.getEventById);
 router.get('/events/:event_id/attendees', attendees.getEventAttendees);
 
