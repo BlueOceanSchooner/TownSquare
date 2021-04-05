@@ -1,6 +1,6 @@
 import React from 'react';
 import { Jumbotron, Button, ListGroup, ListGroupItem } from 'reactstrap';
-import Header from './Header/Header.jsx'
+import Header from '../Header/Header.jsx'
 
 class ExploreGroups extends React.Component {
   constructor(props) {
@@ -18,8 +18,12 @@ class ExploreGroups extends React.Component {
 
     return (
       <div>
-        <Header />
-        <div className="groups-area">Groups In Your Area
+        <div className="groups-area">
+          <br></br><br></br>
+          <Jumbotron>
+            <h2 className="display-6">Groups In Your Area</h2>
+
+          </Jumbotron>
 
         </div>
       </div>

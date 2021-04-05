@@ -20,6 +20,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import ExploreGroups from '../ExploreGroups/ExploreGroups.jsx';
 
 class Header extends Component {
   constructor(props) {
@@ -152,6 +153,11 @@ class Header extends Component {
               </Nav>
             </div>
           </Navbar>
+          <Switch>
+          <Route path="/allgroups">
+            <ExploreGroups />
+          </Route>
+        </Switch>
         </Router>
       </div>
     );
@@ -159,3 +165,4 @@ class Header extends Component {
 }
 
 export default Header;
+
