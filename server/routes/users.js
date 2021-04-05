@@ -19,7 +19,12 @@ const getUserById = (req, res) => {
         error: err
       });
     }
-    return res.json(results);
+    if (results.length === 0) {
+      return res.json({
+        error: `no user found with id ${user_id}`
+      });
+    }
+    return res.json(results[0]);
   });
 };
 
