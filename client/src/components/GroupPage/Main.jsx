@@ -1,6 +1,8 @@
 import React from 'react';
 import GroupInfo from './GroupInfo';
 
+import { Container, Row, Col } from 'reactstrap';
+
 class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -9,24 +11,24 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <Container>
         {/* Group Info */}
-        <div className="row">
-          <div className="col-12">
+        <Row>
+          <Col>
             <GroupInfo />
-          </div>
-        </div>
-        <div className="row">
+          </Col>
+        </Row>
+        <Row className="row">
           {/* Upcoming Events */}
-          <div className="col">
+          <Col xs="6">
             Upcoming Events
-          </div>
+          </Col>
           {/* Announcements / Community Forum */}
-          <div className="col">
+          <Col xs="6">
             Announcements / Community Forum
-          </div>
-        </div>
-      </div>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
