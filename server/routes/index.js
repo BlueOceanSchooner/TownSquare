@@ -5,6 +5,7 @@ const groups = require('./groups.js');
 const events = require('./events.js');
 const members = require('./members.js');
 const attendees = require('./attendees.js');
+const posts = require('./posts.js');
 
 router.get('/users', users.getAllUsers);
 router.get('/users/:user_id', users.getUserById);
@@ -18,8 +19,10 @@ router.get('/groups', groups.getAllGroups);
 router.get('/groups/:group_id', groups.getGroupById);
 router.get('/groups/:group_id/events', events.getEventsByGroup);
 router.get('/groups/:group_id/members', members.getGroupMembers);
+router.get('/groups/:group_id/posts', posts.getPostsByGroupId);
 
 router.post('/groups', groups.addGroup);
+router.post('/groups/:group_id/posts', posts.addPost);
 
 router.get('/events', events.getAllEvents);
 router.get('/events/:event_id', events.getEventById);

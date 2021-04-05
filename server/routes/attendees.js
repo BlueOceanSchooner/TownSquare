@@ -52,7 +52,7 @@ const getUserEvents = (req, res) => {
         city: row.city,
         zipcode: row.zipcode,
         time: row.event_date,
-        status: row.attending,
+        attending: row.attending,
         group: {
           group_id: row.group_id,
           group_name: row.group_name,
@@ -67,12 +67,12 @@ const getUserEvents = (req, res) => {
 const doRsvp = (req, res) => {
   const event_id = req.params.event_id;
   const user_id = req.body.user_id;
-  const status = Number(req.body.status) === 1 ? 1 : 0;
+  const status = Number(req.body.attending) === 1 ? 1 : 0;
   sql = `INSERT INTO attendees SET ?`;
   const data = {
     event_id: event_id,
     user_id: user_id,
-    attending: status
+    attending: attending
   }
   connection.query(sql, data, (err, results) => {
     if (err) {
