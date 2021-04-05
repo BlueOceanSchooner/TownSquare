@@ -12,7 +12,7 @@ const getAllUsers = (req, res) => {
 }
 
 const getUserById = (req, res) => {
-  const user_id = req.params.id;
+  const user_id = req.params.user_id;
   connection.query('SELECT * FROM users WHERE user_id = ?', [user_id], (err, results) => {
     if (err) {
       return res.json({

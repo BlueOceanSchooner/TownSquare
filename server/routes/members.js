@@ -1,7 +1,7 @@
 const connection = require('../../db/connection.js');
 
 const getGroupMembers = (req, res) => {
-  const group_id = req.params.id;
+  const group_id = req.params.group_id;
   const sql = `
     SELECT u.user_id, u.first_name, u.last_name
     FROM users u
@@ -20,7 +20,7 @@ const getGroupMembers = (req, res) => {
 }
 
 const getUserGroups = (req, res) => {
-  const user_id = req.params.id;
+  const user_id = req.params.user_id;
   const sql = `
     SELECT g.group_id, g.group_name, g.description, g.category
     FROM groups_table g

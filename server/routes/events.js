@@ -40,7 +40,7 @@ const getAllEvents = (req, res) => {
 }
 
 const getEventsByGroup = (req, res) => {
-  const group_id = req.params.id;
+  const group_id = req.params.group_id;
   const sql = `
     SELECT e.event_id, e.group_id, e.title, e.description as event_description, e.address_1, e.address_2, e.city, e.state, e.zipcode, e.event_date, g.group_id, g.group_name, g.description as group_description, g.category
     FROM
@@ -81,7 +81,7 @@ const getEventsByGroup = (req, res) => {
 };
 
 const getEventById = (req, res) => {
-  const event_id = req.params.id;
+  const event_id = req.params.event_id;
   const sql = `
     SELECT e.event_id, e.group_id, e.title, e.description as event_description, e.address_1, e.address_2, e.city, e.state, e.zipcode, e.event_date, g.group_id, g.group_name, g.description as group_description, g.category
     FROM
