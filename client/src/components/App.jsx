@@ -1,12 +1,17 @@
-import React, { Fragment} from 'react';
+import React from 'react';
+import { Button } from 'reactstrap';
+import Chat from './Chat/Chat.jsx';
 import Homepage from './homepage/Homepage.jsx';
 
 const App = () => {
+  let userID = 1;
   return (
-    <Fragment>
-      {/* <h1>Town Square</h1> */}
+    <div>
+      <h1>Town Square</h1>
       <Homepage />
-    </Fragment>
+      <Button color="danger">Danger!</Button>
+      <Chat userID={userID}/>
+    </div>
   );
 };
 
