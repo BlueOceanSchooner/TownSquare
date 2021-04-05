@@ -18,7 +18,8 @@ const connection = mysql.createPool({
   host: 'localhost',
   database: process.env.DB_NAME,
   user: process.env.DB_USER,
-  password: process.env.DB_PASS
+  password: process.env.DB_PASS,
+  insecureAuth: true
 });
 
 module.exports = connection;
