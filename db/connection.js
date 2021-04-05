@@ -17,7 +17,7 @@ const connection = mysql.createConnection({
   host: 'localhost',
   database: process.env.DB_NAME,
   user: process.env.DB_USER,
-  pass: process.env.DB_PASS
+  password: process.env.DB_PASS
 });
 
-export default connection;
+module.exports = connection;
