@@ -40,7 +40,6 @@ class Header extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-
   toggleModal() {
     this.setState({
       isModalOpen: !this.state.isModalOpen,
@@ -76,6 +75,7 @@ class Header extends Component {
                       type='text'
                       id='group-name'
                       name='name'
+                      placeholder="e.g. Philly Phanatics"
                       onChange={this.handleChange}
                     />
                   </FormGroup>
@@ -85,6 +85,7 @@ class Header extends Component {
                       type='textarea'
                       id='group-description'
                       name='description'
+                      placeholder="Please provide a description of your group."
                       onChange={this.handleChange}
                     />
                   </FormGroup>

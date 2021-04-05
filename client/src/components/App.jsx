@@ -1,13 +1,16 @@
 import React from 'react';
-import { Button } from 'reactstrap';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom';
 import Header from './Header/Header.jsx'
 
 const App = () => {
   return (
     <div>
       <Header />
-      <h1>Town Square</h1>
-      <Button color="danger">Danger!</Button>
     </div>
   );
 };
