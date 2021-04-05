@@ -1,89 +1,74 @@
-CREATE TABLE `users` (
-  `user_id` int PRIMARY KEY AUTO_INCREMENT,
-  `first_name` varchar(255),
-  `last_name` varchar(255),
-  `email` varchar(255),
-  `created_at` timestamp,
-  `country_code` int
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+  user_id INT AUTO_INCREMENT PRIMARY KEY,
+  first_name VARCHAR(255),
+  last_name VARCHAR(255),
+  email VARCHAR(255),
+  created_at TIMESTAMP,
+  country_code INT
 );
 
-CREATE TABLE `groups` (
-  `group_id` int PRIMARY KEY AUTO_INCREMENT,
-  `group_name` varchar(255),
-  `description` text,
-  `category` ENUM ('outdoors', 'music', 'cooking', 'animals', 'hobbies', 'religious'),
-  `owner_id` int
+DROP TABLE IF EXISTS groups_table;
+CREATE TABLE groups_table (
+  group_id INT AUTO_INCREMENT PRIMARY KEY,
+  group_name VARCHAR(255),
+  description TEXT,
+  category ENUM ('outdoors', 'music', 'cooking', 'animals', 'hobbies', 'religious'),
+  owner_id INT REFERENCES users(user_id)
 );
 
-CREATE TABLE `events` (
-  `event_id` int PRIMARY KEY AUTO_INCREMENT,
-  `group_id` int,
-  `title` varchar(255),
-  `description` text,
-  `address_1` varchar(255),
-  `address_2` varchar(255),
-  `city` varchar(255),
-  `state` char,
-  `zipcode` char,
-  `when` datetime
+DROP TABLE IF EXISTS events;
+CREATE TABLE events (
+  event_id INT AUTO_INCREMENT PRIMARY KEY,
+  group_id INT REFERENCES groups_table(group_id),
+  title VARCHAR(255),
+  description TEXT,
+  address_1 VARCHAR(255),
+  address_2 VARCHAR(255),
+  city VARCHAR(255),
+  state CHAR(2),
+  zipcode CHAR(5),
+  event_date DATETIME
 );
 
-CREATE TABLE `members` (
-  `group` int,
-  `user` int
+DROP TABLE IF EXISTS members;
+CREATE TABLE members (
+  group_id INT REFERENCES groups_table(group_id),
+  user_id INT REFERENCES users(user_id),
+  PRIMARY KEY(group_id, user_id)
 );
 
-CREATE TABLE `attendees` (
-  `event_id` int,
-  `user_id` int,
-  `attending` int DEFAULT 0
+DROP TABLE IF EXISTS attendees;
+CREATE TABLE attendees (
+  event_id INT,
+  user_id INT REFERENCES users(user_id),
+  attending INT DEFAULT 0
 );
 
-CREATE TABLE `posts` (
-  `post_id` int PRIMARY KEY AUTO_INCREMENT,
-  `group_id` int,
-  `author` int,
-  `created_at` timestamp,
-  `title` varchar(255),
-  `body` text
+DROP TABLE IF EXISTS posts;
+CREATE TABLE posts (
+  post_id INT AUTO_INCREMENT PRIMARY KEY,
+  group_id INT REFERENCES groups_table(group_id),
+  author INT REFERENCES users(user_id),
+  created_at TIMESTAMP,
+  title VARCHAR(255),
+  body TEXT
 );
 
-CREATE TABLE `dms` (
-  `dm_id` int PRIMARY KEY AUTO_INCREMENT,
-  `sender` int,
-  `receiver` int,
-  `sent` timestamp,
-  `message` varchar(255)
+DROP TABLE IF EXISTS dms;
+CREATE TABLE dms (
+  dm_id INT AUTO_INCREMENT PRIMARY KEY,
+  sender INT REFERENCES users(user_id),
+  receiver INT REFERENCES users(user_id),
+  sent TIMESTAMP,
+  message VARCHAR(255)
 );
 
-CREATE TABLE `forum` (
-  `forum_post_id` in PRIMARY KEY AUTO_INCREMENT,
-  `group_id` int,
-  `user_id` int,
-  `posted` timestamp,
-  `message` varchar(255)
+DROP TABLE IF EXISTS forum;
+CREATE TABLE forum (
+  forum_post_id INT AUTO_INCREMENT PRIMARY KEY,
+  group_id INT REFERENCES groups_table(group_id),
+  user_id INT REFERENCES users(user_id),
+  posted TIMESTAMP,
+  message VARCHAR(255)
 );
-
-ALTER TABLE `groups` ADD FOREIGN KEY (`owner_id`) REFERENCES `users` (`user_id`);
-
-ALTER TABLE `events` ADD FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`);
-
-ALTER TABLE `members` ADD FOREIGN KEY (`group`) REFERENCES `groups` (`group_id`);
-
-ALTER TABLE `members` ADD FOREIGN KEY (`user`) REFERENCES `users` (`user_id`);
-
-ALTER TABLE `attendees` ADD FOREIGN KEY (`event_id`) REFERENCES `events` (`event_id`);
-
-ALTER TABLE `attendees` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
-ALTER TABLE `posts` ADD FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`);
-
-ALTER TABLE `posts` ADD FOREIGN KEY (`author`) REFERENCES `users` (`user_id`);
-
-ALTER TABLE `dms` ADD FOREIGN KEY (`sender`) REFERENCES `users` (`user_id`);
-
-ALTER TABLE `dms` ADD FOREIGN KEY (`receiver`) REFERENCES `users` (`user_id`);
-
-ALTER TABLE `forum` ADD FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`);
-
-ALTER TABLE `forum` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
