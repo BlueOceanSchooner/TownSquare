@@ -48,7 +48,7 @@ CREATE TABLE posts (
   post_id INT AUTO_INCREMENT PRIMARY KEY,
   group_id INT REFERENCES groups_table(group_id),
   author INT REFERENCES users(user_id),
-  created_at TIMESTAMP,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   title VARCHAR(255),
   body TEXT
 );
@@ -58,7 +58,7 @@ CREATE TABLE dms (
   dm_id INT AUTO_INCREMENT PRIMARY KEY,
   sender INT REFERENCES users(user_id),
   receiver INT REFERENCES users(user_id),
-  sent TIMESTAMP,
+  sent TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   message VARCHAR(255)
 );
 
@@ -67,6 +67,16 @@ CREATE TABLE forum (
   forum_post_id INT AUTO_INCREMENT PRIMARY KEY,
   group_id INT REFERENCES groups_table(group_id),
   user_id INT REFERENCES users(user_id),
-  posted TIMESTAMP,
+  posted TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  message VARCHAR(255)
+);
+
+DROP TABLE IF EXISTS forum_replies;
+CREATE TABLE forum_replies (
+  reply_id INT AUTO_INCREMENT PRIMARY KEY,
+  group_id INT REFERENCES groups_table(group_id),
+  forum_post_id INT REFERENCES forum(forum_post_id),
+  user_id INT REFERENCES users(user_id),
+  posted TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   message VARCHAR(255)
 );
