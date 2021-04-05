@@ -19,6 +19,7 @@ router.post('/users', users.addUser);
 router.post('/users/:user_id/groups/:group_id', members.addUserToGroup);
 
 router.get('/groups', groups.getAllGroups);
+router.get('/groups/category/:category', groups.getGroupsByCategory);
 router.get('/groups/:group_id', groups.getGroupById);
 router.get('/groups/:group_id/events', events.getEventsByGroup);
 router.get('/groups/:group_id/members', members.getGroupMembers);
@@ -31,6 +32,7 @@ router.post('/groups/:group_id/forum', forum.postOnForum);
 router.post('/groups/:group_id/forum-reply', forum.replyOnForum);
 
 router.get('/events', events.getAllEvents);
+router.get('/events/category/:category', events.getEventsByGroupCategory);
 router.get('/events/:event_id', events.getEventById);
 router.get('/events/:event_id/attendees', attendees.getEventAttendees);
 
