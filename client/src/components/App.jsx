@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { Fragment} from 'react';
+import Homepage from './homepage/Homepage.jsx';
 
 const App = () => {
   return (
-    <h1>Town Square</h1>
+    <Fragment>
+      <h1>Town Square</h1>
+      <Homepage />
+    </Fragment>
   );
 };
 
