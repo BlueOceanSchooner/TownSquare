@@ -13,11 +13,13 @@ if (!process.env.hasOwnProperty('DB_PASS')) {
   throw Error('.env fiel missing DB_PASS');
 }
 
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
+  connectionLimit: 10,
   host: 'localhost',
   database: process.env.DB_NAME,
   user: process.env.DB_USER,
-  password: process.env.DB_PASS
+  password: process.env.DB_PASS,
+  insecureAuth: true
 });
 
 module.exports = connection;

@@ -554,3 +554,15 @@ attending: 0 = they responded no, they are not attending
 GET request to /api/dms
 
 Same format as data at /api/users/:user_id/dms
+
+### List Groups by Category
+
+GET request to /api/groups/category/:category_name (for example: /api/groups/category/animals)
+
+Same format as data at /api/groups
+
+### List Events by Category
+
+GET request to /api/events/category/:category_name (for example: /api/groups/category/religious)
+
+Same format as data at /api/events
