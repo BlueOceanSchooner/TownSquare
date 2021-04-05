@@ -1,5 +1,6 @@
 import React from 'react';
 import GroupInfo from './GroupInfo';
+import Events from './Events';
 
 import { Container, Row, Col } from 'reactstrap';
 
@@ -18,10 +19,11 @@ class Main extends React.Component {
             <GroupInfo />
           </Col>
         </Row>
-        <Row className="row">
+        <Row>
           {/* Upcoming Events */}
           <Col xs="6">
-            Upcoming Events
+            Events
+            <Events />
           </Col>
           {/* Announcements / Community Forum */}
           <Col xs="6">
