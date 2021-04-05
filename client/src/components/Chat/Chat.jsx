@@ -34,11 +34,22 @@ class Chat extends React.Component {
   }
 
   render() {
+    if (this.state.chats[this.state.active]) {
+      if (this.state.chats[this.state.active][0].sender.user_id === this.props.userID) {
+        var activeName = `${this.state.chats[this.state.active][0].receiver.first_name} ${this.state.chats[this.state.active][0].receiver.last_name}`;
+      } else {
+        var activeName = `${this.state.chats[this.state.active][0].sender.first_name} ${this.state.chats[this.state.active][0].sender.last_name}`;
+      }
+    } else {
+        var activeName = null;
+    }
     return (
       <div className="chat-icon">
         <i className="fas fa-comment-alt" onClick={this.openDMs}></i>
         <Modal isOpen={this.state.modal} toggle={this.openDMs} className={"chat-modal"}>
-          <ModalHeader className={"modal-header"} toggle={this.openDMs}>Messages</ModalHeader>
+          <ModalHeader className={"modal-header"} toggle={this.openDMs}>
+            Messages
+          </ModalHeader>
           <ModalBody className={"modal-body"}>
             <div className="messages">
               {Object.keys(this.state.chats).map(otherUserID => {
@@ -53,13 +64,20 @@ class Chat extends React.Component {
                       </span>
                       <br/>
                       <span className="last-message">
-                        {conversation[conversation.length - 1].sender.user_id === this.props.userID ? 'You: ' : `${conversation[conversation.length - 1].sender.first_name}: `}
+                        {conversation[conversation.length - 1].sender.user_id === this.props.userID ? "You: " : `${conversation[conversation.length - 1].sender.first_name}: `}
                         {conversation[conversation.length - 1].message}
                       </span>
                     </div>
                   </div>
                 )
               })}
+            </div>
+
+            <div className="conversation">
+              <div className="conversation-header">{activeName}</div>
+              {
+
+              }
             </div>
           </ModalBody>
           {/* <ModalFooter>
