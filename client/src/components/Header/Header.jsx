@@ -64,7 +64,6 @@ class Header extends Component {
   render() {
     return (
       <div className='main-header'>
-        <Router>
           <Navbar  className='py-3' color='primary' expand='md'>
             <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
               <ModalHeader toggle={this.toggleModal}>Create New Group</ModalHeader>
@@ -153,12 +152,6 @@ class Header extends Component {
               </Nav>
             </div>
           </Navbar>
-          <Switch>
-          <Route path="/allgroups">
-            <ExploreGroups />
-          </Route>
-        </Switch>
-        </Router>
       </div>
     );
   }
