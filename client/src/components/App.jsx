@@ -20,17 +20,26 @@ const App = () => {
         <Chat userID={userID}/>
       </div>
       <Switch>
-        <Route path="/allgroups">
-          <ExploreGroups />
-        </Route>
         <Route exact path="/">
           <Homepage />
         </Route>
-        <Route path="/groups/:id">
-          <h1>Group Page</h1>
+        <Route path="/allgroups">
+          <ExploreGroups />
         </Route>
+        <Route exact path="/groups/:id" render={(props) => {
+          // pass this group_id into your component to know which group the user is attempting to view
+          const group_id = props.match.params.id;
+          // replace <h1> tags with your component
+          return (
+            <h1>Page for Group #: {group_id}</h1>
+          );
+        }} />
         <Route path="/signup">
           <h1>Sign Up</h1>
+        </Route>
+
+        <Route path="*">
+          <h1>Address does not match any routes!</h1>
         </Route>
       </Switch>
     </Router>
