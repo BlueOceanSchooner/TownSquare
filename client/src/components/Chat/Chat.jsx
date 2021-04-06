@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, Input } from 'reactstrap';
 
 
 class Chat extends React.Component {
@@ -75,15 +75,38 @@ class Chat extends React.Component {
 
             <div className="conversation">
               <div className="conversation-header">{activeName}</div>
-              {
+              <div className="conversation-messages">
+                {
+                  this.state.chats[this.state.active] ?
+                  this.state.chats[this.state.active].map(message => {
+                    return (
+                      <div key={message.dm_id} className={message.sender.user_id === this.props.userID ? "conversation-you" : "conversation-other"}>
+                        {message.sender.user_id === this.props.userID ? null : <i className="user-picture fas fa-user"></i>}
+                        <span className="name">
+                          {`${message.sender.first_name} ${message.sender.last_name}`}
+                        </span>
+                        <span className="timestamp">
+                          {(new Date() - new Date(message.timestamp))/(1000 * 60 * 60 * 24) < 1 ?
+                          `${new Date(message.timestamp).getHours()}:${new Date(message.timestamp).getMinutes()}`
+                          :
+                          new Date(message.timestamp).toDateString().slice(4, 10)}
+                        </span>
+                        {message.sender.user_id !== this.props.userID ? null : <i className="user-picture fas fa-user"></i>}
+                        <br />
+                        <span className="message-content">
+                          {message.message}
+                        </span>
+                      </div>
+                    )
+                  })
+                  : null
+                }
+              </div>
 
-              }
+              <Input type="textarea"/>
+
             </div>
           </ModalBody>
-          {/* <ModalFooter>
-            <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
-            <Button color="secondary" onClick={toggle}>Cancel</Button>
-          </ModalFooter> */}
         </Modal>
       </div>
     );
