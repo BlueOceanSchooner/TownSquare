@@ -2,8 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { Button, Modal, ModalHeader, ModalBody, Input } from 'reactstrap';
 
-import Sub_previews from './sub_previews.jsx';
-import Sub_conversation from './sub_conversation.jsx';
+import Sub_previews from './Sub_previews.jsx';
+import Sub_conversation from './Sub_conversation.jsx';
 
 
 class Chat extends React.Component {
