@@ -23,7 +23,7 @@ class Announcements extends React.Component {
                 <Col>Mon, Apr 5, 2021</Col>
               </Row>
               <Row>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.
               </Row>
             </Container>
           </ListGroupItem>

@@ -1,7 +1,6 @@
 import React from 'react';
 import GroupInfo from './GroupInfo';
-import EventsList from './EventsList';
-import Announcements from './Announcements';
+import ActivityList from './ActivityList';
 
 import { Container, Row, Col } from 'reactstrap';
 
@@ -20,16 +19,11 @@ class GroupPage extends React.Component {
             <GroupInfo />
           </Col>
         </Row>
+        {/* Activities Tabs */}
         <Row>
-          {/* Upcoming Events */}
-          <Col xs="6">
-            Events
-            <EventsList />
-          </Col>
-          {/* Announcements / Community Forum */}
-          <Col xs="6">
-            Announcements / Community Forum
-            <Announcements />
+          <Col>
+          Events / Announcements / Community Forum
+            <ActivityList />
           </Col>
         </Row>
       </Container>
