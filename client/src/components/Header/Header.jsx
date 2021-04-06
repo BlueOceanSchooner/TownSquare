@@ -50,27 +50,40 @@ class Header extends Component {
     });
   }
 
+  allValid() {
+    let valid = true;
+    for (let key in this.state.validations) {
+      if (!this.state.validations[key]) {
+        valid = false;
+      }
+    }
+    return valid;
+  }
+
   handleCreateGroup(e) {
     e.preventDefault();
-    this.toggleModal();
-    let data = this.state.input;
-    data.owner_id = this.props.userID;
-    axios.post('/api/groups', data)
-      .catch((err) => console.log(err))
-      .then(() => {
-        this.setState({
-          input: {
-            group_name: '',
-            description: '',
-            category: ''
-          },
-          validations: {
-            group_name: false,
-            description: false,
-            category: false
-          }
+    if (this.allValid()) {
+      this.toggleModal();
+      let data = this.state.input;
+      data.owner_id = this.props.userID;
+      axios.post('/api/groups', data)
+        .catch((err) => console.log(err))
+        .then(() => {
+          this.setState({
+            input: {
+              group_name: '',
+              description: '',
+              category: ''
+            },
+            validations: {
+              group_name: false,
+              description: false,
+              category: false
+            }
+          })
         })
-      })
+
+    }
   }
 
   handleChange(e) {
@@ -93,7 +106,6 @@ class Header extends Component {
     } else if (e.target.value === '' && e.target.name === 'category') {
       newValid[e.target.name] = false;
     }
-    console.log(newValid);
     this.setState({
       input: newInput,
       validations: newValid
@@ -118,7 +130,7 @@ class Header extends Component {
                       valid={this.state.validations.group_name}
                     />
                     <FormText>e.g. Philly Phanatics</FormText>
-                    <FormFeedback valid>Sweet! that name is available</FormFeedback>
+                    <FormFeedback valid>Sweet! That name is available!</FormFeedback>
                   </FormGroup>
                   <FormGroup>
                     <Label for='group-description'>Group Description</Label>

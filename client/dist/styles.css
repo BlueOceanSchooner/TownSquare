@@ -188,11 +188,38 @@
   justify-content: center;
 }
 
+
+
 .group-list-name {
   color: inherit;
+  justify-self: left;
   text-decoration: none;
 }
 
 .group-list-name:hover {
   text-decoration: none;
+}
+
+.groups-header {
+  display: flex;
+  width: 90%;
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  height: 80px;
+  align-content: center;
+  justify-content: center;
+  background-color: #007bff;
+  color: #fff;
+  vertical-align: center;
+}
+
+.g-header {
+  display: inline-flex;
+  align-self: center;
+}
+
+
+.browse-group-btn:hover {
+  color: grey;
 }

@@ -1,39 +1,57 @@
 import React from 'react';
-import { Jumbotron, Button, ListGroup, ListGroupItem, ListGroupItemText, ListGroupItemHeading } from 'reactstrap';
+import {
+  Jumbotron,
+  Button,
+  ListGroup,
+  ListGroupItem,
+  ListGroupItemText,
+  ListGroupItemHeading,
+  Form,
+  FormGroup,
+  FormFeedback,
+  FormText,
+  Input,
+  Label, } from 'reactstrap';
 import Header from '../Header/Header.jsx'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
-const jumbostyles = {
-  width: '80%',
-  display: 'flex',
-  justifyContent: 'center',
-  justifySelf: "center"
-}
-
-const divstyles = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignContent: 'center',
-  height: '80px'
-}
 
 class ExploreGroups extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      groups: null
+      groups: null,
+      selectVal: '',
+      options: ['', 'outdoors', 'music', 'cooking', 'animals', 'hobbies', 'religious']
     }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleFilter = this.handleFilter.bind(this);
   }
 
   componentDidMount() {
     axios.get('/api/groups')
       .then((results) => {
-        console.log(results.data)
         this.setState({
           groups: results.data
         })
       })
+  }
+
+  handleFilter(val) {
+    axios.get(`/api/groups/category/${val}`)
+      .then((results) => {
+        this.setState({
+          groups: results.data
+        })
+      })
+  }
+
+  handleChange(e) {
+    this.setState({
+      selectVal: e.target.value
+    }, () => {
+      this.handleFilter(this.state.selectVal)
+    })
   }
 
   render() {
@@ -41,16 +59,26 @@ class ExploreGroups extends React.Component {
       return <div>loading...</div>
     } else {
       return (
-        <div>
-          <br></br><br></br>
-          <div style={divstyles} className='groups-area'>
-            <Jumbotron style={jumbostyles} fluid>
-              <h2 className='display-6'>Groups In Your Area</h2>
-            </Jumbotron>
+        <div className='groups-page'>
+          <div className='groups-header'>
+              <h3 className='g-header'>Groups In Your Area</h3>
+              <Form>
+                <FormGroup>
+                <Label for='modal-category'>Filter by category</Label>
+                    <Input
+                    onChange={this.handleChange}
+                    type='select'
+                    name='category'
+                    id='modal-category'
+                    value={this.state.selectVal}
+                    >
+                      {this.state.options.map((option, i) => {
+                        return <option value={option} key={i}>{option}</option>
+                      })}
+                    </Input>
+                </FormGroup>
+              </Form>
           </div>
-          <br></br>
-          <br></br>
-          <br></br>
           <div className='group-list-container'>
             <div className='group-list'>
               <ListGroup >
