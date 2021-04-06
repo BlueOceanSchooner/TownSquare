@@ -3,6 +3,18 @@
 ## API
 All API endpoints begin with /api.
 
+### Errors
+
+If there is an error than the JSON object returned will have one key, errors, with an array of the errors encountered.
+```
+{
+  errors: [
+    "first_name is a required field",
+    "last_name is a required field
+  ]
+}
+```
+
 ### Users
 
 ### List all users:
@@ -153,6 +165,7 @@ GET request to /api/groups
 ```
 [
   {
+    "group_id": 1,
     "group_name": "JavaScript Meet Up",
     "description": "We meet up and write code",
     "category": "religious",
@@ -164,6 +177,7 @@ GET request to /api/groups
     }
   },
   {
+    "group_id": 2,
     "group_name": "Cleveland Horse Enthusiasts",
     "description": "We are enthusiastic about horses!",
     "category": "animals",
@@ -183,6 +197,7 @@ GET request to /api/groups/:id
 
 ```
 {
+  "group_id": 1,
   "group_name": "JavaScript Meet Up",
   "description": "We meet up and write code",
   "category": "religious",
