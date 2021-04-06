@@ -17,11 +17,12 @@ const Sub_conversation = ({ userID, activeName, chats, active, newMessage, updat
                   <span className="name">
                     {`${message.sender.first_name} ${message.sender.last_name}`}
                   </span>
+                  <br/>
                   <span className="timestamp">
-                    {(new Date() - new Date(message.timestamp))/(1000 * 60 * 60 * 24) < 1 ?
-                    `${new Date(message.timestamp).getHours()}:${new Date(message.timestamp).getMinutes()}`
+                    {new Date().toDateString().slice(4,15) === new Date(message.timestamp).toDateString().slice(4,15) ?
+                    new Date(message.timestamp).getHours() > 12 ? `${new Date(message.timestamp).getHours() - 12}:${new Date(message.timestamp).getMinutes()} PM` : `${new Date(message.timestamp).getHours()}:${new Date(message.timestamp).getMinutes()} AM`
                     :
-                    new Date(message.timestamp).toDateString().slice(4, 10)}
+                    new Date(message.timestamp).toDateString().slice(4,10)}
                   </span>
                   <br />
                   <span className="message-content">
