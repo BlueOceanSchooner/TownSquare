@@ -10,6 +10,8 @@ import {
   ModalBody,
   Form,
   FormGroup,
+  FormFeedback,
+  FormText,
   Input,
   Label,
   NavLink
@@ -34,7 +36,12 @@ class Header extends Component {
         description: '',
         category: ''
       },
-      options: ['outdoors', 'music', 'cooking', 'animals', 'hobbies', 'religious']
+      options: ['', 'outdoors', 'music', 'cooking', 'animals', 'hobbies', 'religious'],
+      validations: {
+        group_name: false,
+        description: false,
+        category: false
+      }
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -49,20 +56,52 @@ class Header extends Component {
   }
 
   handleCreateGroup(e) {
+    e.preventDefault();
     this.toggleModal();
     let data = this.state.input;
     data.owner_id = this.props.userID;
     axios.post('/api/groups', data)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-    e.preventDefault();
+      .catch((err) => console.log(err))
+      .then(() => {
+        this.setState({
+          input: {
+            group_name: '',
+            description: '',
+            category: ''
+          },
+          validations: {
+            group_name: false,
+            description: false,
+            category: false
+          }
+        })
+      })
   }
 
   handleChange(e) {
     let newInput = this.state.input;
     newInput[e.target.name] = e.target.value;
+
+    let newValid = this.state.validations;
+    if (e.target.value.length > 5 && e.target.name === 'group_name') {
+      newValid[e.target.name] = true;
+    } else if ((e.target.value.length < 5 && e.target.name === 'group_name')) {
+      newValid[e.target.name] = false;
+    }
+    if (e.target.value.length > 10 && e.target.name === 'description') {
+      newValid[e.target.name] = true;
+    } else if (e.target.value.length < 10 && e.target.name === 'description'){
+      newValid[e.target.name] = false;
+    }
+    if (e.target.value !== '' && e.target.name === 'category') {
+      newValid[e.target.name] = true;
+    } else if (e.target.value === '' && e.target.name === 'category') {
+      newValid[e.target.name] = false;
+    }
+    console.log(newValid);
     this.setState({
-      input: newInput
+      input: newInput,
+      validations: newValid
     });
   }
 
@@ -80,9 +119,11 @@ class Header extends Component {
                       type='text'
                       id='group_name'
                       name='group_name'
-                      placeholder="e.g. Philly Phanatics"
                       onChange={this.handleChange}
+                      valid={this.state.validations.group_name}
                     />
+                    <FormText>e.g. Philly Phanatics</FormText>
+                    <FormFeedback valid>Sweet! that name is available</FormFeedback>
                   </FormGroup>
                   <FormGroup>
                     <Label for='group-description'>Group Description</Label>
@@ -90,17 +131,27 @@ class Header extends Component {
                       type='textarea'
                       id='group-description'
                       name='description'
-                      placeholder="Please provide a description of your group."
                       onChange={this.handleChange}
+                      valid={this.state.validations.description}
                     />
+                    <FormText>Please provide a description of your group.</FormText>
+                    <FormFeedback valid>Great description!</FormFeedback>
                   </FormGroup>
                   <FormGroup>
                   <Label for='modal-category'>Select Category</Label>
-                    <Input onChange={this.handleChange} type='select' name='category' id='modal-category'>
+                    <Input
+                    onChange={this.handleChange}
+                    type='select'
+                    name='category'
+                    id='modal-category'
+                    valid={this.state.validations.category}
+                    >
                       {this.state.options.map((option, i) => {
-                        return <option key={i}>{option}</option>
+                        return <option value={option} key={i}>{option}</option>
                       })}
                     </Input>
+                    <FormText>Select a category for your group.</FormText>
+                    <FormFeedback valid></FormFeedback>
                 </FormGroup>
                   <Button type='submit' value='submit' color='primary'>
                     Create Group
