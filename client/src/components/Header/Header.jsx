@@ -37,7 +37,8 @@ class Header extends Component {
         group_name: false,
         description: false,
         category: false
-      }
+      },
+      nameTaken: false
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -80,11 +81,24 @@ class Header extends Component {
               group_name: false,
               description: false,
               category: false
-            }
+            },
+            nameTaken: false
           })
         })
 
     }
+  }
+
+  checkGroupName(name) {
+    axios.get('/api/groups/search', {params: {name: name, exact: true}})
+      .then((result) => {
+        let newValid = this.state.validations;
+        newValid.group_name = result.data.length < 1;
+        this.setState({
+          nameTaken: result.data.length >= 1,
+          input: newValid
+        })
+      })
   }
 
   handleChange(e) {
@@ -93,9 +107,16 @@ class Header extends Component {
 
     let newValid = this.state.validations;
     if (e.target.value.length > 5 && e.target.name === 'group_name') {
-      newValid[e.target.name] = true;
+      if (this.checkGroupName(e.target.value)) {
+        newValid[e.target.name] = true;
+      } else {
+        newValid[e.target.name] = false;
+      }
     } else if ((e.target.value.length < 5 && e.target.name === 'group_name')) {
       newValid[e.target.name] = false;
+    }
+    if (e.target.name === 'group_name') {
+      this.checkGroupName(e.target.value)
     }
     if (e.target.value.length > 10 && e.target.name === 'description') {
       newValid[e.target.name] = true;
@@ -128,10 +149,12 @@ class Header extends Component {
                       id='group_name'
                       name='group_name'
                       onChange={this.handleChange}
-                      valid={this.state.validations.group_name}
+                      valid={this.state.validations.group_name && !this.state.nameTaken ? true : false}
+                      invalid={(this.state.nameTaken && !this.state.validations.group_name) ? true : false}
                     />
                     <FormText>e.g. Philly Phanatics</FormText>
                     <FormFeedback valid>Sweet! That name is available!</FormFeedback>
+                    <FormFeedback invalid>That name is already taken.</FormFeedback>
                   </FormGroup>
                   <FormGroup>
                     <Label for='group-description'>Group Description</Label>
