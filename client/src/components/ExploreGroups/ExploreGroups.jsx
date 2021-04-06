@@ -75,14 +75,13 @@ class ExploreGroups extends React.Component {
             <div className='group-select'>
               <Form className="form-inline">
                 <FormGroup>
-                  <Label className='filter-label' for='category-filter'>Filter by category</Label>
+                  <Label className='filter-label' for='category-filter'>Browse by category</Label>
                       <Input
                       onChange={this.handleChange}
                       type='select'
                       name='category-filter'
                       value={this.state.selectVal}
                       className='select-box'
-                      maxMenuHeight={10}
                       >
                         {this.state.options.map((option, i) => {
                           return <option className='select-box-option' value={option} key={i}>{option}</option>

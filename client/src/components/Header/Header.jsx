@@ -116,7 +116,7 @@ class Header extends Component {
   render() {
     return (
       <div className='main-header'>
-          <Navbar  className='py-3' color='primary' expand='md'>
+          <Navbar  className='py-3' color='secondary' expand='md'>
             <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
               <ModalHeader toggle={this.toggleModal}>Create New Group</ModalHeader>
               <ModalBody>
@@ -178,7 +178,7 @@ class Header extends Component {
                   fontSize: '2em' }}
                   href='/'
                   >
-                  <img src={logo} alt='TownSquare Logo'/> TownSquare
+                  <img height="40px" id='logo' src={logo} alt='TownSquare Logo'/> TownSquare
                   </NavbarBrand>
                 </NavItem>
               </Nav>
@@ -187,10 +187,9 @@ class Header extends Component {
                 <NavItem>
                   <Link to='/allgroups'>
                     <Button
-                      outline
                       color='secondary'
                       size='small'
-                      style={{ backgroundColor: '#fff', marginTop: '16px'}}
+                      style={{ marginTop: '16px'}}
                       >
                       Browse All Groups
                     </Button>
@@ -198,11 +197,10 @@ class Header extends Component {
                 </NavItem>
                 <NavItem>
                   <Button
-                    outline
                     color='secondary'
                     size='small'
-                    style={{ backgroundColor: '#fff', marginLeft: '10px', marginTop: '16px'}}
                     onClick={this.toggleModal}
+                    style={{marginTop: '16px', marginLeft: '10px'}}
                     className='createGroupBtn'
                   >
                     Create New Group
@@ -210,7 +208,7 @@ class Header extends Component {
                 </NavItem>
                 <NavItem >
                 <Link to='/'>
-                    <i style={{color: '#fff', marginLeft: '10px', marginTop: '9px'}} className='fas fa-home fa-3x'></i>
+                    <i style={{color: '#fff', marginLeft: '10px', marginTop: '8px'}} className='fas fa-home fa-3x'></i>
                   </Link>
                 </NavItem>
               </Nav>

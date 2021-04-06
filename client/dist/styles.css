@@ -177,6 +177,11 @@
   object-fit: cover;
 }
 
+
+
+
+/* JOE'S STUFF DON'T TOUCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
+
 .group-list {
   text-align: center;
   width: 60%;
@@ -209,7 +214,7 @@
   height: 60px;
   align-content: center;
   justify-content: center;
-  background-color: #007bff;
+  background-color: #6c757d;
   color: #fff;
   vertical-align: center;
 }
@@ -239,3 +244,14 @@
 .select-box-option {
   height: 10px;
 }
+
+#logo {
+  margin-bottom: 5px;
+}
+
+.createGroupBtn {
+  margin-left: '10px';
+  margin-top: '16px';
+}
+
+/* HERE ENDS JOE'S STUFF ::::) */
