@@ -1,6 +1,7 @@
 import React from 'react';
 import GroupInfo from './GroupInfo';
-import Events from './Events';
+import EventsList from './EventsList';
+import Announcements from './Announcements';
 
 import { Container, Row, Col } from 'reactstrap';
 
@@ -23,11 +24,12 @@ class Main extends React.Component {
           {/* Upcoming Events */}
           <Col xs="6">
             Events
-            <Events />
+            <EventsList />
           </Col>
           {/* Announcements / Community Forum */}
           <Col xs="6">
             Announcements / Community Forum
+            <Announcements />
           </Col>
         </Row>
       </Container>

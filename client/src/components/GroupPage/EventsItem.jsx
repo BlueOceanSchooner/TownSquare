@@ -1,7 +1,7 @@
 import React from 'react';
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import { ListGroupItem } from 'reactstrap';
 
-const Events = () => {
+const EventsItem = () => {
   return (
     <div>
       <ListGroup>
@@ -14,4 +14,4 @@ const Events = () => {
   )
 }
 
-export default Events;
+export default EventsItem;
