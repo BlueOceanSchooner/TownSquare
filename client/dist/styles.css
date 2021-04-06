@@ -96,3 +96,12 @@
   display: flex;
   justify-content: center;
 }
+
+.group-list-name {
+  color: inherit;
+  text-decoration: none;
+}
+
+.group-list-name:hover {
+  text-decoration: none;
+}
