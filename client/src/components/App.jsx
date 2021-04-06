@@ -1,11 +1,11 @@
 import React from 'react';
+import Login from './Auth/Login.jsx';
+import Signup from './Auth/Signup.jsx';
 import { Button } from 'reactstrap';
 
 const App = () => {
   return (
     <div>
-      <h1>Town Square</h1>
-      <Button color="danger">Danger!</Button>
     </div>
   );
 };
