@@ -172,7 +172,23 @@
   margin-right: 10px;
 }
 
+/* Group Page Section */
+
 .group-poster {
   height: 250px;
   object-fit: cover;
 }
+
+.group-tab-header {
+  margin-right: 20px;
+}
+
+.group-container {
+  margin-top: 40px;
+}
+
+.activities-container {
+  margin-top: 40px;
+}
+
+/* End of Group Page Section */

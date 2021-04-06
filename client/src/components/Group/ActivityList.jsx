@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button, ListGroup, ListGroupItem
+  CardTitle, CardSubtitle, CardHeader, Button, ListGroup, ListGroupItem
 } from 'reactstrap';
 
 import { Container, Row, Col } from 'reactstrap';
@@ -14,8 +14,15 @@ class Announcements extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="activities-container">
         <ListGroup>
+          <CardHeader>
+            <span className="group-tab-header">Upcoming Events</span>
+            <span className="group-tab-header">|</span>
+            <span className="group-tab-header">Announcements</span>
+            <span className="group-tab-header">|</span>
+            <span className="group-tab-header">Community Forum</span>
+          </CardHeader>
           <ListGroupItem>
             <Container>
               <Row>

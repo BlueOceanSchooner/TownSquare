@@ -12,7 +12,7 @@ class GroupPage extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container className="group-container">
         {/* Group Info */}
         <Row>
           <Col>
@@ -22,7 +22,6 @@ class GroupPage extends React.Component {
         {/* Activities Tabs */}
         <Row>
           <Col>
-          Events / Announcements / Community Forum
             <ActivityList />
           </Col>
         </Row>
