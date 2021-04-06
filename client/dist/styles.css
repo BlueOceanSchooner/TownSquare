@@ -1,0 +1,87 @@
+.chat-icon {
+  transform: scaleX(-1);
+  cursor: pointer;
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  font-size: 40px;
+  top: calc(100vh - 60px);
+  left: calc(100vw - 60px);
+  color: #1D3557;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat-modal {
+  background-color: #bbb;
+  max-width: 95vw !important;
+  overflow: scroll;
+}
+
+.chat-modal .modal-header {
+  text-align: center;
+}
+
+.chat-modal .modal-body {
+  background-color: #ccc;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 6fr;
+  grid-template-areas:
+    "messages name"
+    "messages conversation"
+}
+
+.chat-modal .modal-body .messages {
+  grid-area: messages;
+}
+
+.chat-modal .modal-body .message {
+  cursor: pointer;
+  background-color: #eee;
+  margin-bottom: 5px;
+  display: grid;
+  grid-template-columns: 10px 65px 1fr;
+  grid-template-rows: 60px;
+  grid-template-areas:
+    "active-bar picture content"
+}
+
+.chat-modal .modal-body .active-bar {
+  grid-area: active-bar;
+  background-color: #aaa;
+  width: 10px;
+  height: 55px;
+  margin: 2.5px;
+}
+
+.chat-modal .modal-body .user-picture {
+  grid-area: picture;
+  margin: 5px;
+  margin-left: 10px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  font-size: 30px;
+  background-color: #ccc;
+}
+
+.chat-modal .modal-body .content {
+  margin: 5px;
+  grid-area: content;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chat-modal .modal-body .other-user-name {
+  font-weight: bold;
+}
+
+.chat-modal .modal-body .last-message {
+  font-size: 13px;
+}

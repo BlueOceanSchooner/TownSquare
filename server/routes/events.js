@@ -80,6 +80,48 @@ const getEventsByGroup = (req, res) => {
   })
 };
 
+const getEventsByGroupCategory = (req, res) => {
+  const category = req.params.category;
+  const sql = `
+    SELECT e.event_id, e.group_id, e.title, e.description as event_description, e.address_1, e.address_2, e.city, e.state, e.zipcode, e.event_date, g.group_id, g.group_name, g.description as group_description, g.category
+    FROM
+      events e
+    LEFT JOIN
+      groups_table g
+    ON e.group_id = g.group_id
+    WHERE g.category = ?
+    ORDER BY e.event_date
+  `;
+  connection.query(sql, [category], (err, results) => {
+    if (err) {
+      return res.json({
+        error: err
+      });
+    }
+    const rows = results.map((row) => {
+      return {
+        event_id: row.event_id,
+        title: row.title,
+        description: row.event_description,
+        address_1: row.address_1,
+        address_2: row.address_2,
+        city: row.city,
+        state: row.state,
+        zipcode: row.zipcode,
+        time: row.event_date,
+        group: {
+          group_id: row.group_id,
+          group_name: row.group_name,
+          description: row.group_description,
+          category: row.category
+        }
+      }
+    });
+    return res.json(rows);
+  });
+}
+
+
 const getEventById = (req, res) => {
   const event_id = req.params.event_id;
   const sql = `
@@ -139,6 +181,7 @@ const addEvent = (req, res) => {
 module.exports = {
   getAllEvents,
   getEventsByGroup,
+  getEventsByGroupCategory,
   getEventById,
   addEvent
 };
