@@ -103,7 +103,7 @@ class Chat extends React.Component {
                 }
               </div>
 
-              <Input type="textarea"/>
+              <Input className={"input"} type="textarea"/>
 
             </div>
           </ModalBody>

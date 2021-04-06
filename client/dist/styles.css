@@ -14,8 +14,10 @@
 }
 
 .chat-modal {
-  background-color: #bbb;
   max-width: 90vw !important;
+}
+
+.chat-modal .modal-content{
   height: 90vh;
 }
 
@@ -35,9 +37,11 @@
   display: grid;
   grid-template-columns: 1fr 2fr;
   column-gap: 10px;
-  grid-template-rows: 1fr;
+  grid-template-rows: 30px 50vh 60px;
   grid-template-areas:
-    "messages conversation"
+    "messages conversation-name"
+    "messages conversation-messages"
+    "messages conversation-input"
 }
 
 .chat-modal .modal-body .messages {
@@ -52,7 +56,7 @@
   grid-template-columns: 10px 65px 1fr;
   grid-template-rows: 60px;
   grid-template-areas:
-    "active-bar picture content"
+    "active-bar picture message-preview"
 }
 
 .chat-modal .modal-body .active-bar {
@@ -78,7 +82,7 @@
 
 .chat-modal .modal-body .content {
   margin: 5px;
-  /* grid-area: content; */
+  grid-area: message-preview;
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -105,15 +109,8 @@
   margin-right: 10px;
 }
 
-.chat-modal .modal-body .conversation {
-  grid-area: conversation;
-  height: 80vh;
-  overflow-y: auto;
-}
-
 .chat-modal .modal-body .conversation-header {
-  position: fixed;
-  width: calc((90vw * (2/3)) - 2rem);
+  grid-area: conversation-name;
 }
 
 .chat-modal .modal-body .conversation-you,
@@ -126,8 +123,10 @@
 }
 
 .chat-modal .modal-body .conversation-messages {
-  margin-top: 50px;
+  grid-area: conversation-messages;
   background-color: #ddd;
+  overflow-y: auto;
+  height: calc(90vh - 2rem - 90px - 36px - 2rem);
   overflow-y: auto;
 }
 
@@ -137,4 +136,9 @@
 
 .chat-modal .modal-body .conversation-other .message-content {
   margin-left: 65px;
+}
+
+.chat-modal .modal-body .input {
+  grid-area: conversation-input;
+  align-self: baseline;
 }
