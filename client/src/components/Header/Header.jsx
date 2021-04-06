@@ -19,6 +19,7 @@ import {
 import { Link } from 'react-router-dom';
 import ExploreGroups from '../ExploreGroups/ExploreGroups.jsx';
 import axios from 'axios';
+import logo from '../../../assets/townsquare.png';
 
 class Header extends Component {
   constructor(props) {
@@ -177,7 +178,7 @@ class Header extends Component {
                   fontSize: '2em' }}
                   href='/'
                   >
-                  &#91;&#160;&#160;&#93; TownSquare
+                  <img src={logo} alt='TownSquare Logo'/> TownSquare
                   </NavbarBrand>
                 </NavItem>
               </Nav>
