@@ -228,7 +228,7 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` VALUES (1,1,1,'2021-04-05 14:00:00','Don\'t forget to bring your own food to the cookout!','Last time we had a cookout some people forgot to bring their own food (Jane), and then caused a scene (Jane). Let\'s not have that happen again.'),(2,1,1,'2021-04-05 14:00:00','Thank You Everyone Who Attended Last Month\'s Coding Exercise','It was dope');
+INSERT INTO `posts` VALUES (1,1,1,'2021-04-05 14:00:00',`Don\'t forget to bring your own food to the cookout!`,'Last time we had a cookout some people forgot to bring their own food (Jane), and then caused a scene (Jane). Let\'s not have that happen again.'),(2,1,1,'2021-04-05 14:00:00','Thank You Everyone Who Attended Last Month\'s Coding Exercise','It was dope');
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
