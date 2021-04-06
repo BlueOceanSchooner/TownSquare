@@ -1,8 +1,6 @@
 import React from 'react';
-<<<<<<< HEAD
 import Login from './Auth/Login.jsx';
 import Signup from './Auth/Signup.jsx';
-=======
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,7 +8,6 @@ import {
   Link
 } from 'react-router-dom';
 import Header from './Header/Header.jsx'
->>>>>>> master
 import { Button } from 'reactstrap';
 import Chat from './Chat/Chat.jsx';
 import ExploreGroups from './ExploreGroups/ExploreGroups.jsx';
@@ -18,10 +15,6 @@ import ExploreGroups from './ExploreGroups/ExploreGroups.jsx';
 const App = () => {
   let userID = 1;
   return (
-<<<<<<< HEAD
-    <div>
-    </div>
-=======
     <Router>
       <div>
         <Header />
@@ -42,7 +35,6 @@ const App = () => {
         </Route>
       </Switch>
     </Router>
->>>>>>> master
   );
 };
 
