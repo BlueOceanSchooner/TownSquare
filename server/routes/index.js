@@ -20,6 +20,7 @@ router.post('/users/:user_id/groups/:group_id', members.addUserToGroup);
 
 router.get('/groups', groups.getAllGroups);
 router.get('/groups/category/:category', groups.getGroupsByCategory);
+router.get('/groups/search', groups.findGroupByName);
 router.get('/groups/:group_id', groups.getGroupById);
 router.get('/groups/:group_id/events', events.getEventsByGroup);
 router.get('/groups/:group_id/members', members.getGroupMembers);

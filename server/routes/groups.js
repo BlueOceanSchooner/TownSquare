@@ -22,8 +22,55 @@ const getAllGroups = (req, res) => {
       }
     });
     return res.json(results);
-  })
+  });
 };
+
+const findGroupByName = (req, res) => {
+  if (!req.query || !req.query.name) {
+    return res.json({
+      errors: ['please specify a partial or complete name to search for']
+    });
+  }
+  const partialMatch = `%${req.query.name}%`;
+  const exactMatch = req.query.name;
+  const isExactMatch = req.query.exact && req.query.exact === 'true';
+  let sql, term;
+  const sqlBase = `
+    SELECT g.group_id, g.group_name, g.description, g.category, g.owner_id,
+      u.first_name, u.last_name, u.email
+    FROM groups_table g
+    LEFT JOIN users u ON g.owner_id = u.user_id
+  `;
+  if (isExactMatch) {
+    sql = sqlBase + ' WHERE g.group_name = ?';
+    term = exactMatch;
+  } else {
+    sql = sqlBase + ' WHERE g.group_name LIKE ?';
+    term = partialMatch;
+  }
+  connection.query(sql, term, (err, results) => {
+    if (err) {
+      return res.json({
+        errors: [err]
+      });
+    }
+    results = results.map((row) => {
+      return {
+        group_id: row.group_id,
+        group_name: row.group_name,
+        description: row.description,
+        category: row.category,
+        owner: {
+          user_id: row.owner_id,
+          first_name: row.first_name,
+          last_name: row.last_name,
+          email: row.email
+        }
+      }
+    });
+    return res.json(results);
+  });
+}
 
 const getGroupsByCategory = (req, res) => {
   const category = req.params.category;
@@ -89,7 +136,6 @@ const getGroupById = (req, res) => {
 
 const addGroup = (req, res) => {
   const data = req.body;
-  console.log(data);
   connection.query('INSERT INTO groups_table SET ?', data, (err, results) => {
     if (err) {
       return res.json({
@@ -102,6 +148,7 @@ const addGroup = (req, res) => {
 
 module.exports = {
   getAllGroups,
+  findGroupByName,
   getGroupById,
   getGroupsByCategory,
   addGroup
