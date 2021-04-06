@@ -22,6 +22,13 @@ class Chat extends React.Component {
     this.sendNewMessage = this.sendNewMessage.bind(this);
   }
 
+  componentDidUpdate() {
+    var messageBody = document.querySelector('.chat-modal .modal-body .conversation-messages');
+    if (messageBody) {
+      messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+    }
+  }
+
   getMessages() {
     axios.get(`/api/users/${this.props.userID}/dms`)
     .then(response => {

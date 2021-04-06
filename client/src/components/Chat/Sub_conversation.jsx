@@ -12,20 +12,24 @@ const Sub_conversation = ({ userID, activeName, chats, active, newMessage, updat
             return (
               <div key={message.dm_id} className={message.sender.user_id === userID ? "conversation-you" : "conversation-other"}>
                 {message.sender.user_id === userID ? null : <i className="user-picture fas fa-user"></i>}
-                <span className="name">
-                  {`${message.sender.first_name} ${message.sender.last_name}`}
-                </span>
-                <span className="timestamp">
-                  {(new Date() - new Date(message.timestamp))/(1000 * 60 * 60 * 24) < 1 ?
-                  `${new Date(message.timestamp).getHours()}:${new Date(message.timestamp).getMinutes()}`
-                  :
-                  new Date(message.timestamp).toDateString().slice(4, 10)}
-                </span>
+
+                <div className="conversation-content">
+                  <span className="name">
+                    {`${message.sender.first_name} ${message.sender.last_name}`}
+                  </span>
+                  <span className="timestamp">
+                    {(new Date() - new Date(message.timestamp))/(1000 * 60 * 60 * 24) < 1 ?
+                    `${new Date(message.timestamp).getHours()}:${new Date(message.timestamp).getMinutes()}`
+                    :
+                    new Date(message.timestamp).toDateString().slice(4, 10)}
+                  </span>
+                  <br />
+                  <span className="message-content">
+                    {message.message}
+                  </span>
+                </div>
+
                 {message.sender.user_id !== userID ? null : <i className="user-picture fas fa-user"></i>}
-                <br />
-                <span className="message-content">
-                  {message.message}
-                </span>
               </div>
             )
           })

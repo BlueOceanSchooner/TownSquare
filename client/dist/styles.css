@@ -21,7 +21,7 @@
   max-width: 90vw !important;
 }
 
-.chat-modal .modal-content{
+.chat-modal .modal-content {
   height: 90vh;
 }
 
@@ -127,6 +127,12 @@
   border-bottom: 5px solid #ccc;
 }
 
+.chat-modal .conversation-content {
+  display: inline-block;
+  position: relative;
+  top: 5px;
+}
+
 .chat-modal .modal-body .conversation-you,
 .chat-modal .modal-body .conversation-other {
   margin-bottom: 10px;
@@ -144,14 +150,6 @@
   overflow-y: auto;
   border-bottom: 5px solid #ccc;
   padding: 0 20px;
-}
-
-.chat-modal .modal-body .conversation-you .message-content {
-  margin-right: 75px;
-}
-
-.chat-modal .modal-body .conversation-other .message-content {
-  margin-left: 75px;
 }
 
 .chat-modal .modal-body .input {
