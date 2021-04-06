@@ -60,11 +60,11 @@ class Chat extends React.Component {
                     <i className="user-picture fas fa-user"></i>
                     <div className="content">
                       <span className="other-user-name">
-                        {conversation[0].sender.user_id === this.props.userID ? `${conversation[0].receiver.first_name} ${conversation[0].receiver.last_name}` : `${conversation[0].sender.first_name} ${conversation[0].sender.first_name}`}
+                        {conversation[0].sender.user_id === this.props.userID ? `${conversation[0].receiver.first_name} ${conversation[0].receiver.last_name}` : `${conversation[0].sender.first_name} ${conversation[0].sender.last_name}`}
                       </span>
                       <br/>
                       <span className="last-message">
-                        {conversation[conversation.length - 1].sender.user_id === this.props.userID ? "You: " : `${conversation[conversation.length - 1].sender.first_name}: `}
+                        {conversation[conversation.length - 1].sender.user_id === this.props.userID ? "You: " : `${conversation[conversation.length - 1].sender.first_name} ${conversation[conversation.length - 1].sender.last_name}: `}
                         {conversation[conversation.length - 1].message}
                       </span>
                     </div>
