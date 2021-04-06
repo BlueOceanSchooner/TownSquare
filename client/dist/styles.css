@@ -71,10 +71,10 @@
   background-color: #eee;
   margin-bottom: 5px;
   display: grid;
-  grid-template-columns: 10px 65px 1fr;
+  grid-template-columns: 10px 65px 1fr 70px;
   grid-template-rows: 60px;
   grid-template-areas:
-    "active-bar picture message-preview"
+    "active-bar picture message-preview timestamp"
 }
 
 .chat-modal .modal-body .active-bar {
@@ -108,6 +108,13 @@
 
 .chat-modal .modal-body .other-user-name {
   font-weight: bold;
+}
+
+.chat-modal .modal-body .preview-timestamp {
+  grid-area: timestamp;
+  font-size: 12px;
+  text-align: right;
+  padding: 10px 10px 0 0;
 }
 
 .chat-modal .modal-body .last-message {

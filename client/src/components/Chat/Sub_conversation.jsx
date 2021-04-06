@@ -58,19 +58,6 @@ class Sub_conversation extends React.Component {
     .catch(err => console.log('error:', err));
   }
 
-  getProperTimestamp(timestamp) {
-    if (new Date().toDateString().slice(4,15) === new Date(timestamp).toDateString().slice(4,15)) {
-      if (new Date(timestamp).getHours() > 12) {
-        return `${new Date(timestamp).getHours() - 12}:${new Date(timestamp).getMinutes() < 10 ? '0' : ''}${new Date(timestamp).getMinutes()} PM`;
-      }
-      if (new Date(timestamp).getHours() === 12) {
-        return `12:${new Date(timestamp).getMinutes() < 10 ? '0' : ''}${new Date(timestamp).getMinutes()} PM`;
-      }
-      return `${new Date(timestamp).getHours()}:${new Date(timestamp).getMinutes() < 10 ? '0' : ''}${new Date(timestamp).getMinutes()} AM`;
-    }
-    return new Date(timestamp).toDateString().slice(4,10);
-  }
-
   renderConversationMessages(chats) {
     return chats.map(message => {
       return (
@@ -82,7 +69,7 @@ class Sub_conversation extends React.Component {
           </span>
           <br/>
           <span className="timestamp">
-            {this.getProperTimestamp(message.timestamp)}
+            {this.props.getProperTimestamp(message.timestamp)}
           </span>
           <br />
           <span className="message-content">

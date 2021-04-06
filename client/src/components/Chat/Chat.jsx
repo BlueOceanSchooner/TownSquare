@@ -23,6 +23,7 @@ class Chat extends React.Component {
     this.getAllUsers = this.getAllUsers.bind(this);
     this.openNewMessage = this.openNewMessage.bind(this);
     this.closeNewMessage = this.closeNewMessage.bind(this);
+    this.getProperTimestamp = this.getProperTimestamp.bind(this);
   }
 
   openDMs() {
@@ -87,6 +88,19 @@ class Chat extends React.Component {
     this.setState({ newRecipient: false });
   }
 
+  getProperTimestamp(timestamp) {
+    if (new Date().toDateString().slice(4,15) === new Date(timestamp).toDateString().slice(4,15)) {
+      if (new Date(timestamp).getHours() > 12) {
+        return `${new Date(timestamp).getHours() - 12}:${new Date(timestamp).getMinutes() < 10 ? '0' : ''}${new Date(timestamp).getMinutes()} PM`;
+      }
+      if (new Date(timestamp).getHours() === 12) {
+        return `12:${new Date(timestamp).getMinutes() < 10 ? '0' : ''}${new Date(timestamp).getMinutes()} PM`;
+      }
+      return `${new Date(timestamp).getHours()}:${new Date(timestamp).getMinutes() < 10 ? '0' : ''}${new Date(timestamp).getMinutes()} AM`;
+    }
+    return new Date(timestamp).toDateString().slice(4,10);
+  }
+
   render() {
     if (this.state.chats[this.state.active]) {
       if (this.state.chats[this.state.active][0].sender.user_id === this.props.userID) {
@@ -106,9 +120,9 @@ class Chat extends React.Component {
           </ModalHeader>
           <ModalBody className={"modal-body"}>
 
-            <Sub_previews userID={this.props.userID} chats={this.state.chats} active={this.state.active} changeActiveConversation={this.changeActiveConversation} openNewMessage={this.openNewMessage} newRecipient={this.state.newRecipient} chatIDsOrderedByTime={this.state.chatIDsOrderedByTime}/>
+            <Sub_previews userID={this.props.userID} chats={this.state.chats} active={this.state.active} changeActiveConversation={this.changeActiveConversation} openNewMessage={this.openNewMessage} newRecipient={this.state.newRecipient} chatIDsOrderedByTime={this.state.chatIDsOrderedByTime} getProperTimestamp={this.getProperTimestamp}/>
 
-            <Sub_conversation userID={this.props.userID} activeName={activeName} chats={this.state.chats} active={this.state.active} newRecipient={this.state.newRecipient} allUsers={this.state.allUsers} closeNewMessage={this.closeNewMessage} getMessages={this.getMessages} changeActiveConversationAfterNewMessage={this.changeActiveConversationAfterNewMessage}/>
+            <Sub_conversation userID={this.props.userID} activeName={activeName} chats={this.state.chats} active={this.state.active} newRecipient={this.state.newRecipient} allUsers={this.state.allUsers} closeNewMessage={this.closeNewMessage} getMessages={this.getMessages} changeActiveConversationAfterNewMessage={this.changeActiveConversationAfterNewMessage} getProperTimestamp={this.getProperTimestamp}/>
 
           </ModalBody>
         </Modal>
