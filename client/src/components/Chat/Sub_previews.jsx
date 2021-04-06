@@ -1,8 +1,6 @@
 import React from 'react';
-import axios from 'axios';
-import { Button, Modal, ModalHeader, ModalBody, Input } from 'reactstrap';
 
-const Previews = ({ userID, chats, active, changeActiveConversation }) => {
+const Sub_previews = ({ userID, chats, active, changeActiveConversation }) => {
   return (
     <div className="messages">
       {Object.keys(chats).map(otherUserID => {
@@ -28,4 +26,4 @@ const Previews = ({ userID, chats, active, changeActiveConversation }) => {
   );
 }
 
-export default Previews;
+export default Sub_previews;

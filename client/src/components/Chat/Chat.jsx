@@ -2,7 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { Button, Modal, ModalHeader, ModalBody, Input } from 'reactstrap';
 
-import Previews from './Previews.jsx';
+import Sub_previews from './sub_previews.jsx';
+import Sub_conversation from './sub_conversation.jsx';
 
 
 class Chat extends React.Component {
@@ -79,43 +80,8 @@ class Chat extends React.Component {
             Messages
           </ModalHeader>
           <ModalBody className={"modal-body"}>
-
-           <Previews userID={this.props.userID} chats={this.state.chats} active={this.state.active} changeActiveConversation={this.changeActiveConversation}/>
-
-            <div className="conversation">
-              <div className="conversation-header">{activeName}</div>
-              <div className="conversation-messages">
-                {
-                  this.state.chats[this.state.active] ?
-                  this.state.chats[this.state.active].map(message => {
-                    return (
-                      <div key={message.dm_id} className={message.sender.user_id === this.props.userID ? "conversation-you" : "conversation-other"}>
-                        {message.sender.user_id === this.props.userID ? null : <i className="user-picture fas fa-user"></i>}
-                        <span className="name">
-                          {`${message.sender.first_name} ${message.sender.last_name}`}
-                        </span>
-                        <span className="timestamp">
-                          {(new Date() - new Date(message.timestamp))/(1000 * 60 * 60 * 24) < 1 ?
-                          `${new Date(message.timestamp).getHours()}:${new Date(message.timestamp).getMinutes()}`
-                          :
-                          new Date(message.timestamp).toDateString().slice(4, 10)}
-                        </span>
-                        {message.sender.user_id !== this.props.userID ? null : <i className="user-picture fas fa-user"></i>}
-                        <br />
-                        <span className="message-content">
-                          {message.message}
-                        </span>
-                      </div>
-                    )
-                  })
-                  : null
-                }
-              </div>
-
-              <Input className={"input"} type="text" onChange={this.updateNewMessage} value={this.state.newMessage}/>
-              <Button color="primary" disabled={this.state.newMessage === ''} onClick={this.sendNewMessage}>Send</Button>
-
-            </div>
+           <Sub_previews userID={this.props.userID} chats={this.state.chats} active={this.state.active} changeActiveConversation={this.changeActiveConversation}/>
+           <Sub_conversation userID={this.props.userID} activeName={activeName} chats={this.state.chats} active={this.state.active} newMessage={this.state.newMessage} updateNewMessage={this.updateNewMessage} sendNewMessage={this.sendNewMessage}/>
           </ModalBody>
         </Modal>
       </div>
