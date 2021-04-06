@@ -191,6 +191,22 @@ GET request to /api/groups
 ]
 ```
 
+### Search For Group By Name
+
+GET request to /api/groups/search?name=searchTerm (replace "searchTerm" with name you are searching for)
+
+- If the search term contains spaces you will need to URL encode it before making the request
+- If you want an exact match, add "&exact=true" to the end of the URL
+- Data is in the same format as other group data requests
+- Letter case does not matter
+
+Examples:
+
+`/api/groups/search?name=ends` WILL match the group name "Friends"
+
+`/api/groups/search?name=ends&exact=true` WILL NOT match the group name "Friends"
+
+
 ### Info for Specific Group
 
 GET request to /api/groups/:id
