@@ -85,3 +85,14 @@
 .chat-modal .modal-body .last-message {
   font-size: 13px;
 }
+
+.group-list {
+  text-align: center;
+  width: 60%;
+  justify-self: center;
+}
+
+.group-list-container {
+  display: flex;
+  justify-content: center;
+}

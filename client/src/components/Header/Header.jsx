@@ -16,12 +16,7 @@ import {
   Label,
   NavLink
 } from 'reactstrap';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ExploreGroups from '../ExploreGroups/ExploreGroups.jsx';
 import axios from 'axios';
 
