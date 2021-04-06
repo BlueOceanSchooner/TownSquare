@@ -59,8 +59,8 @@ const getGroupsByCategory = (req, res) => {
 }
 
 const getGroupById = (req, res) => {
-  const user_id = req.params.group_id;
-  connection.query('SELECT g.group_id, g.group_name, g.description, g.category, g.owner_id, u.first_name, u.last_name, u.email FROM groups_table g LEFT JOIN users u ON g.owner_id = u.user_id WHERE g.owner_id = ?', [user_id], (err, results) => {
+  const group_id = req.params.group_id;
+  connection.query('SELECT g.group_id, g.group_name, g.description, g.category, g.owner_id, u.first_name, u.last_name, u.email FROM groups_table g LEFT JOIN users u ON g.owner_id = u.user_id WHERE g.group_id = ?', [group_id], (err, results) => {
     if (err) {
       return res.json({
         error: err
