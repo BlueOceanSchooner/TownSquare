@@ -21,6 +21,7 @@ import {
   Link
 } from 'react-router-dom';
 import ExploreGroups from '../ExploreGroups/ExploreGroups.jsx';
+import Login from '../Auth/Login.jsx';
 
 class Header extends Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class Header extends Component {
 
     this.state = {
       isModalOpen: false,
+      isLoginOpen: false,
       input: {
         group_name: '',
         description: '',
@@ -44,6 +46,12 @@ class Header extends Component {
   toggleModal() {
     this.setState({
       isModalOpen: !this.state.isModalOpen,
+    });
+  }
+
+  toggleLogin() {
+    this.setState({
+      isLoginOpen: !this.state.isLoginOpen,
     });
   }
 
@@ -65,6 +73,7 @@ class Header extends Component {
     return (
       <div className='main-header'>
           <Navbar  className='py-3' color='primary' expand='md'>
+            <Login toggleLogin={this.toggleLogin.bind(this)} isLoginOpen={this.state.isLoginOpen} />
             <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
               <ModalHeader toggle={this.toggleModal}>Create New Group</ModalHeader>
               <ModalBody>
@@ -143,6 +152,31 @@ class Header extends Component {
                   >
                     Create New Group
                   </Button>
+                </NavItem>
+                <NavItem>
+                  <Button
+                    outline
+                    color='secondary'
+                    size='small'
+                    style={{ backgroundColor: '#fff', marginLeft: '10px', marginTop: '16px'}}
+                    onClick={this.toggleLogin.bind(this)}
+                    className='loginBtn'
+                  >
+                    Log In
+                  </Button>
+                </NavItem>
+                <NavItem>
+                  <Link to='/signup'>
+                  <Button
+                    outline
+                    color='secondary'
+                    size='small'
+                    style={{ backgroundColor: '#fff', marginLeft: '10px', marginTop: '16px'}}
+                    className='signupBtn'
+                  >
+                    Sign Up
+                  </Button>
+                  </Link>
                 </NavItem>
                 <NavItem >
                 <Link to='/'>

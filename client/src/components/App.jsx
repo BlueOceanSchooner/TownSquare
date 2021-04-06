@@ -1,5 +1,4 @@
 import React from 'react';
-import Login from './Auth/Login.jsx';
 import Signup from './Auth/Signup.jsx';
 import {
   BrowserRouter as Router,
@@ -31,7 +30,7 @@ const App = () => {
           <h1>Group Page</h1>
         </Route>
         <Route path="/signup">
-          <h1>Sign Up</h1>
+          <Signup />
         </Route>
       </Switch>
     </Router>
