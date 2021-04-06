@@ -21,6 +21,7 @@ import {
   Link
 } from 'react-router-dom';
 import ExploreGroups from '../ExploreGroups/ExploreGroups.jsx';
+import axios from 'axios';
 
 class Header extends Component {
   constructor(props) {
@@ -49,7 +50,11 @@ class Header extends Component {
 
   handleCreateGroup(e) {
     this.toggleModal();
-    console.log(this.state.input);
+    let data = this.state.input;
+    data.owner_id = this.props.userID;
+    axios.post('/api/groups', data)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
     e.preventDefault();
   }
 
@@ -70,11 +75,11 @@ class Header extends Component {
               <ModalBody>
                 <Form onSubmit={this.handleCreateGroup}>
                   <FormGroup>
-                    <Label for='group-name'>Group Name</Label>
+                    <Label for='group_name'>Group Name</Label>
                     <Input
                       type='text'
-                      id='group-name'
-                      name='name'
+                      id='group_name'
+                      name='group_name'
                       placeholder="e.g. Philly Phanatics"
                       onChange={this.handleChange}
                     />

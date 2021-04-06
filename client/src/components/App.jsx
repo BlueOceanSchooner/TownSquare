@@ -15,7 +15,7 @@ const App = () => {
   return (
     <Router>
       <div>
-        <Header />
+        <Header userID={userID} />
         <Chat userID={userID}/>
       </div>
       <Switch>

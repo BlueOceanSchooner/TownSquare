@@ -28,7 +28,6 @@ class ExploreGroups extends React.Component {
   componentDidMount() {
     axios.get('/api/groups')
       .then((results) => {
-        console.log(results);
         this.setState({
           groups: results.data
         })
