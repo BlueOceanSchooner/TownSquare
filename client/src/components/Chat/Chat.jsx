@@ -9,28 +9,52 @@ class Chat extends React.Component {
     this.state = {
       modal: false,
       chats: {},
-      active: 0
+      active: 0,
+      newMessage: ''
     }
+    this.getMessages = this.getMessages.bind(this);
     this.openDMs = this.openDMs.bind(this);
     this.changeActiveConversation = this.changeActiveConversation.bind(this);
+    this.updateNewMessage = this.updateNewMessage.bind(this);
+    this.sendNewMessage = this.sendNewMessage.bind(this);
+  }
+
+  getMessages() {
+    axios.get(`/api/users/${this.props.userID}/dms`)
+    .then(response => {
+      var active = response.data ? Object.keys(response.data)[0] : 0;
+      this.setState({ chats: response.data, active })
+    })
+    .catch(err => console.log('error:', err));
   }
 
   openDMs() {
     const { modal } = this.state;
     this.setState({ modal: !modal });
     if (!modal) {
-      axios.get(`/api/users/${this.props.userID}/dms`)
-      .then(response => {
-        console.log(response);
-        var active = response.data ? Object.keys(response.data)[0] : 0;
-        this.setState({ chats: response.data, active })
-      })
-      .catch(err => console.log('error:', err));
+      this.getMessages();
     }
   }
 
   changeActiveConversation(e) {
     this.setState({ active: e.currentTarget.getAttribute('name') });
+  }
+
+  updateNewMessage(e) {
+    this.setState({ newMessage: e.target.value });
+  }
+
+  sendNewMessage() {
+    axios.post('/api/dms', {
+      sender_id: this.props.userID,
+      receiver_id: this.state.active,
+      message: this.state.newMessage
+    })
+    .then(() => {
+      this.setState({ newMessage: '' });
+      this.getMessages();
+    })
+    .catch(err => console.log('error:', err));
   }
 
   render() {
@@ -103,7 +127,8 @@ class Chat extends React.Component {
                 }
               </div>
 
-              <Input className={"input"} type="textarea"/>
+              <Input className={"input"} type="text" onChange={this.updateNewMessage} value={this.state.newMessage}/>
+              <Button color="primary" disabled={this.state.newMessage === ''} onClick={this.sendNewMessage}>Send</Button>
 
             </div>
           </ModalBody>

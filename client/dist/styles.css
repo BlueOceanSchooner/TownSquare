@@ -14,6 +14,9 @@
 }
 
 .chat-modal {
+  position: absolute;
+  top: 5vh;
+  margin-top: 0 !important;
   max-width: 90vw !important;
 }
 
@@ -37,7 +40,7 @@
   display: grid;
   grid-template-columns: 1fr 2fr;
   column-gap: 10px;
-  grid-template-rows: 30px 50vh 60px;
+  grid-template-rows: 30px auto 40px;
   grid-template-areas:
     "messages conversation-name"
     "messages conversation-messages"
@@ -51,7 +54,7 @@
 .chat-modal .modal-body .message {
   cursor: pointer;
   background-color: #eee;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   display: grid;
   grid-template-columns: 10px 65px 1fr;
   grid-template-rows: 60px;
@@ -69,8 +72,8 @@
 
 .chat-modal .modal-body .user-picture {
   grid-area: picture;
-  margin: 5px;
-  margin-left: 10px;
+  margin: 5px 10px;
+  /* margin-left: 10px; */
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -111,6 +114,7 @@
 
 .chat-modal .modal-body .conversation-header {
   grid-area: conversation-name;
+  border-bottom: 5px solid #ccc;
 }
 
 .chat-modal .modal-body .conversation-you,
@@ -126,19 +130,32 @@
   grid-area: conversation-messages;
   background-color: #ddd;
   overflow-y: auto;
-  height: calc(90vh - 2rem - 90px - 36px - 2rem);
+  height: calc(90vh - 2rem - 30px - 45px - 36px - 2rem);
   overflow-y: auto;
+  border-bottom: 5px solid #ccc;
+  padding: 0 20px;
 }
 
 .chat-modal .modal-body .conversation-you .message-content {
-  margin-right: 65px;
+  margin-right: 75px;
 }
 
 .chat-modal .modal-body .conversation-other .message-content {
-  margin-left: 65px;
+  margin-left: 75px;
 }
 
 .chat-modal .modal-body .input {
   grid-area: conversation-input;
   align-self: baseline;
+  width: calc(100% - 100px);
+  display: inline-block;
+  height: 38px;
+}
+
+.chat-modal .modal-body button {
+  display: inline-block;
+  width: 96px;
+  height: 36px;
+  margin: 0 2px 2px 2px;
+  position: relative;
 }
