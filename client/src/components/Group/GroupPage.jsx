@@ -5,7 +5,7 @@ import Announcements from './Announcements';
 
 import { Container, Row, Col } from 'reactstrap';
 
-class Main extends React.Component {
+class GroupPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -37,4 +37,4 @@ class Main extends React.Component {
   }
 }
 
-export default Main;
+export default GroupPage;

@@ -19,11 +19,11 @@
   overflow: scroll;
 }
 
-.modal-header {
+.chat-modal .modal-header {
   text-align: center;
 }
 
-.modal-body {
+.chat-modal .modal-body {
   background-color: #ccc;
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -33,11 +33,11 @@
     "messages conversation"
 }
 
-.modal-body .messages {
+.chat-modal .modal-body .messages {
   grid-area: messages;
 }
 
-.modal-body .message {
+.chat-modal .modal-body .message {
   cursor: pointer;
   background-color: #eee;
   margin-bottom: 5px;
@@ -48,7 +48,7 @@
     "active-bar picture content"
 }
 
-.modal-body .active-bar {
+.chat-modal .modal-body .active-bar {
   grid-area: active-bar;
   background-color: #aaa;
   width: 10px;
@@ -56,7 +56,7 @@
   margin: 2.5px;
 }
 
-.modal-body .user-picture {
+.chat-modal .modal-body .user-picture {
   grid-area: picture;
   margin: 5px;
   margin-left: 10px;
@@ -69,7 +69,7 @@
   background-color: #ccc;
 }
 
-.modal-body .content {
+.chat-modal .modal-body .content {
   margin: 5px;
   grid-area: content;
   display: inline-block;
@@ -78,11 +78,11 @@
   white-space: nowrap;
 }
 
-.modal-body .other-user-name {
+.chat-modal .modal-body .other-user-name {
   font-weight: bold;
 }
 
-.modal-body .last-message {
+.chat-modal .modal-body .last-message {
   font-size: 13px;
 }
 
