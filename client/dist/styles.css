@@ -11,30 +11,59 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 
 .chat-modal {
-  background-color: #bbb;
-  max-width: 95vw !important;
-  overflow: scroll;
+  position: absolute;
+  top: 5vh;
+  margin-top: 0 !important;
+  max-width: 90vw !important;
 }
 
-.chat-modal .modal-header {
+.chat-modal .modal-content {
+  height: 90vh;
+}
+
+.chat-modal h5.modal-title {
   text-align: center;
+  width: 100%;
+  font-size: 36px;
+  line-height: 36px;
+}
+
+.chat-modal button.close {
+  font-size: 36px;
 }
 
 .chat-modal .modal-body {
   background-color: #ccc;
   display: grid;
   grid-template-columns: 1fr 2fr;
-  grid-template-rows: 1fr 6fr;
+  column-gap: 10px;
+  grid-template-rows: 30px auto 40px;
   grid-template-areas:
-    "messages name"
-    "messages conversation"
+    "new-message conversation-name"
+    "messages conversation-messages"
+    "messages conversation-input"
+}
+
+.chat-modal .modal-body .new-message {
+  grid-area: new-message;
+  width: 98%;
+  left: 1%;
+  margin-bottom: 10px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 18px;
+  padding: 0;
 }
 
 .chat-modal .modal-body .messages {
   grid-area: messages;
+  padding: 2px;
+  max-height: calc(90vh - 2rem - 36px - 2rem - 45px);
+  overflow-y: scroll;
 }
 
 .chat-modal .modal-body .message {
@@ -42,10 +71,10 @@
   background-color: #eee;
   margin-bottom: 5px;
   display: grid;
-  grid-template-columns: 10px 65px 1fr;
+  grid-template-columns: 10px 65px 1fr 70px;
   grid-template-rows: 60px;
   grid-template-areas:
-    "active-bar picture content"
+    "active-bar picture message-preview timestamp"
 }
 
 .chat-modal .modal-body .active-bar {
@@ -58,8 +87,7 @@
 
 .chat-modal .modal-body .user-picture {
   grid-area: picture;
-  margin: 5px;
-  margin-left: 10px;
+  margin: 5px 10px;
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -71,7 +99,7 @@
 
 .chat-modal .modal-body .content {
   margin: 5px;
-  grid-area: content;
+  grid-area: message-preview;
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -82,6 +110,99 @@
   font-weight: bold;
 }
 
+.chat-modal .modal-body .preview-timestamp {
+  grid-area: timestamp;
+  font-size: 12px;
+  text-align: right;
+  padding: 10px 10px 0 0;
+}
+
 .chat-modal .modal-body .last-message {
   font-size: 13px;
+}
+
+.chat-modal .modal-body .conversation-header {
+  font-weight: bold;
+  text-align: center;
+  font-size: 20px;
+  background-color: #eee;
+}
+
+.chat-modal .modal-body .conversation .name {
+  font-weight: bold;
+}
+
+.chat-modal .modal-body .conversation-header {
+  grid-area: conversation-name;
+  border-bottom: 5px solid #ccc;
+}
+
+.chat-modal .conversation-content {
+  display: inline-block;
+  position: relative;
+  top: 5px;
+}
+
+.chat-modal .modal-body .conversation-you,
+.chat-modal .modal-body .conversation-other {
+  margin-bottom: 20px;
+  display: flex;
+
+}
+
+.chat-modal .modal-body .conversation-you {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.chat-modal .modal-body .conversation-messages {
+  grid-area: conversation-messages;
+  background-color: #ddd;
+  overflow-y: auto;
+  height: calc(90vh - 2rem - 30px - 45px - 36px - 2rem);
+  overflow-y: auto;
+  border-bottom: 5px solid #ccc;
+  padding: 0 20px;
+}
+
+.chat-modal .modal-body .conversation-messages .timestamp {
+  font-size: 12px;
+}
+
+.chat-modal .modal-body .input {
+  grid-area: conversation-input;
+  align-self: baseline;
+  width: calc(100% - 100px);
+  display: inline-block;
+  height: 38px;
+}
+
+.chat-modal .modal-body button {
+  display: inline-block;
+  width: 96px;
+  height: 36px;
+  margin: 0 2px 2px 2px;
+  position: relative;
+}
+
+.chat-modal .send-message {
+  margin-right: 10px;
+}
+
+.chat-modal .select-new-message-recipient {
+  width: calc(100% - 55px);
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.chat-modal .close-new-message {
+  grid-area: conversation-name;
+  display: inline-block;
+  width: 50px !important;
+  padding: 0;
+}
+
+.group-poster {
+  height: 250px;
+  object-fit: cover;
 }
