@@ -171,3 +171,8 @@
 .chat-modal .send-message {
   margin-right: 10px;
 }
+
+.group-poster {
+  height: 250px;
+  object-fit: cover;
+}

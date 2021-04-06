@@ -8,6 +8,7 @@ import {
 import Header from './Header/Header.jsx'
 import { Button } from 'reactstrap';
 import Chat from './Chat/Chat.jsx';
+import GroupPage from './Group/GroupPage';
 import Homepage from './homepage/Homepage.jsx';
 import ExploreGroups from './ExploreGroups/ExploreGroups.jsx';
 
@@ -31,7 +32,7 @@ const App = () => {
           const group_id = props.match.params.id;
           // replace <h1> tags with your component
           return (
-            <h1>Page for Group #: {group_id}</h1>
+            <GroupPage groupId={group_id} />
           );
         }} />
         <Route path="/signup">
