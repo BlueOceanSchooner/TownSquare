@@ -110,25 +110,6 @@
   font-size: 13px;
 }
 
-.group-list {
-  text-align: center;
-  width: 60%;
-  justify-self: center;
-}
-
-.group-list-container {
-  display: flex;
-  justify-content: center;
-}
-
-.group-list-name {
-  color: inherit;
-  text-decoration: none;
-}
-
-.group-list-name:hover {
-  text-decoration: none;
-}
 .chat-modal .modal-body .conversation-header {
   font-weight: bold;
   text-align: center;
@@ -194,4 +175,24 @@
 .group-poster {
   height: 250px;
   object-fit: cover;
+}
+
+.group-list {
+  text-align: center;
+  width: 60%;
+  justify-self: center;
+}
+
+.group-list-container {
+  display: flex;
+  justify-content: center;
+}
+
+.group-list-name {
+  color: inherit;
+  text-decoration: none;
+}
+
+.group-list-name:hover {
+  text-decoration: none;
 }
