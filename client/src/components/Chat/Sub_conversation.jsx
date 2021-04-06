@@ -33,7 +33,10 @@ const Sub_conversation = ({ userID, activeName, chats, active, newMessage, updat
         }
       </div>
       <Input className={"input"} type="text" onChange={updateNewMessage} value={newMessage}/>
-      <Button color="primary" disabled={newMessage === ''} onClick={sendNewMessage}>Send</Button>
+      <Button color="primary" disabled={newMessage === ''} onClick={sendNewMessage}>
+        <i className="send-message fas fa-paper-plane"></i>
+        Send
+      </Button>
     </div>
   );
 }

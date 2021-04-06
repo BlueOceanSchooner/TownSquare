@@ -11,6 +11,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 
 .chat-modal {
@@ -51,6 +52,16 @@
   grid-area: messages;
 }
 
+.chat-modal .modal-body .new-message {
+  width: 98%;
+  left: 1%;
+  margin-bottom: 10px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 18px;
+  padding: 0;
+}
+
 .chat-modal .modal-body .message {
   cursor: pointer;
   background-color: #eee;
@@ -73,7 +84,6 @@
 .chat-modal .modal-body .user-picture {
   grid-area: picture;
   margin: 5px 10px;
-  /* margin-left: 10px; */
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -158,4 +168,8 @@
   height: 36px;
   margin: 0 2px 2px 2px;
   position: relative;
+}
+
+.chat-modal .send-message {
+  margin-right: 10px;
 }

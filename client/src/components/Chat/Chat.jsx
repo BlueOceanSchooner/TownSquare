@@ -80,8 +80,8 @@ class Chat extends React.Component {
             Messages
           </ModalHeader>
           <ModalBody className={"modal-body"}>
-           <Sub_previews userID={this.props.userID} chats={this.state.chats} active={this.state.active} changeActiveConversation={this.changeActiveConversation}/>
-           <Sub_conversation userID={this.props.userID} activeName={activeName} chats={this.state.chats} active={this.state.active} newMessage={this.state.newMessage} updateNewMessage={this.updateNewMessage} sendNewMessage={this.sendNewMessage}/>
+            <Sub_previews userID={this.props.userID} chats={this.state.chats} active={this.state.active} changeActiveConversation={this.changeActiveConversation}/>
+            <Sub_conversation userID={this.props.userID} activeName={activeName} chats={this.state.chats} active={this.state.active} newMessage={this.state.newMessage} updateNewMessage={this.updateNewMessage} sendNewMessage={this.sendNewMessage}/>
           </ModalBody>
         </Modal>
       </div>

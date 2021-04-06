@@ -1,8 +1,12 @@
 import React from 'react';
+import { Button } from 'reactstrap';
 
 const Sub_previews = ({ userID, chats, active, changeActiveConversation }) => {
   return (
     <div className="messages">
+      <Button className={"new-message"} color="primary">
+        New Message
+      </Button>
       {Object.keys(chats).map(otherUserID => {
         let conversation = chats[otherUserID];
         return (
