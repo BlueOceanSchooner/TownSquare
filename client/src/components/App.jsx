@@ -8,6 +8,7 @@ import {
 import Header from './Header/Header.jsx'
 import { Button } from 'reactstrap';
 import Chat from './Chat/Chat.jsx';
+import Homepage from './homepage/Homepage.jsx';
 import ExploreGroups from './ExploreGroups/ExploreGroups.jsx';
 
 const App = () => {
@@ -23,7 +24,7 @@ const App = () => {
           <ExploreGroups />
         </Route>
         <Route exact path="/">
-          <h1>Home Page</h1>
+          <Homepage />
         </Route>
         <Route path="/groups/:id">
           <h1>Group Page</h1>
