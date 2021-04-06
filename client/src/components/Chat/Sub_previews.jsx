@@ -1,17 +1,17 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 
-const Sub_previews = ({ userID, chats, active, changeActiveConversation }) => {
+const Sub_previews = ({ userID, chats, active, changeActiveConversation, openNewMessage, newRecipient, chatIDsOrderedByTime }) => {
   return (
     <div className="messages">
-      <Button className={"new-message"} color="primary">
+      <Button className={"new-message"} color="primary" onClick={openNewMessage} disabled={newRecipient}>
         New Message
       </Button>
-      {Object.keys(chats).map(otherUserID => {
-        let conversation = chats[otherUserID];
+      {chatIDsOrderedByTime.map(otherUserID => {
+        let conversation = chats[String(otherUserID)];
         return (
           <div className="message" key={otherUserID} name={otherUserID} onClick={changeActiveConversation}>
-            <span className={otherUserID === active ? "active-bar" : null}></span>
+            <span className={Number(otherUserID) === Number(active) ? "active-bar" : null}></span>
             <i className="user-picture fas fa-user"></i>
             <div className="content">
               <span className="other-user-name">

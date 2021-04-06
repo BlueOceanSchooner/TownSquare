@@ -50,6 +50,7 @@
 
 .chat-modal .modal-body .messages {
   grid-area: messages;
+  overflow-y: scroll;
 }
 
 .chat-modal .modal-body .new-message {
@@ -176,6 +177,19 @@
 
 .chat-modal .send-message {
   margin-right: 10px;
+}
+
+.chat-modal .select-new-message-recipient {
+  width: calc(100% - 55px);
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.chat-modal .close-new-message {
+  grid-area: conversation-name;
+  display: inline-block;
+  width: 50px !important;
+  padding: 0;
 }
 
 .group-poster {

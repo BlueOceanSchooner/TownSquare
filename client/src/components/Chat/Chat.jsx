@@ -5,39 +5,24 @@ import { Button, Modal, ModalHeader, ModalBody, Input } from 'reactstrap';
 import Sub_previews from './Sub_previews.jsx';
 import Sub_conversation from './Sub_conversation.jsx';
 
-
 class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
       chats: {},
+      chatIDsOrderedByTime: [],
       active: 0,
-      newMessage: ''
+      allUsers: [],
+      newRecipient: false
     }
-    this.getMessages = this.getMessages.bind(this);
     this.openDMs = this.openDMs.bind(this);
+    this.getMessages = this.getMessages.bind(this);
     this.changeActiveConversation = this.changeActiveConversation.bind(this);
-    this.updateNewMessage = this.updateNewMessage.bind(this);
-    this.sendNewMessage = this.sendNewMessage.bind(this);
-  }
-
-  componentDidUpdate() {
-    var messageBody = document.querySelector('.chat-modal .modal-body .conversation-messages');
-    if (messageBody) {
-      messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
-    }
-  }
-
-  getMessages() {
-    axios.get(`/api/users/${this.props.userID}/dms`)
-    .then(response => {
-      if (this.state.active === 0 && response.data) {
-        this.setState({ chats: response.data, active: Object.keys(response.data)[0] })
-      }
-      this.setState({ chats: response.data })
-    })
-    .catch(err => console.log('error:', err));
+    this.changeActiveConversationAfterNewMessage = this.changeActiveConversationAfterNewMessage.bind(this);
+    this.getAllUsers = this.getAllUsers.bind(this);
+    this.openNewMessage = this.openNewMessage.bind(this);
+    this.closeNewMessage = this.closeNewMessage.bind(this);
   }
 
   openDMs() {
@@ -48,25 +33,58 @@ class Chat extends React.Component {
     }
   }
 
+  getMessages() {
+    axios.get(`/api/users/${this.props.userID}/dms`)
+    .then(response => {
+      if (response.data) {
+        var orderedChats = [];
+        Object.keys(response.data).forEach(chatID => {
+          var chat = response.data[chatID];
+          for (var i = 0; i < orderedChats.length; i++) {
+            var currentChat = orderedChats[i];
+            if (new Date(chat[chat.length - 1].timestamp) > new Date(currentChat[currentChat.length - 1].timestamp)) {
+              orderedChats.splice(i, 0, chat);
+              return;
+            }
+          }
+          orderedChats.push(chat);
+        })
+        var chatIDs = orderedChats.map(chat => {
+          if (chat[0].sender.user_id === this.props.userID) {
+            return chat[0].receiver.user_id;
+          }
+          return chat[0].sender.user_id;
+        });
+        this.setState({ chatIDsOrderedByTime: chatIDs, chats: response.data, active: chatIDs[0] })
+      }
+      this.setState({ chats: response.data })
+    })
+    .catch(err => console.log('error:', err));
+  }
+
   changeActiveConversation(e) {
     this.setState({ active: e.currentTarget.getAttribute('name') });
   }
 
-  updateNewMessage(e) {
-    this.setState({ newMessage: e.target.value });
+  changeActiveConversationAfterNewMessage(id) {
+    this.setState({ active: id });
   }
 
-  sendNewMessage() {
-    axios.post('/api/dms', {
-      sender_id: this.props.userID,
-      receiver_id: this.state.active,
-      message: this.state.newMessage
-    })
-    .then(() => {
-      this.setState({ newMessage: '' });
-      this.getMessages();
+  getAllUsers() {
+    axios.get('/api/users')
+    .then(response => {
+      this.setState({ allUsers: response.data })
     })
     .catch(err => console.log('error:', err));
+  }
+
+  openNewMessage() {
+    this.setState({ newRecipient: true });
+    this.getAllUsers();
+  }
+
+  closeNewMessage() {
+    this.setState({ newRecipient: false });
   }
 
   render() {
@@ -87,8 +105,11 @@ class Chat extends React.Component {
             Messages
           </ModalHeader>
           <ModalBody className={"modal-body"}>
-            <Sub_previews userID={this.props.userID} chats={this.state.chats} active={this.state.active} changeActiveConversation={this.changeActiveConversation}/>
-            <Sub_conversation userID={this.props.userID} activeName={activeName} chats={this.state.chats} active={this.state.active} newMessage={this.state.newMessage} updateNewMessage={this.updateNewMessage} sendNewMessage={this.sendNewMessage}/>
+
+            <Sub_previews userID={this.props.userID} chats={this.state.chats} active={this.state.active} changeActiveConversation={this.changeActiveConversation} openNewMessage={this.openNewMessage} newRecipient={this.state.newRecipient} chatIDsOrderedByTime={this.state.chatIDsOrderedByTime}/>
+
+            <Sub_conversation userID={this.props.userID} activeName={activeName} chats={this.state.chats} active={this.state.active} newRecipient={this.state.newRecipient} allUsers={this.state.allUsers} closeNewMessage={this.closeNewMessage} getMessages={this.getMessages} changeActiveConversationAfterNewMessage={this.changeActiveConversationAfterNewMessage}/>
+
           </ModalBody>
         </Modal>
       </div>
