@@ -85,3 +85,8 @@
 .chat-modal .modal-body .last-message {
   font-size: 13px;
 }
+
+.group-poster {
+  height: 250px;
+  object-fit: cover;
+}
