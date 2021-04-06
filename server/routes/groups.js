@@ -1,7 +1,7 @@
 const connection = require('../../db/connection.js');
 
 const getAllGroups = (req, res) => {
-  connection.query('SELECT g.group_name, g.description, g.category, g.owner_id, u.first_name, u.last_name, u.email FROM groups_table g LEFT JOIN users u ON g.owner_id = u.user_id', (err, results) => {
+  connection.query('SELECT g.group_id, g.group_name, g.description, g.category, g.owner_id, u.first_name, u.last_name, u.email FROM groups_table g LEFT JOIN users u ON g.owner_id = u.user_id', (err, results) => {
     if (err) {
       return res.json({
         error: err
@@ -9,6 +9,7 @@ const getAllGroups = (req, res) => {
     }
     results = results.map((row) => {
       return {
+        group_id: row.group_id,
         group_name: row.group_name,
         description: row.description,
         category: row.category,
@@ -27,7 +28,7 @@ const getAllGroups = (req, res) => {
 const getGroupsByCategory = (req, res) => {
   const category = req.params.category;
   const sql = `
-    SELECT g.group_name, g.description, g.category, g.owner_id,
+    SELECT g.group_id, g.group_name, g.description, g.category, g.owner_id,
       u.first_name, u.last_name, u.email
     FROM groups_table g
     LEFT JOIN users u ON g.owner_id = u.user_id
@@ -41,6 +42,7 @@ const getGroupsByCategory = (req, res) => {
     }
     results = results.map((row) => {
       return {
+        group_id: row.group_id,
         group_name: row.group_name,
         description: row.description,
         category: row.category,
@@ -57,8 +59,8 @@ const getGroupsByCategory = (req, res) => {
 }
 
 const getGroupById = (req, res) => {
-  const user_id = req.params.group_id;
-  connection.query('SELECT g.group_name, g.description, g.category, g.owner_id, u.first_name, u.last_name, u.email FROM groups_table g LEFT JOIN users u ON g.owner_id = u.user_id WHERE g.owner_id = ?', [user_id], (err, results) => {
+  const group_id = req.params.group_id;
+  connection.query('SELECT g.group_id, g.group_name, g.description, g.category, g.owner_id, u.first_name, u.last_name, u.email FROM groups_table g LEFT JOIN users u ON g.owner_id = u.user_id WHERE g.group_id = ?', [group_id], (err, results) => {
     if (err) {
       return res.json({
         error: err
@@ -67,6 +69,7 @@ const getGroupById = (req, res) => {
     if (results.length === 1) {
       const row = results[0];
       return res.json({
+        group_id: row.group_id,
         group_name: row.group_name,
         description: row.description,
         category: row.category,
