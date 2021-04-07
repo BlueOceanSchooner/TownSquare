@@ -30,13 +30,14 @@ const CreateEventModal = (props) => {
 
     const onSubmit = (e) => {
       e.preventDefault();
-      console.log(inputs, value.toISOString());
       let data = inputs;
       data.event_date = value.toISOString().slice(0, 19);
       props.group.group_id = props.group.group_id.toString();
       data.group_id = props.group.group_id;
       axios.post('/api/events', data)
         .then((res) => {
+          // console.clear()
+          location.reload()
           setInputs(inputs => ({}))
           props.toggleModal();
         })

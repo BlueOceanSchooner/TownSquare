@@ -41,7 +41,6 @@ class Header extends Component {
         category: false
       },
       nameTaken: false,
-      otherModal: false,
       group: {
         group_id: 1,
         group_name: "JavaScript Meet Up",
@@ -52,13 +51,7 @@ class Header extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.handleCreateGroup = this.handleCreateGroup.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.toggleOther = this.toggleOther.bind(this);
-  }
 
-  toggleOther() {
-    this.setState({
-      otherModal: !this.state.otherModal,
-    });
   }
 
   toggleModal() {
@@ -85,7 +78,7 @@ class Header extends Component {
       data.owner_id = this.props.userID;
       axios.post('/api/groups', data)
         .catch((err) => console.log(err))
-        .then(() => {
+        .then((res) => {
           this.setState({
             input: {
               group_name: '',
@@ -110,8 +103,7 @@ class Header extends Component {
         let newValid = this.state.validations;
         newValid.group_name = result.data.length < 1;
         this.setState({
-          nameTaken: result.data.length >= 1,
-          input: newValid
+          nameTaken: result.data.length >= 1
         })
       })
   }
@@ -165,8 +157,10 @@ class Header extends Component {
                       id='group_name'
                       name='group_name'
                       onChange={this.handleChange}
+                      value={this.state.group_name}
                       valid={this.state.validations.group_name && !this.state.nameTaken ? true : false}
-                      invalid={(this.state.nameTaken && !this.state.validations.group_name) ? true : false}
+                      invalid={(this.state.nameTaken && !this.state.validations.group_name) ? 1 : undefined}
+                      required
                     />
                     <FormText>e.g. Philly Phanatics</FormText>
                     <FormFeedback valid>Sweet! That name is available!</FormFeedback>
@@ -179,28 +173,29 @@ class Header extends Component {
                       id='group-description'
                       name='description'
                       onChange={this.handleChange}
-                      valid={this.state.validations.description}
+                      value={this.state.description}
+                      invalid={this.state.validations.description ? 1 : undefined}
+                      required
                     />
                     <FormText>Please provide a description of your group.</FormText>
                     <FormFeedback valid>Great description!</FormFeedback>
                   </FormGroup>
                   <FormGroup>
-                    <Label for='url'>Image url</Label>
+                    <Label for='image_url'>Image url</Label>
                     <Input
                       type='text'
-                      id='url'
-                      name='url'
+                      id='image_url'
+                      name='image_url'
                       onChange={this.handleChange}
-                      required
                     />
                     <FormText>Please provide a link to an image for your group.</FormText>
                   </FormGroup>
                   <FormGroup>
-                    <Label for='url'>Zipcode</Label>
+                    <Label for='zipcode'>Zipcode</Label>
                     <Input
-                      type='text'
-                      id='url'
-                      name='url'
+                      type='number'
+                      id='zipcode'
+                      name='zipcode'
                       onChange={this.handleChange}
                       required
                     />
@@ -296,10 +291,6 @@ class Header extends Component {
                 <Link to='/'>
                     <i style={{color: '#fff', marginLeft: '10px', marginTop: '8px'}} className='fas fa-home fa-3x'></i>
                   </Link>
-                </NavItem>
-                <NavItem>
-                  <Button  onClick={this.toggleOther}>Button</Button>
-                  <CreateEventModal group={this.state.group} isModalOpen={this.state.otherModal} toggleModal={this.toggleOther}/>
                 </NavItem>
               </Nav>
             </div>
