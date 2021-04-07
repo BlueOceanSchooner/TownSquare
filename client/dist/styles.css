@@ -259,6 +259,10 @@
   border-right: 1px solid black;
 }
 
+.group-post-title {
+  margin-right: 8px;
+}
+
 .group-event-description {
   border-right: 1px solid black;
 }
@@ -270,6 +274,11 @@
 .group-event-button {
   text-align: center;
   margin-top: 11px;
+}
+
+.announcement-card-header-section {
+  display: flex;
+  align-items: baseline;
 }
 
 .forum-container {
@@ -293,6 +302,10 @@
 
 .forum-card-title {
   margin-right: 8px;
+}
+
+.forum-reply-area {
+  margin: 10px 0;
 }
 
 /* End of Group Page Section */

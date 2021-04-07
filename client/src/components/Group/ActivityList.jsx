@@ -12,7 +12,7 @@ class Announcements extends React.Component {
   }
 
   render() {
-    const { events, posts, forum } = this.props;
+    const { events, posts, forum, groupId, userId } = this.props;
     return (
       <div className="activities-container">
         <Tabs selectedTabClassName="group-tab-selected">
@@ -29,7 +29,7 @@ class Announcements extends React.Component {
             <AnnouncementsList posts={posts} />
           </TabPanel>
           <TabPanel>
-            <Forum forum={forum} />
+            <Forum forum={forum} groupId={groupId} userId={userId}/>
           </TabPanel>
         </Tabs>
       </div>

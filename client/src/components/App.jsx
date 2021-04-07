@@ -32,7 +32,7 @@ const App = () => {
           const group_id = props.match.params.id;
           // replace <h1> tags with your component
           return (
-            <GroupPage groupId={group_id} />
+            <GroupPage groupId={group_id} userId={props.userId}/>
           );
         }} />
         <Route path="/signup">

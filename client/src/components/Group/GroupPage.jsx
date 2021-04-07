@@ -68,6 +68,7 @@ class GroupPage extends React.Component {
 
   render() {
     const { groupInfo, members, events, posts, forum } = this.state;
+    const { groupId, userId } = this.props;
     return (
       <Container className="group-container">
         {/* Group Info */}
@@ -79,7 +80,7 @@ class GroupPage extends React.Component {
         {/* Activities Tabs */}
         <Row>
           <Col>
-            <ActivityList events={events} posts={posts} forum={forum}/>
+            <ActivityList events={events} posts={posts} forum={forum} groupId={groupId} userId={userId}/>
           </Col>
         </Row>
       </Container>
