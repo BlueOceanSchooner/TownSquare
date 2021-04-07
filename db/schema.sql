@@ -13,6 +13,7 @@ CREATE TABLE groups_table (
   description TEXT,
   category ENUM ('outdoors', 'music', 'cooking', 'animals', 'hobbies', 'religious'),
   owner_id INT REFERENCES users(user_id),
+  zipcode CHAR(5),
   location POINT NOT NULL SRID 4326,
   image_url VARCHAR(255),
   thumbnail_url VARCHAR(255)
