@@ -3,7 +3,7 @@ const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
 const app = express();
 const router = require('./routes/index.js');
-const auth = require('./routes/auth.js');
+const auth = require('./auth/auth.js');
 const passport = require('passport');
 const morgan = require('morgan');
 const path = require('path');
@@ -26,9 +26,7 @@ app.use(expressSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.post('/signup', (req, res) => {
-  console.log(req.body)
-})
+app.post('/signup', auth.signup)
 
 const file = path.join(__dirname, '../client/dist/index.html');
 app.get('*', (req, res) => {

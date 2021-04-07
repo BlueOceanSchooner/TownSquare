@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, Modal, Container, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
-const Signup = () => {
+const Signup = ({toggleLogin}) => {
   const [queries, setQueries] = useState({
     first_name: '',
     last_name: '',
@@ -16,6 +16,7 @@ const Signup = () => {
     password: false
   });
   const [showError, setShowError] = useState(false)
+  const [showEmailUsed, setShowEmailUsed] = useState(false);
 
   const handleChange = e => {
     setQueries({ ...queries, [e.target.name]: e.target.value })
@@ -27,16 +28,29 @@ const Signup = () => {
     }
     else if (e.target.name === 'email') {
       setInputValid({ ...inputValid, email: checkEmail(e.target.value)})
+      setShowEmailUsed(false);
     }
   };
   const handleSubmit = e => {
     e.preventDefault();
     if (Object.values(inputValid).every(item => item === true) ) {
-      axios.post('/signup', queries)
+      navigator.geolocation.getCurrentPosition((position) => {
+        let latitude = position.coords.latitude
+        let longitude = position.coords.longitude;
+        axios.post('/signup', {...queries, latitude, longitude})
+        .then(data => {
+          if (data.data.msg === 'used') {
+            setShowEmailUsed(true);
+          } else {
+
+          }
+        })
+      })
     } else {
       setShowError(true);
     }
   }
+
   const checkEmail = email => {
     var [user, domain] = email.split('@');
     if (domain === undefined) { return false; }
@@ -56,6 +70,7 @@ const Signup = () => {
         <br />
         <br />
         <h2>Sign up</h2>
+        <FormText>Already signed up? <a style={{color: 'blue'}} onClick={toggleLogin}>Login</a></FormText>
         <br />
           <Form>
             <FormGroup>
@@ -72,6 +87,7 @@ const Signup = () => {
               <Label for="email">Email Address*:</Label>
               <Input type="email" name="email" value={queries.email} onChange={handleChange}/>
               { showError && !inputValid.email && <FormText color="danger">Please enter a valid email address.</FormText>}
+              { showEmailUsed && <FormText color="danger">That email address is already in use.</FormText>}
             </FormGroup>
             <FormGroup>
               <Label for="password">Password*:</Label>

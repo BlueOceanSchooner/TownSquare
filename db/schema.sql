@@ -4,7 +4,9 @@ CREATE TABLE users (
   first_name VARCHAR(255),
   last_name VARCHAR(255),
   email VARCHAR(255),
-  password VARCHAR(255)
+  password VARCHAR(255),
+  latitude FLOAT(24),
+  longitude FLOAT(24)
 );
 
 DROP TABLE IF EXISTS groups_table;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Signup from './Auth/Signup.jsx';
 import {
   BrowserRouter as Router,
@@ -15,10 +15,14 @@ import ExploreGroups from './ExploreGroups/ExploreGroups.jsx';
 
 const App = () => {
   let userID = 1;
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const toggleLogin = () => {
+    setIsLoginOpen(!isLoginOpen);
+  };
   return (
     <Router>
       <div>
-        <Header />
+        <Header isLoginOpen={isLoginOpen} toggleLogin={toggleLogin}/>
         <Chat userID={userID}/>
       </div>
       <Switch>
@@ -37,7 +41,7 @@ const App = () => {
           );
         }} />
         <Route path="/signup">
-          <Signup />
+          <Signup toggleLogin={toggleLogin} />
         </Route>
 
         <Route path="*">

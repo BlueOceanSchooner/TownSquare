@@ -58,7 +58,7 @@ const Login = ({isLoginOpen, toggleLogin}) => {
         </ModalBody>
 
         <ModalFooter >
-          <div className="g-signin2" data-width="200" data-height="50" data-longtitle="true" data-theme="dark"></div>
+          <div className="g-signin2" data-width="470" data-height="50" data-longtitle="true" data-theme="dark"></div>
         </ModalFooter>
       </Modal>
     </div>

@@ -29,7 +29,6 @@ class Header extends Component {
 
     this.state = {
       isModalOpen: false,
-      isLoginOpen: false,
       input: {
         group_name: '',
         description: '',
@@ -46,12 +45,6 @@ class Header extends Component {
   toggleModal() {
     this.setState({
       isModalOpen: !this.state.isModalOpen,
-    });
-  }
-
-  toggleLogin() {
-    this.setState({
-      isLoginOpen: !this.state.isLoginOpen,
     });
   }
 
@@ -73,7 +66,7 @@ class Header extends Component {
     return (
       <div className='main-header'>
           <Navbar  className='py-3' color='primary' expand='md'>
-            <Login toggleLogin={this.toggleLogin.bind(this)} isLoginOpen={this.state.isLoginOpen} />
+            <Login toggleLogin={this.props.toggleLogin} isLoginOpen={this.props.isLoginOpen} />
             <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
               <ModalHeader toggle={this.toggleModal}>Create New Group</ModalHeader>
               <ModalBody>
@@ -159,7 +152,7 @@ class Header extends Component {
                     color='secondary'
                     size='small'
                     style={{ backgroundColor: '#fff', marginLeft: '10px', marginTop: '16px'}}
-                    onClick={this.toggleLogin.bind(this)}
+                    onClick={this.props.toggleLogin}
                     className='loginBtn'
                   >
                     Log In
