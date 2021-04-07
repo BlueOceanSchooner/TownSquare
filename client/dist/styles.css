@@ -207,7 +207,7 @@
   font-size: 1.25rem;
   font-weight: 500;
   padding: 10px;
-  background-color: #f5f5f5;
+  background-color: #d4d4d4;
   border-radius: 5px 5px 0 0;
   box-shadow: inset 0px -2px 2px 0px rgba(0, 0, 0, 0.5);
 }
@@ -215,12 +215,12 @@
 .group-tab-selected {
   border: 1px solid rgba(0,0,0,.125);
   border-bottom: none;
-  background-color:#d4d4d4;
+  background-color:#f5f5f5;
   box-shadow: none;
 }
 
 .group-event-item {
-  background-color: #d4d4d4 !important;
+  background-color: #f5f5f5 !important;
 }
 
 .group-event-title {

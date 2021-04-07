@@ -1,5 +1,6 @@
 import React from 'react';
 import EventsList from './EventsComponents/EventsList';
+import AnnouncementsList from './AnnouncementsComponents/AnnouncementsList';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
@@ -10,7 +11,7 @@ class Announcements extends React.Component {
   }
 
   render() {
-    const { events } = this.props;
+    const { events, posts } = this.props;
     return (
       <div className="activities-container">
         <Tabs selectedTabClassName="group-tab-selected">
@@ -24,7 +25,7 @@ class Announcements extends React.Component {
             <EventsList events={events} />
           </TabPanel>
           <TabPanel>
-            <h2>Any content 2</h2>
+            <AnnouncementsList posts={posts} />
           </TabPanel>
           <TabPanel>
             <h2>Any content 3</h2>
