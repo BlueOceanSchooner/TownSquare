@@ -25,10 +25,10 @@ const signup = (req, res) => {
       console.log(results)
       return res.json(results);
     } else {
-      if (result[0]['1'] === 1) {
+      if (results[0]['1'] === 1) {
         res.json({ msg: 'used' })
       } else {
-        res.redirect('/login');
+        res.redirect('/');
       }
     }
   });

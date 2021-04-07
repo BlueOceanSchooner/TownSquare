@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Signup from './Auth/Signup.jsx';
 import {
   BrowserRouter as Router,
@@ -23,6 +23,7 @@ class App extends React.Component {
       isLoginOpen: false
     }
     this.chatOnClick = this.chatOnClick.bind(this);
+    this.toggleLogin = this.toggleLogin.bind(this);
   }
 
   toggleLogin() {
@@ -46,7 +47,7 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <Header isLoginOpen={this.state.isLoginOpen} toggleLogin={this.toggleLogin.bind(this)}/>
+          <Header isLoginOpen={this.state.isLoginOpen} toggleLogin={this.toggleLogin}/>
           <Chat userID={userID} onClick={this.chatOnClick} modal={this.state.chatModal} chatMemberID={this.state.chatMemberID}/>
 
           {/* Example use of MessageMember component */}
@@ -69,7 +70,7 @@ class App extends React.Component {
             );
           }} />
           <Route path="/signup">
-            <Signup />
+            <Signup toggleLogin={this.toggleLogin}/>
           </Route>
 
           <Route path="*">
