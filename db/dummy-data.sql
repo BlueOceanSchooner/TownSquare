@@ -84,6 +84,7 @@ CREATE TABLE `events` (
   `state` char(2) DEFAULT NULL,
   `zipcode` char(5) DEFAULT NULL,
   `event_date` datetime DEFAULT NULL,
+  `location` point NOT NULL /*!80003 SRID 4326 */,
   PRIMARY KEY (`event_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -94,7 +95,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
-INSERT INTO `events` VALUES (1,1,'Group Coding at Stephen\'s','We\'re gonna write some JavaScript while watching Sister Wives','1600 Pennsylvania Avenue','Apartment 3',NULL,'OH','44124','2021-04-10 20:00:00'),(2,1,'Extra Self Assessment','We miss having self assessments, so we\'re gonna make some for ourselves','1600 Pennsylvania Avenue','Apartment 3',NULL,'OH','44124','2021-04-12 16:00:00'),(3,1,'Syntax Error Cookout','We will be eating non-expired beef in the park','123 Park Street','',NULL,'OH','44124','2021-04-20 17:30:00'),(4,2,'Outdoor Lecture','A.G. Pennypacker will be giving a talk on his new book titled \"Horses: Man\'s Best Friend? The Case Against Dogs\"','123 Park Street','',NULL,'OH','44124','2021-04-16 14:00:00'),(5,2,'Cookout in the Park','We will be hosting our annual cookout serving our four legged friends who didn\'t make it this year.','123 Park Street','',NULL,'OH','44124','2021-04-28 18:00:00');
+
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
