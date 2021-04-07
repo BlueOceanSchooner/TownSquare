@@ -213,8 +213,8 @@
 /* JOE'S STUFF DON'T TOUCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
 
 .group-list {
-  text-align: center;
-  width: 60%;
+  text-align: left;
+  width: 50%;
   justify-self: center;
 }
 
@@ -223,12 +223,24 @@
   justify-content: center;
 }
 
+.group-heading-container {
+  display: flex;
+  justify-content: left;
+}
 
 
 .group-list-name {
   color: inherit;
   justify-self: left;
   text-decoration: none;
+}
+
+.group-list-item {
+  padding: 5px;
+}
+
+.group-list-item:hover {
+  background-color: rgb(238, 238, 238);
 }
 
 .group-list-name:hover {

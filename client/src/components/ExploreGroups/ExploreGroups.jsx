@@ -96,9 +96,12 @@ class ExploreGroups extends React.Component {
                   {this.state.groups.map((group, i) => {
                     return (
                       <ListGroupItem className='group-list-item' key={i}>
-                      <Link className='group-list-name' to={`/groups/${group.group_id}`} >
-                        <ListGroupItemHeading >{group.group_name}</ListGroupItemHeading>
-                      </Link>
+                      <div className='group-heading-container'>
+                        <Link className='group-list-name' to={`/groups/${group.group_id}`} >
+                          <ListGroupItemHeading >{group.group_name}</ListGroupItemHeading>
+                        </Link>
+                      </div>
+
                       <ListGroupItemText>{group.description}</ListGroupItemText>
                       </ListGroupItem>
                     )

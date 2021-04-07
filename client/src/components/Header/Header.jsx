@@ -20,7 +20,7 @@ import { Link } from 'react-router-dom';
 import ExploreGroups from '../ExploreGroups/ExploreGroups.jsx';
 import axios from 'axios';
 import logo from '../../../assets/townsquare.png';
-import EventModal from '../Events/EventModal.jsx';
+import CreateEventModal from '../Events/CreateEventModal.jsx';
 
 class Header extends Component {
   constructor(props) {
@@ -46,6 +46,7 @@ class Header extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.handleCreateGroup = this.handleCreateGroup.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.toggleOther = this.toggleOther.bind(this);
   }
 
   toggleOther() {
@@ -243,7 +244,8 @@ class Header extends Component {
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <EventModal/>
+                  <Button  onClick={this.toggleOther}>Button</Button>
+                  <CreateEventModal isModalOpen={this.state.otherModal} toggleModal={this.toggleOther}/>
                 </NavItem>
               </Nav>
             </div>
