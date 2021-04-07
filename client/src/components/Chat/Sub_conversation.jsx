@@ -37,6 +37,9 @@ class Sub_conversation extends React.Component {
   }
 
   sendNewMessage() {
+    if (!this.state.newRecipientID) {
+      return alert("Please enter a valid recipient name");
+    }
     if (this.props.newRecipient) {
       var receiver_id = this.state.newRecipientID.value;
     } else {
@@ -83,7 +86,7 @@ class Sub_conversation extends React.Component {
   }
 
   render() {
-    const { userID, activeName, chats, active, newRecipient, allUsers, closeNewMessage } = this.props;
+    const { userID, activeName, chats, active, newRecipient, allUsers, closeNewMessage, memberNameClick } = this.props;
     const { newMessage, newMessageChats } = this.state;
 
     if (newRecipient) {
@@ -94,9 +97,8 @@ class Sub_conversation extends React.Component {
       });
       return (
         <div className="conversation">
-
           <Select
-            value={this.props.memberNameClick ? options.filter(user => Number(user.value) === Number(this.props.active)) : this.state.newRecipientID}
+            value={memberNameClick ? options.filter(user => Number(user.value) === Number(active)) : this.state.newRecipientID}
             onChange={this.changeNewRecipient}
             options={options}
             className="select-new-message-recipient"
@@ -104,7 +106,7 @@ class Sub_conversation extends React.Component {
           <Button className={"close-new-message"} onClick={closeNewMessage} close />
 
           <div className="conversation-messages">
-          {this.props.memberNameClick ? this.renderConversationMessages(chats[this.props.active]) : this.renderConversationMessages(newMessageChats)}
+          {memberNameClick ? this.renderConversationMessages(chats[active]) : this.renderConversationMessages(newMessageChats)}
           </div>
 
           <Input className={"input"} type="text" onChange={this.updateNewMessage} value={newMessage}/>

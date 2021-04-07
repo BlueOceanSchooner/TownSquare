@@ -8,7 +8,7 @@ import {
 import Header from './Header/Header.jsx'
 import { Button } from 'reactstrap';
 import Chat from './Chat/Chat.jsx';
-import Member from './Member/Member.jsx';
+import MessageMember from './Members/MessageMember.jsx';
 import GroupPage from './Group/GroupPage';
 import Homepage from './homepage/Homepage.jsx';
 import ExploreGroups from './ExploreGroups/ExploreGroups.jsx';
@@ -41,7 +41,7 @@ class App extends React.Component {
         <div>
           <Header />
           <Chat userID={userID} onClick={this.chatOnClick} modal={this.state.chatModal} chatMemberID={this.state.chatMemberID}/>
-          <Member name={"Jane Waterson"} id={8} onClick={this.chatOnClick}/>
+          <MessageMember name={"Jane Waterson"} id={8} onClick={this.chatOnClick}/>
         </div>
         <Switch>
           <Route exact path="/">
