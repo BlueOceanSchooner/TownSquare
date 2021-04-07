@@ -135,7 +135,38 @@ const getGroupById = (req, res) => {
 };
 
 const addGroup = (req, res) => {
+  const errors = [];
   const data = req.body;
+  if (!data.hasOwnProperty('group_name')) {
+    errors.push('group_name is required field');
+  }
+  if (!data.hasOwnProperty('description')) {
+    errors.push('description is required field');
+  }
+  if (!data.hasOwnProperty('category')) {
+    errors.push('category is required field');
+  }
+  if (!data.hasOwnProperty('owner_id')) {
+    errors.push('owner_id is required field');
+  }
+  if (!data.hasOwnProperty('zipcode')) {
+    errors.push('zipcode is required field');
+  }
+  if (errors.length !== 0) {
+    return res.json({
+      errors: errors
+    });
+  }
+
+  const defaultImages = {
+    outdoors: '',
+    music: '',
+    cooking: '',
+    animals: '',
+    hobbies: '',
+    religious: ''
+  };
+
   connection.query('INSERT INTO groups_table SET ?', data, (err, results) => {
     if (err) {
       return res.json({
