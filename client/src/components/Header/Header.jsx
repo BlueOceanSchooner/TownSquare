@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 import ExploreGroups from '../ExploreGroups/ExploreGroups.jsx';
 import axios from 'axios';
 import logo from '../../../assets/townsquare.png';
+import EventModal from '../Events/EventModal.jsx';
 
 class Header extends Component {
   constructor(props) {
@@ -38,12 +39,19 @@ class Header extends Component {
         description: false,
         category: false
       },
-      nameTaken: false
+      nameTaken: false,
+      otherModal: false
     };
 
     this.toggleModal = this.toggleModal.bind(this);
     this.handleCreateGroup = this.handleCreateGroup.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  toggleOther() {
+    this.setState({
+      otherModal: !this.state.otherModal,
+    });
   }
 
   toggleModal() {
@@ -233,6 +241,9 @@ class Header extends Component {
                 <Link to='/'>
                     <i style={{color: '#fff', marginLeft: '10px', marginTop: '8px'}} className='fas fa-home fa-3x'></i>
                   </Link>
+                </NavItem>
+                <NavItem>
+                  <EventModal/>
                 </NavItem>
               </Nav>
             </div>

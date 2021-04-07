@@ -15,15 +15,16 @@ class EventModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      eventName = 'Sister Wives Watch Party',
+      eventName: 'Sister Wives Watch Party',
+      isModalOpen: this.props.modalOpen
+
 
     }
   }
 
   toggleModal() {
     this.setState({
-      isModalOpen: !this.state.isModalOpen,
-      isModalOpen: false,
+      isModalOpen: !this.state.isModalOpen
     });
   }
 
@@ -32,11 +33,13 @@ class EventModal extends React.Component {
     return (
       <div>
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
-              <ModalHeader toggle={this.toggleModal}>{this.state.eventName}</ModalHeader>
-              <ModalBody>
-              </ModalBody>
+          <ModalHeader toggle={this.toggleModal}>{this.state.eventName}</ModalHeader>
+          <ModalBody>
+          </ModalBody>
         </Modal>
       </div>
     )
   }
 }
+
+export default EventModal;
