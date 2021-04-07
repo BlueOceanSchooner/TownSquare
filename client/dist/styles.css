@@ -43,16 +43,13 @@
   column-gap: 10px;
   grid-template-rows: 30px auto 40px;
   grid-template-areas:
-    "messages conversation-name"
+    "new-message conversation-name"
     "messages conversation-messages"
     "messages conversation-input"
 }
 
-.chat-modal .modal-body .messages {
-  grid-area: messages;
-}
-
 .chat-modal .modal-body .new-message {
+  grid-area: new-message;
   width: 98%;
   left: 1%;
   margin-bottom: 10px;
@@ -62,15 +59,22 @@
   padding: 0;
 }
 
+.chat-modal .modal-body .messages {
+  grid-area: messages;
+  padding: 2px;
+  max-height: calc(90vh - 2rem - 36px - 2rem - 45px);
+  overflow-y: scroll;
+}
+
 .chat-modal .modal-body .message {
   cursor: pointer;
   background-color: #eee;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   display: grid;
-  grid-template-columns: 10px 65px 1fr;
+  grid-template-columns: 10px 65px 1fr 70px;
   grid-template-rows: 60px;
   grid-template-areas:
-    "active-bar picture message-preview"
+    "active-bar picture message-preview timestamp"
 }
 
 .chat-modal .modal-body .active-bar {
@@ -106,6 +110,13 @@
   font-weight: bold;
 }
 
+.chat-modal .modal-body .preview-timestamp {
+  grid-area: timestamp;
+  font-size: 12px;
+  text-align: right;
+  padding: 10px 10px 0 0;
+}
+
 .chat-modal .modal-body .last-message {
   font-size: 13px;
 }
@@ -119,7 +130,6 @@
 
 .chat-modal .modal-body .conversation .name {
   font-weight: bold;
-  margin-right: 10px;
 }
 
 .chat-modal .modal-body .conversation-header {
@@ -135,10 +145,13 @@
 
 .chat-modal .modal-body .conversation-you,
 .chat-modal .modal-body .conversation-other {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  display: flex;
+
 }
 
 .chat-modal .modal-body .conversation-you {
+  justify-content: flex-end;
   text-align: right;
 }
 
@@ -150,6 +163,10 @@
   overflow-y: auto;
   border-bottom: 5px solid #ccc;
   padding: 0 20px;
+}
+
+.chat-modal .modal-body .conversation-messages .timestamp {
+  font-size: 12px;
 }
 
 .chat-modal .modal-body .input {
@@ -170,6 +187,19 @@
 
 .chat-modal .send-message {
   margin-right: 10px;
+}
+
+.chat-modal .select-new-message-recipient {
+  width: calc(100% - 55px);
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.chat-modal .close-new-message {
+  grid-area: conversation-name;
+  display: inline-block;
+  width: 50px !important;
+  padding: 0;
 }
 
 /* Group Page Section */
