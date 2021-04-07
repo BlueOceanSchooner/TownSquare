@@ -102,7 +102,7 @@ class Chat extends React.Component {
   }
 
   closeNewMessage() {
-    this.setState({ newRecipient: false, newMessageViaNameClickClose: true, newRecipientID: null, newMessageChats: [] });
+    this.setState({ newRecipient: false, newMessageViaNameClickClose: true, newRecipientID: null, newMessageChats: [], newMessage: '' });
   }
 
   getProperTimestamp(timestamp) {
@@ -180,6 +180,7 @@ class Chat extends React.Component {
     } else {
         var activeName = null;
     }
+
     var { onClick } = this.props;
 
     return (
@@ -191,9 +192,16 @@ class Chat extends React.Component {
           </ModalHeader>
           <ModalBody className={"modal-body"}>
 
-            <Sub_previews userID={this.props.userID} chats={this.state.chats} active={activeID} changeActiveConversation={this.changeActiveConversation} openNewMessage={this.openNewMessage} newRecipient={newRecipient} chatIDsOrderedByTime={this.state.chatIDsOrderedByTime} getProperTimestamp={this.getProperTimestamp}/>
-
-            {/* const { userID, activeName, chats, active, newRecipient, newRecipientID, allUsers, closeNewMessage, memberNameClick, newMessage, newMessageChats, changeNewRecipient, updateNewMessage, sendNewMessage } = this.props; */}
+            <Sub_previews
+              userID={this.props.userID}
+              chats={this.state.chats}
+              active={activeID}
+              changeActiveConversation={this.changeActiveConversation}
+              openNewMessage={this.openNewMessage}
+              newRecipient={newRecipient}
+              chatIDsOrderedByTime={this.state.chatIDsOrderedByTime}
+              getProperTimestamp={this.getProperTimestamp}
+            />
 
             <Sub_conversation
               userID={this.props.userID}
@@ -201,19 +209,15 @@ class Chat extends React.Component {
               chats={this.state.chats}
               active={activeID}
               newRecipient={newRecipient}
-
               newRecipientID={this.state.newRecipientID}
-
               allUsers={this.state.allUsers}
               closeNewMessage={this.closeNewMessage}
               memberNameClick={Boolean(this.props.chatMemberID) && !this.state.newMessageViaNameClickClose}
-
               newMessage={this.state.newMessage}
               newMessageChats={this.state.newMessageChats}
               changeNewRecipient={this.changeNewRecipient}
               updateNewMessage={this.updateNewMessage}
               sendNewMessage={this.sendNewMessage}
-
               getProperTimestamp={this.getProperTimestamp}
             />
 
