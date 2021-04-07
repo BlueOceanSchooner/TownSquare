@@ -96,7 +96,7 @@ class Sub_conversation extends React.Component {
         <div className="conversation">
 
           <Select
-            value={this.state.newRecipientID}
+            value={this.props.memberNameClick ? options.filter(user => Number(user.value) === Number(this.props.active)) : this.state.newRecipientID}
             onChange={this.changeNewRecipient}
             options={options}
             className="select-new-message-recipient"
@@ -104,8 +104,9 @@ class Sub_conversation extends React.Component {
           <Button className={"close-new-message"} onClick={closeNewMessage} close />
 
           <div className="conversation-messages">
-          {this.renderConversationMessages(newMessageChats)}
+          {this.props.memberNameClick ? this.renderConversationMessages(chats[this.props.active]) : this.renderConversationMessages(newMessageChats)}
           </div>
+
           <Input className={"input"} type="text" onChange={this.updateNewMessage} value={newMessage}/>
           <Button color="primary" disabled={newMessage === ''} onClick={this.sendNewMessage}>
             <i className="send-message fas fa-paper-plane"></i>

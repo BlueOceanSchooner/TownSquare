@@ -9,14 +9,13 @@ class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false,
       chats: {},
       chatIDsOrderedByTime: [],
       active: 0,
       allUsers: [],
-      newRecipient: false
+      newRecipient: false,
+      newMessageViaNameClickClose: false
     }
-    this.openDMs = this.openDMs.bind(this);
     this.getMessages = this.getMessages.bind(this);
     this.changeActiveConversation = this.changeActiveConversation.bind(this);
     this.changeActiveConversationAfterNewMessage = this.changeActiveConversationAfterNewMessage.bind(this);
@@ -26,11 +25,15 @@ class Chat extends React.Component {
     this.getProperTimestamp = this.getProperTimestamp.bind(this);
   }
 
-  openDMs() {
-    const { modal } = this.state;
-    this.setState({ modal: !modal });
-    if (!modal) {
-      this.getMessages();
+  componentDidMount() {
+    this.getMessages();
+    setInterval(this.getMessages, 10000);
+    this.getAllUsers();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.modal) {
+      this.setState({ newMessageViaNameClickClose: false, newRecipient: false })
     }
   }
 
@@ -80,12 +83,12 @@ class Chat extends React.Component {
   }
 
   openNewMessage() {
-    this.setState({ newRecipient: true });
+    this.setState({ newRecipient: true, newMessageViaNameClickClose: false });
     this.getAllUsers();
   }
 
   closeNewMessage() {
-    this.setState({ newRecipient: false });
+    this.setState({ newRecipient: false, newMessageViaNameClickClose: true });
   }
 
   getProperTimestamp(timestamp) {
@@ -101,28 +104,40 @@ class Chat extends React.Component {
     return new Date(timestamp).toDateString().slice(4,10);
   }
 
+
   render() {
-    if (this.state.chats[this.state.active]) {
-      if (this.state.chats[this.state.active][0].sender.user_id === this.props.userID) {
-        var activeName = `${this.state.chats[this.state.active][0].receiver.first_name} ${this.state.chats[this.state.active][0].receiver.last_name}`;
+    var memberNameClick = Boolean(this.props.chatMemberID);
+    if (memberNameClick) {
+      var activeID = this.props.chatMemberID;
+      var newRecipient = true;
+    } else {
+      var activeID = this.state.active;
+      var newRecipient = this.state.newRecipient;
+    }
+
+    if (this.state.chats[activeID]) {
+      if (this.state.chats[activeID][0].sender.user_id === this.props.userID) {
+        var activeName = `${this.state.chats[activeID][0].receiver.first_name} ${this.state.chats[activeID][0].receiver.last_name}`;
       } else {
-        var activeName = `${this.state.chats[this.state.active][0].sender.first_name} ${this.state.chats[this.state.active][0].sender.last_name}`;
+        var activeName = `${this.state.chats[activeID][0].sender.first_name} ${this.state.chats[activeID][0].sender.last_name}`;
       }
     } else {
         var activeName = null;
     }
+    var { onClick } = this.props;
+
     return (
       <div className="chat-icon">
-        <i className="fas fa-comment-alt" onClick={this.openDMs}></i>
-        <Modal isOpen={this.state.modal} toggle={this.openDMs} className={"chat-modal"}>
-          <ModalHeader className={"modal-header"} toggle={this.openDMs}>
+         <i className="fas fa-comment-alt" onClick={onClick}></i>
+        <Modal isOpen={this.props.modal} toggle={onClick} className={"chat-modal"}>
+          <ModalHeader className={"modal-header"} toggle={onClick}>
             Messages
           </ModalHeader>
           <ModalBody className={"modal-body"}>
 
-            <Sub_previews userID={this.props.userID} chats={this.state.chats} active={this.state.active} changeActiveConversation={this.changeActiveConversation} openNewMessage={this.openNewMessage} newRecipient={this.state.newRecipient} chatIDsOrderedByTime={this.state.chatIDsOrderedByTime} getProperTimestamp={this.getProperTimestamp}/>
+            <Sub_previews userID={this.props.userID} chats={this.state.chats} active={activeID} changeActiveConversation={this.changeActiveConversation} openNewMessage={this.openNewMessage} newRecipient={newRecipient && !this.state.newMessageViaNameClickClose} chatIDsOrderedByTime={this.state.chatIDsOrderedByTime} getProperTimestamp={this.getProperTimestamp} memberNameClick={memberNameClick}/>
 
-            <Sub_conversation userID={this.props.userID} activeName={activeName} chats={this.state.chats} active={this.state.active} newRecipient={this.state.newRecipient} allUsers={this.state.allUsers} closeNewMessage={this.closeNewMessage} getMessages={this.getMessages} changeActiveConversationAfterNewMessage={this.changeActiveConversationAfterNewMessage} getProperTimestamp={this.getProperTimestamp}/>
+            <Sub_conversation userID={this.props.userID} activeName={activeName} chats={this.state.chats} active={activeID} newRecipient={newRecipient && !this.state.newMessageViaNameClickClose} allUsers={this.state.allUsers} closeNewMessage={this.closeNewMessage} getMessages={this.getMessages} changeActiveConversationAfterNewMessage={this.changeActiveConversationAfterNewMessage} getProperTimestamp={this.getProperTimestamp} memberNameClick={memberNameClick}/>
 
           </ModalBody>
         </Modal>
