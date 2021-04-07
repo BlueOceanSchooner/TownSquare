@@ -69,7 +69,7 @@ class App extends React.Component {
             );
           }} />
           <Route path="/signup">
-            <h1>Sign Up</h1>
+            <Signup />
           </Route>
 
           <Route path="*">
