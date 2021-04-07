@@ -223,9 +223,14 @@
   background-color: #d4d4d4 !important;
 }
 
+.group-event-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
 .group-event-description {
-  display: flex;
-  align-items: center;
+  /* display: flex;
+  align-items: center; */
 }
 
 .group-event-time {
