@@ -191,6 +191,24 @@ GET request to /api/groups
 ]
 ```
 
+## Create Group
+
+POST request to /api/groups
+
+- image_url is optional
+
+Include data in the following format:
+```
+{
+  "group_name": "My New Group Name",
+  "description": "We like to hang out",
+  "category": "outdoors",
+  "owner_id": 1,
+  "zipcode": 44124,
+  "image_url": "http://website.com/image.jpg"
+}
+```
+
 ### Search For Group By Name
 
 GET request to /api/groups/search?name=searchTerm (replace "searchTerm" with name you are searching for)
