@@ -1,4 +1,5 @@
 const connection = require('../../db/connection.js');
+const axios = require('axios');
 
 const getAllGroups = (req, res) => {
   connection.query('SELECT g.group_id, g.group_name, g.description, g.category, g.owner_id, u.first_name, u.last_name, u.email FROM groups_table g LEFT JOIN users u ON g.owner_id = u.user_id', (err, results) => {
@@ -136,6 +137,7 @@ const getGroupById = (req, res) => {
 
 const addGroup = (req, res) => {
   const errors = [];
+  const validCategories = ['outdoors', 'music', 'cooking', 'animals', 'hobbies', 'religious'];
   const data = req.body;
   if (!data.hasOwnProperty('group_name')) {
     errors.push('group_name is required field');
@@ -145,6 +147,8 @@ const addGroup = (req, res) => {
   }
   if (!data.hasOwnProperty('category')) {
     errors.push('category is required field');
+  } else if (!validCategories.includes(data.category)) {
+    errors.push(`"${data.category}" is not a valid category`);
   }
   if (!data.hasOwnProperty('owner_id')) {
     errors.push('owner_id is required field');
@@ -159,22 +163,57 @@ const addGroup = (req, res) => {
   }
 
   const defaultImages = {
-    outdoors: '',
-    music: '',
-    cooking: '',
-    animals: '',
-    hobbies: '',
-    religious: ''
+    outdoors: 'assets/images/default-outdoors.jpg',
+    music: 'assets/images/default-music.jpb',
+    cooking: 'assets/images/default-cooking.jpg',
+    animals: 'assets/images/default-animals.jpg',
+    hobbies: 'assets/images/default-hobbies.jpg',
+    religious: 'assets/images/default-religious.jpg'
   };
 
-  connection.query('INSERT INTO groups_table SET ?', data, (err, results) => {
-    if (err) {
-      return res.json({
-        error: err
+  if (!process.env.hasOwnProperty('P_STACK_API_KEY')) {
+    return res.send({
+      errors: ['no Position Stack API key loaded! cannot locate coordinates without location service']
+    });
+  }
+
+  data.image_url = data.image_url ? data.image_url : defaultImages[data.category];
+
+  const P_STACK_API_KEY = process.env.P_STACK_API_KEY;
+  const ZIPCODE = data.zipcode;
+
+  const params = {
+    access_key: P_STACK_API_KEY,
+    query: `zipcode ${ZIPCODE}`
+  };
+
+  axios.get('http://api.positionstack.com/v1/forward', {params})
+    .then(response => {
+      const results = response.data.data;
+      if (results.length === 0) {
+        return res.json({
+          error: 'no location found for zipcode given'
+        });
+      }
+      const latitude = results[0].latitude;
+      const longitude = results[0].longitude;
+      console.log(latitude, longitude)
+      const sql = `INSERT INTO groups_table SET location = ST_GeomFromText('POINT(? ?)', 4326), ?`;
+
+      connection.query(sql, [latitude, longitude, data], (err, results) => {
+        if (err) {
+          return res.json({
+            errors: [err]
+          });
+        }
+        return res.json(results);
       });
-    }
-    return res.json(results);
-  });
+    })
+    .catch(error => {
+      return res.json({
+        errors: [error]
+      });
+    });
 }
 
 module.exports = {
