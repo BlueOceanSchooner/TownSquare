@@ -3,7 +3,8 @@ CREATE TABLE users (
   user_id INT AUTO_INCREMENT PRIMARY KEY,
   first_name VARCHAR(255),
   last_name VARCHAR(255),
-  email VARCHAR(255)
+  email VARCHAR(255),
+  password VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS groups_table;
@@ -12,7 +13,10 @@ CREATE TABLE groups_table (
   group_name VARCHAR(255),
   description TEXT,
   category ENUM ('outdoors', 'music', 'cooking', 'animals', 'hobbies', 'religious'),
-  owner_id INT REFERENCES users(user_id)
+  owner_id INT REFERENCES users(user_id),
+  zipcode CHAR(5),
+  location POINT NOT NULL SRID 4326,
+  image_url VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS events;

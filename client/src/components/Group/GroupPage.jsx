@@ -17,6 +17,7 @@ class GroupPage extends React.Component {
       events: [],
       posts: [],
       forum: [],
+      user: {},
     }
   }
 
@@ -26,7 +27,7 @@ class GroupPage extends React.Component {
 
   // get information for a group
   getGroupInfo() {
-    const { groupId } = this.props;
+    const { groupId, userId } = this.props;
     // get general group info
     const info = `/api/groups/${groupId}`;
     // get members of a group
@@ -37,37 +38,44 @@ class GroupPage extends React.Component {
     const annc = `/api/groups/${groupId}/posts`;
     // get forum posts for a group
     const forum = `/api/groups/${groupId}/forum`;
+    // get user information
+    const user = `/api/users/${userId}`;
 
     const requestInfo = axios.get(info);
     const requestMembers = axios.get(memb);
     const requestEvents = axios.get(events);
     const requestPosts = axios.get(annc);
     const requestForum = axios.get(forum);
+    const requestUser = axios.get(user);
 
-    axios.all([requestInfo, requestMembers, requestEvents, requestPosts, requestForum])
+    axios.all([requestInfo, requestMembers, requestEvents, requestPosts, requestForum, requestUser])
       .then(axios.spread((...responses) => {
         const responseInfo = responses[0];
         const responseMembers = responses[1];
         const responseEvents = responses[2];
         const responsePosts = responses[3];
         const responseForum = responses[4];
+        const responseUser = responses[5];
         // console.log('responseInfo', responseInfo.data);
         // console.log('responseMembers', responseMembers.data);
         // console.log('responseEvents', responseEvents.data);
         // console.log('responsePosts', responsePosts.data);
         console.log('responseForum', responseForum.data);
+        console.log('responseUser', responseUser.data);
+        console.log('userId:', userId);
         this.setState({
           groupInfo: responseInfo.data,
           members: responseMembers.data,
           events: responseEvents.data,
           posts: responsePosts.data,
           forum: responseForum.data,
+          user: responseUser.data,
         });
       }))
   }
 
   render() {
-    const { groupInfo, members, events, posts, forum } = this.state;
+    const { groupInfo, members, events, posts, forum, user } = this.state;
     const { groupId, userId } = this.props;
     return (
       <Container className="group-container">
@@ -80,7 +88,7 @@ class GroupPage extends React.Component {
         {/* Activities Tabs */}
         <Row>
           <Col>
-            <ActivityList events={events} posts={posts} forum={forum} groupId={groupId} userId={userId}/>
+            <ActivityList events={events} posts={posts} forum={forum} groupId={groupId} userId={userId} user={user}/>
           </Col>
         </Row>
       </Container>

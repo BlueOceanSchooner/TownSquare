@@ -8,7 +8,7 @@ import {
 } from 'reactstrap';
 import moment from 'moment';
 
-const ParentMessage = ({ thread, groupId, userId }) => {
+const ParentMessage = ({ thread, groupId, userId, user }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [childMessage, setChildMessage] = useState('');
   const date = moment(thread.parent.posted).format("MMMM Do h:mm a");
@@ -37,16 +37,26 @@ const ParentMessage = ({ thread, groupId, userId }) => {
                   <CardSubtitle tag="h6" className="mb-2 text-muted">{date}</CardSubtitle>
                 </div>
                 <CardText>{thread.parent.message}</CardText>
-                <Button color="primary" onClick={toggle}>Reply</Button>
+                <Button className="forum-reply-button" color="primary" onClick={toggle}>Reply</Button>
               </CardBody>
             </Card>
             <Collapse isOpen={isOpen}>
               <Form>
-                <FormGroup className="forum-reply-area">
-                  <Input type="textarea" name="text" placeholder="Reply.." onChange={(e) => {setChildMessage(e.target.value)}} />
-                </FormGroup>
-                {/* adding a child forum post */}
-                <Button onClick={addChildPost}>Send</Button>
+                <Container>
+                  <Row>
+                    <Col xs="11">
+                      <FormGroup className="forum-reply-area">
+                        <Input type="textarea" name="text" placeholder="Reply.." onChange={(e) => { setChildMessage(e.target.value) }} />
+                      </FormGroup>
+                    </Col>
+                    <Col xs="1">
+                      {/* adding a child forum post */}
+                      <Button className="forum-send-button" onClick={addChildPost}>Send</Button>
+                    </Col>
+                  </Row>
+                </Container>
+
+
               </Form>
             </Collapse>
           </Col>

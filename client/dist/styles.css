@@ -308,4 +308,14 @@
   margin: 10px 0;
 }
 
+.forum-reply-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.forum-send-button {
+  margin-top: 10px;
+}
+
 /* End of Group Page Section */
