@@ -16,6 +16,7 @@ class GroupPage extends React.Component {
       members: [],
       events: [],
       posts: [],
+      forum: [],
     }
   }
 
@@ -34,33 +35,39 @@ class GroupPage extends React.Component {
     const events = `/api/groups/${groupId}/events`;
     // get announcement posts for a group
     const annc = `/api/groups/${groupId}/posts`;
+    // get forum posts for a group
+    const forum = `/api/groups/${groupId}/forum`;
 
     const requestInfo = axios.get(info);
     const requestMembers = axios.get(memb);
     const requestEvents = axios.get(events);
     const requestPosts = axios.get(annc);
+    const requestForum = axios.get(forum);
 
-    axios.all([requestInfo, requestMembers, requestEvents, requestPosts])
+    axios.all([requestInfo, requestMembers, requestEvents, requestPosts, requestForum])
       .then(axios.spread((...responses) => {
         const responseInfo = responses[0];
         const responseMembers = responses[1];
         const responseEvents = responses[2];
         const responsePosts = responses[3];
-        console.log('responseInfo', responseInfo.data);
-        console.log('responseMembers', responseMembers.data);
-        console.log('responseEvents', responseEvents.data);
-        console.log('responsePosts', responsePosts.data);
+        const responseForum = responses[4];
+        // console.log('responseInfo', responseInfo.data);
+        // console.log('responseMembers', responseMembers.data);
+        // console.log('responseEvents', responseEvents.data);
+        // console.log('responsePosts', responsePosts.data);
+        console.log('responseForum', responseForum.data);
         this.setState({
           groupInfo: responseInfo.data,
           members: responseMembers.data,
           events: responseEvents.data,
           posts: responsePosts.data,
+          forum: responseForum.data,
         });
       }))
   }
 
   render() {
-    const { groupInfo, members, events, posts } = this.state;
+    const { groupInfo, members, events, posts, forum } = this.state;
     return (
       <Container className="group-container">
         {/* Group Info */}
@@ -72,7 +79,7 @@ class GroupPage extends React.Component {
         {/* Activities Tabs */}
         <Row>
           <Col>
-            <ActivityList events={events} posts={posts}/>
+            <ActivityList events={events} posts={posts} forum={forum}/>
           </Col>
         </Row>
       </Container>
