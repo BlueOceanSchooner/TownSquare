@@ -272,4 +272,27 @@
   margin-top: 11px;
 }
 
+.forum-container {
+  border: 1px solid rgba(0,0,0,.125);
+  padding-bottom: 25px
+}
+
+.forum-parent-card {
+  margin-top: 25px;
+  background-color: #d0d0d0 !important;
+}
+
+.forum-child-card {
+  background-color: #eaeaea !important;
+}
+
+.forum-card-header-section {
+  display: flex;
+  align-items: baseline;
+}
+
+.forum-card-title {
+  margin-right: 8px;
+}
+
 /* End of Group Page Section */

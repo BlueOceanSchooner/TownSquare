@@ -17,12 +17,10 @@ class Forum extends React.Component {
   render() {
     const { forum } = this.props;
     return (
-      <div>
-        <ListGroup>
-          {forum.map((thread) => (
-            <ParentMessage key={thread.parent.forum_post_id} thread={thread} />
-          ))}
-        </ListGroup>
+      <div className="forum-container">
+        {forum.map((thread) => (
+          <ParentMessage key={thread.parent.forum_post_id} thread={thread} />
+        ))}
       </div>
     );
   }

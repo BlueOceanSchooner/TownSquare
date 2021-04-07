@@ -12,8 +12,8 @@ const AnnouncementsItem = ({ post }) => {
       <Container>
         <Card>
           <CardBody>
-            <CardTitle className="group-post-title">{post.author.first_name} {post.author.last_name}</CardTitle>
-            <CardSubtitle>{post.created_at}</CardSubtitle>
+            <CardTitle tag="h5" className="group-post-title">{post.author.first_name} {post.author.last_name}</CardTitle>
+            <CardSubtitle tag="h6" className="mb-2 text-muted">{post.created_at}</CardSubtitle>
             <CardText>{post.body}</CardText>
           </CardBody>
         </Card>
