@@ -26,7 +26,8 @@ app.use(expressSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.post('/signup', auth.signup)
+app.post('/signup', auth.signup);
+app.post('/login', auth.login);
 
 const file = path.join(__dirname, '../client/dist/index.html');
 app.get('*', (req, res) => {

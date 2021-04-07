@@ -33,11 +33,11 @@ const Signup = ({toggleLogin}) => {
   };
   const handleSubmit = e => {
     e.preventDefault();
-    if (Object.values(inputValid).every(item => item === true) ) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        let latitude = position.coords.latitude
-        let longitude = position.coords.longitude;
-        axios.post('/signup', {...queries, latitude, longitude})
+    if (Object.values(inputValid).every(item => item === true)) {
+      // navigator.geolocation.getCurrentPosition((position) => {
+      //   let latitude = position.coords.latitude
+      //   let longitude = position.coords.longitude;
+        axios.post('/signup', {...queries})
         .then(data => {
           if (data.data.msg === 'used') {
             setShowEmailUsed(true);
@@ -45,7 +45,7 @@ const Signup = ({toggleLogin}) => {
 
           }
         })
-      })
+      // })
     } else {
       setShowError(true);
     }
