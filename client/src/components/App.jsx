@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import Signup from './Auth/Signup.jsx';
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,10 +19,17 @@ class App extends React.Component {
     super(props);
     this.state = {
       chatModal: false,
-      chatMemberID: null
+      chatMemberID: null,
+      isLoginOpen: false
     }
     this.chatOnClick = this.chatOnClick.bind(this);
   }
+
+  toggleLogin() {
+    this.setState({
+      isLoginOpen: !this.state.isLoginOpen
+    });
+  };
 
   chatOnClick(chatMember) {
     const { chatModal } = this.state;
@@ -38,7 +46,7 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <Header />
+          <Header isLoginOpen={this.state.isLoginOpen} toggleLogin={this.toggleLogin.bind(this)}/>
           <Chat userID={userID} onClick={this.chatOnClick} modal={this.state.chatModal} chatMemberID={this.state.chatMemberID}/>
 
           {/* Example use of MessageMember component */}
@@ -61,7 +69,7 @@ class App extends React.Component {
             );
           }} />
           <Route path="/signup">
-            <h1>Sign Up</h1>
+            <Signup />
           </Route>
 
           <Route path="*">
