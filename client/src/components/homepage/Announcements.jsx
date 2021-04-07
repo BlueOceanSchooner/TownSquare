@@ -13,10 +13,10 @@ class Announcements extends Component {
 
     const { announcements, groups } = this.props;
     const announcementItems = [];
-    console.log('ANNOUNCEMENTS: ', announcements)
+    let keyCount = 0;
     announcements.forEach((a) => {
       announcementItems.push((
-        <AnnouncementItem announcement={a} groups={groups}/>
+        <AnnouncementItem key={keyCount++} announcement={a} groups={groups}/>
       ));
     });
 

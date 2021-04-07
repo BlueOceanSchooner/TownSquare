@@ -14,7 +14,6 @@ const AnnouncementItem = ({ announcement, groups }) => {
     }
   }
 
-  console.log('announcement: ', announcement);
   return (
     <div className="row border border-dark m-2 p-2" style={{height: "fit-content"}}>
       <h5 className="w-100">{groupName} <span className="float-right" style={{fontSize: "0.75em"}}>{date} @ {hour}</span></h5>

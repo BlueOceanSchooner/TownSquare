@@ -28,13 +28,14 @@ class Events extends Component {
   }
 
   render() {
-    const { events } = this.props;
+    const { events, chatOnClick, userID } = this.props;
     const { isModalOpen, selectedEvent } = this.state;
 
     const eventItems = [];
+    let keyCount = 0;
     events.forEach((event) => {
       eventItems.push((
-        <EventItem event={event} updateSelectedEvent={this.updateSelectedEvent} />
+        <EventItem key={keyCount++} event={event} updateSelectedEvent={this.updateSelectedEvent} />
       ));
     });
 
@@ -46,7 +47,7 @@ class Events extends Component {
           </div>
         </div>
         {eventItems}
-        {isModalOpen && <EventInfoModal event={selectedEvent} toggleModal={this.toggleModal} isModalOpen={isModalOpen} />}
+        {isModalOpen && <EventInfoModal event={selectedEvent} toggleModal={this.toggleModal} isModalOpen={isModalOpen} chatOnClick={chatOnClick} userID={userID} />}
       </div>
 
     );

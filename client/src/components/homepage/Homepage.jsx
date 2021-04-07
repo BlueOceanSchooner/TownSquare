@@ -15,7 +15,6 @@ class Homepage extends Component {
   }
 
   componentDidMount() {
-    console.log('USER ID: ',  this.props.userID);
     axios.get(`/api/users/${this.props.userID}/groups`)
       .then((results) => {
         const groups = results.data;
@@ -43,11 +42,12 @@ class Homepage extends Component {
 
   render() {
     const { events, announcements, groups } = this.state;
+    const { chatOnClick, userID } = this.props;
     return (
       <div className="container">
         <GroupCarousel groups={groups} />
         <div className="row">
-          <Events events={events} />
+          <Events events={events} chatOnClick={chatOnClick} userID={userID} />
           <Announcements announcements={announcements} groups={groups}/>
         </div>
       </div>

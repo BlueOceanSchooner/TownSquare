@@ -14,9 +14,10 @@ class GroupCarousel extends Component {
     const { groups } = this.props;
 
     const groupItems = [];
+    let keyCount = 0;
     groups.forEach((g) => {
       groupItems.push((
-        <GroupItem group={g} />
+        <GroupItem key={keyCount++} group={g} />
       ));
     });
 

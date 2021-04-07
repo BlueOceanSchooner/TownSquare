@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MessageMember from '../Members/MessageMember.jsx';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import axios from 'axios';
 
@@ -20,9 +21,8 @@ class EventInfoModal extends Component {
       .catch((err) => console.log(err));
   }
 
-
   render() {
-    const { event, isModalOpen, toggleModal } = this.props;
+    const { event, isModalOpen, toggleModal, chatOnClick, userID } = this.props;
     const { attendees } = this.state;
 
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -31,11 +31,13 @@ class EventInfoModal extends Component {
     date = `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
 
     const attendeeNames = [];
+    let keyCount = 0;
     if (attendees !== null) {
       attendees.forEach((a) => {
         if (a.attending === 1) {
+          const name = `${a.first_name} ${a.last_name}`;
           attendeeNames.push((
-            <div>{a.first_name} {a.last_name}</div>
+            <MessageMember key={keyCount++} onClick={chatOnClick} id={a.user_id} name={name} userID={userID} />
           ));
         }
       });

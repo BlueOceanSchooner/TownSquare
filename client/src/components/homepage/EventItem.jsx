@@ -6,7 +6,6 @@ const EventItem = ({ event, updateSelectedEvent }) => {
   const hour = `${date.getHours()}:${date.getMinutes() === 0 ? '00' : date.getMinutes()}`;
   date = `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
 
-  console.log('DATE: ', date);
   return (
     <div className="row border border-dark m-2" style={{cursor: 'pointer'}} onClick={() => updateSelectedEvent(event)}>
       <div className="col-9 p-2" style={{height: "6em"}}>
