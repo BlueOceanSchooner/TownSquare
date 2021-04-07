@@ -53,7 +53,7 @@ CREATE TABLE `dms` (
   `sent` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `message` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`dm_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -85,7 +85,7 @@ CREATE TABLE `events` (
   `zipcode` char(5) DEFAULT NULL,
   `event_date` datetime DEFAULT NULL,
   PRIMARY KEY (`event_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,7 +112,7 @@ CREATE TABLE `forum` (
   `posted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `message` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`forum_post_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,7 +140,7 @@ CREATE TABLE `forum_replies` (
   `posted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `message` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`reply_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -166,8 +166,11 @@ CREATE TABLE `groups_table` (
   `description` text,
   `category` enum('outdoors','music','cooking','animals','hobbies','religious') DEFAULT NULL,
   `owner_id` int DEFAULT NULL,
+  `zipcode` char(5) DEFAULT NULL,
+  `location` point NOT NULL /*!80003 SRID 4326 */,
+  `image_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +179,7 @@ CREATE TABLE `groups_table` (
 
 LOCK TABLES `groups_table` WRITE;
 /*!40000 ALTER TABLE `groups_table` DISABLE KEYS */;
-INSERT INTO `groups_table` VALUES (1,'JavaScript Meet Up','We meet up and write code','religious',1),(2,'Cleveland Horse Enthusiasts','We are enthusiastic about horses!','animals',2);
+INSERT INTO `groups_table` VALUES (1,'JavaScript Meet Up','We like to code','religious',1,'44124',0xE610000001010000009CDD5A26C35D54C0E8A38CB800C04440,'assets/images/default-religious.jpg'),(2,'Cleveland Horse Enthusiasts','We are enthusiastic about horses','animals',2,'44128',0xE61000000101000000AB933314776254C0BABA63B14DB84440,'assets/images/default-animals.jpg'),(3,'Chicago Hikers Association','We hike in Chicago','outdoors',11,'60601',0xE610000001010000009BC6F65AD0E755C07D06D49B51F14440,'assets/images/default-outdoors.jpg'),(4,'Philly Musicians','We music in Philly','music',14,'19103',0xE610000001010000008670CCB227CB52C09F3E027FF8F94340,'assets/images/default-music.jpb'),(5,'Pennsylvannia Cookers','We cook in Pennsylvannia','cooking',12,'15001',0xE610000001010000005CE84A04AA1454C06AC2F693314C4440,'assets/images/default-cooking.jpg'),(6,'DOTA 4 Gamers','We Dota in Michigan','hobbies',13,'49503',0xE610000001010000006F4BE482336A55C0EC6987BF267B4540,'assets/images/default-hobbies.jpg'),(7,'Okalahoma Cattle Ranglers','We rangle in Okalahoma','outdoors',15,'73101',0xE610000001010000004016A243E048C8BF1EA7E8482EAF1640,'assets/images/default-outdoors.jpg');
 /*!40000 ALTER TABLE `groups_table` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,7 +222,7 @@ CREATE TABLE `posts` (
   `title` varchar(255) DEFAULT NULL,
   `body` text,
   PRIMARY KEY (`post_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -228,7 +231,9 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` VALUES (1,1,1,'2021-04-05 14:00:00',`Don\'t forget to bring your own food to the cookout!`,'Last time we had a cookout some people forgot to bring their own food (Jane), and then caused a scene (Jane). Let\'s not have that happen again.'),(2,1,1,'2021-04-05 14:00:00','Thank You Everyone Who Attended Last Month\'s Coding Exercise','It was dope');
+INSERT INTO `posts` VALUES
+(1, 1, 1, '2021-04-05 14:00:00','Dont forget to bring your own food to the cookout!','Last time we had a cookout some people forgot to bring their own food (Jane), and then caused a scene (Jane). Lets not have that happen again.'),
+(2, 1, 1, '2021-04-05 14:00:00', 'Thank You Everyone Who Attended Last Months Coding Exercise','It was dope');
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -244,8 +249,9 @@ CREATE TABLE `users` (
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -254,7 +260,22 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Stephen','Hyde','stephen@friend.horse'),(2,'Fred','Flintstone','fred@gmail.com'),(3,'Sam','Smith','arbyslover@email.com'),(4,'Dante','Alghieri','author@inferno.com'),(5,'Thomas','McHorseradish','thomas@gmail.com'),(6,'Billy','Jones','billy@gmail.com'),(7,'Timmy','McLastname','timmy@gmail.com'),(8,'Jane','Waterson','jane@gmail.com'),(9,'Alfred','Freeman','alf@gmail.com'),(10,'Ezekial','McHarrypotter','em@gmail.com'),(11,'Colleen','McCohort','colleen@gmail.com'),(12,'JiHang','McCohort','jihang@gmail.com'),(13,'Adrian','McCohort','adrain@gmail.com'),(14,'Joe','McCohort','joe@gmail.com'),(15,'Ross','McCohort','ross@gmail.com');
+INSERT INTO `users` VALUES
+(1,'Stephen','Hyde','stephen@friend.horse','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
+(2,'Fred','Flintstone','fred@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
+(3,'Sam','Smith','arbyslover@email.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
+(4,'Dante','Alghieri','author@inferno.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
+(5,'Thomas','McHorseradish','thomas@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
+(6,'Billy','Jones','billy@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
+(7,'Timmy','McLastname','timmy@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
+(8,'Jane','Waterson','jane@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
+(9,'Alfred','Freeman','alf@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
+(10,'Ezekial','McHarrypotter','em@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
+(11,'Colleen','McCohort','colleen@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
+(12,'JiHang','McCohort','jihang@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
+(13,'Adrian','McCohort','adrian@spelledright.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
+(14,'Joe','McCohort','joe@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
+(15,'Ross','McCohort','ross@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -267,4 +288,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-05 13:45:37
+-- Dump completed on 2021-04-07 14:51:54
