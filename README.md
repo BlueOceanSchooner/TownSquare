@@ -408,6 +408,32 @@ GET request to /api/groups/:id/forum
 ]
 ```
 
+### Add a Top-Level Post to a Forum
+
+POST request to /api/groups/:group_id/forum with data having the structure:
+
+```
+{
+  "group_id": 1,
+  "user_id": 1,
+  "message": "This is a top level post"
+}
+```
+
+
+### Add a Reply to a Top-Level Post on a Forum
+
+POST request to /api/groups/:group_id/forum-reply with data having the structure:
+```
+{
+  "group_id": 1,
+  "user_id": 2,
+  "forum_post_id": 1,
+  "message": "And this is a response to that top level post"
+}
+```
+
+
 ### List ALL Events
 
 GET request to /api/events
