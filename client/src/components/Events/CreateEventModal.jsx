@@ -31,6 +31,8 @@ const CreateEventModal = (props) => {
     const onSubmit = (e) => {
       e.preventDefault();
       console.log(inputs, value.toISOString());
+      let data = inputs;
+      data.
       setInputs(inputs => ({}))
       props.toggleModal();
     }

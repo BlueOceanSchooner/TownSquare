@@ -202,11 +202,14 @@
   padding: 0;
 }
 
+/* Group Page Section */
+
 .group-poster {
   height: 250px;
   object-fit: cover;
 }
 
+<<<<<<< HEAD
 
 
 
@@ -297,3 +300,69 @@
 }
 
 /* HERE ENDS JOE'S STUFF ::::) */
+=======
+.group-tab-header {
+  margin-right: 20px;
+}
+
+.group-container {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.group-member {
+  margin-right: 15px;
+}
+
+.activities-container {
+  margin-top: 40px;
+}
+
+.tab-list-container {
+  display: flex;
+  padding-left: 25px;
+  margin-bottom: 0px;
+}
+
+.tab-name {
+  list-style-type: none;
+  font-size: 1.25rem;
+  font-weight: 500;
+  padding: 10px;
+  background-color: #eaeaea;
+  border-radius: 5px 5px 0 0;
+  box-shadow: inset 0px -2px 2px 0px rgba(0, 0, 0, 0.5);
+}
+
+.group-tab-selected {
+  border: 1px solid rgba(0,0,0,.125);
+  border-bottom: none;
+  background-color: #ffffff;
+  box-shadow: none;
+}
+
+.group-event-item {
+  background-color: #ffffff !important;
+}
+
+.group-event-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-right: 1px solid black;
+}
+
+.group-event-description {
+  border-right: 1px solid black;
+}
+
+.group-event-time {
+  text-align: center;
+}
+
+.group-event-button {
+  text-align: center;
+  margin-top: 11px;
+}
+
+/* End of Group Page Section */
+>>>>>>> master
