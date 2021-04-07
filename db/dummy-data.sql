@@ -179,7 +179,14 @@ CREATE TABLE `groups_table` (
 
 LOCK TABLES `groups_table` WRITE;
 /*!40000 ALTER TABLE `groups_table` DISABLE KEYS */;
-INSERT INTO `groups_table` VALUES (1,'JavaScript Meet Up','We like to code','religious',1,'44124',0xE610000001010000009CDD5A26C35D54C0E8A38CB800C04440,'assets/images/default-religious.jpg'),(2,'Cleveland Horse Enthusiasts','We are enthusiastic about horses','animals',2,'44128',0xE61000000101000000AB933314776254C0BABA63B14DB84440,'assets/images/default-animals.jpg'),(3,'Chicago Hikers Association','We hike in Chicago','outdoors',11,'60601',0xE610000001010000009BC6F65AD0E755C07D06D49B51F14440,'assets/images/default-outdoors.jpg'),(4,'Philly Musicians','We music in Philly','music',14,'19103',0xE610000001010000008670CCB227CB52C09F3E027FF8F94340,'assets/images/default-music.jpb'),(5,'Pennsylvannia Cookers','We cook in Pennsylvannia','cooking',12,'15001',0xE610000001010000005CE84A04AA1454C06AC2F693314C4440,'assets/images/default-cooking.jpg'),(6,'DOTA 4 Gamers','We Dota in Michigan','hobbies',13,'49503',0xE610000001010000006F4BE482336A55C0EC6987BF267B4540,'assets/images/default-hobbies.jpg'),(7,'Okalahoma Cattle Ranglers','We rangle in Okalahoma','outdoors',15,'73101',0xE610000001010000004016A243E048C8BF1EA7E8482EAF1640,'assets/images/default-outdoors.jpg');
+INSERT INTO `groups_table` VALUES
+(1,'JavaScript Meet Up','We like to code','religious',1,'44124',0xE610000001010000009CDD5A26C35D54C0E8A38CB800C04440,'/assets/images/default-religious.jpg'),
+(2,'Cleveland Horse Enthusiasts','We are enthusiastic about horses','animals',2,'44128',0xE61000000101000000AB933314776254C0BABA63B14DB84440,'/assets/images/default-animals.jpg'),
+(3,'Chicago Hikers Association','We hike in Chicago','outdoors',11,'60601',0xE610000001010000009BC6F65AD0E755C07D06D49B51F14440,'/assets/images/default-outdoors.jpg'),
+(4,'Philly Musicians','We music in Philly','music',14,'19103',0xE610000001010000008670CCB227CB52C09F3E027FF8F94340,'/assets/images/default-music.jpg'),
+(5,'Pennsylvannia Cookers','We cook in Pennsylvannia','cooking',12,'15001',0xE610000001010000005CE84A04AA1454C06AC2F693314C4440,'/assets/images/default-cooking.jpg'),
+(6,'DOTA 4 Gamers','We Dota in Michigan','hobbies',13,'49503',0xE610000001010000006F4BE482336A55C0EC6987BF267B4540,'/assets/images/default-hobbies.jpg'),
+(7,'Okalahoma Cattle Ranglers','We rangle in Okalahoma','outdoors',15,'73101',0xE610000001010000004016A243E048C8BF1EA7E8482EAF1640,'/assets/images/default-outdoors.jpg');
 /*!40000 ALTER TABLE `groups_table` ENABLE KEYS */;
 UNLOCK TABLES;
 
