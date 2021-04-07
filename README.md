@@ -59,12 +59,14 @@ GET request to /api/users/:id/groups
 [
   {
     "group_id": 1,
+    "image_url": "assets/images/default-religious.jpg",
     "group_name": "JavaScript Meet Up",
     "description": "We meet up and write code",
     "category": "religious"
   },
   {
     "group_id": 2,
+    "image_url": "assets/images/default-animals.jpg",
     "group_name": "Cleveland Horse Enthusiasts",
     "description": "We are enthusiastic about horses!",
     "category": "animals"
@@ -166,6 +168,7 @@ GET request to /api/groups
 [
   {
     "group_id": 1,
+    "image_url": "assets/images/default-religious.jpg",
     "group_name": "JavaScript Meet Up",
     "description": "We meet up and write code",
     "category": "religious",
@@ -178,6 +181,7 @@ GET request to /api/groups
   },
   {
     "group_id": 2,
+    "image_url": "assets/images/default-animals.jpg",
     "group_name": "Cleveland Horse Enthusiasts",
     "description": "We are enthusiastic about horses!",
     "category": "animals",
@@ -232,6 +236,7 @@ GET request to /api/groups/:id
 ```
 {
   "group_id": 1,
+  "image_url": "assets/images/default-religious.jpg",
   "group_name": "JavaScript Meet Up",
   "description": "We meet up and write code",
   "category": "religious",
