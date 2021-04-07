@@ -10,9 +10,13 @@ const AnnouncementsItem = ({ post }) => {
   return (
     <ListGroupItem className="group-post-item" >
       <Container>
-        <Col>{post.author.first_name}{post.author.last_name}</Col>
-        <Col>{post.created_at}</Col>
-        <Col>{post.body}</Col>
+        <Card>
+          <CardBody>
+            <CardTitle className="group-post-title">{post.author.first_name} {post.author.last_name}</CardTitle>
+            <CardSubtitle>{post.created_at}</CardSubtitle>
+            <CardText>{post.body}</CardText>
+          </CardBody>
+        </Card>
       </Container>
     </ListGroupItem>
   )
