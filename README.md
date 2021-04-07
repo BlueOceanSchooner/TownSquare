@@ -191,6 +191,22 @@ GET request to /api/groups
 ]
 ```
 
+### Search For Group By Name
+
+GET request to /api/groups/search?name=searchTerm (replace "searchTerm" with name you are searching for)
+
+- If the search term contains spaces you will need to URL encode it before making the request
+- If you want an exact match, add "&exact=true" to the end of the URL
+- Data is in the same format as other group data requests
+- Letter case does not matter
+
+Examples:
+
+`/api/groups/search?name=ends` WILL match the group name "Friends"
+
+`/api/groups/search?name=ends&exact=true` WILL NOT match the group name "Friends"
+
+
 ### Info for Specific Group
 
 GET request to /api/groups/:id
@@ -391,6 +407,32 @@ GET request to /api/groups/:id/forum
   }
 ]
 ```
+
+### Add a Top-Level Post to a Forum
+
+POST request to /api/groups/:group_id/forum with data having the structure:
+
+```
+{
+  "group_id": 1,
+  "user_id": 1,
+  "message": "This is a top level post"
+}
+```
+
+
+### Add a Reply to a Top-Level Post on a Forum
+
+POST request to /api/groups/:group_id/forum-reply with data having the structure:
+```
+{
+  "group_id": 1,
+  "user_id": 2,
+  "forum_post_id": 1,
+  "message": "And this is a response to that top level post"
+}
+```
+
 
 ### List ALL Events
 
