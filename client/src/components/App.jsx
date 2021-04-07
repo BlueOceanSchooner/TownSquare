@@ -40,8 +40,10 @@ class App extends React.Component {
         <div>
           <Header />
           <Chat userID={userID} onClick={this.chatOnClick} modal={this.state.chatModal} chatMemberID={this.state.chatMemberID}/>
+
           {/* Example use of MessageMember component */}
-          <MessageMember name={"Jane Waterson"} id={8} onClick={this.chatOnClick}/>
+          {/* <MessageMember name={"Jane Waterson"} id={8} onClick={this.chatOnClick}/> */}
+
         </div>
         <Switch>
           <Route exact path="/">
