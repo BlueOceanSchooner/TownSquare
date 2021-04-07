@@ -24,13 +24,12 @@ class App extends React.Component {
   }
 
   chatOnClick(chatMember) {
-    if (chatMember) {
-      this.setState({ chatMemberID: chatMember.target.getAttribute('name') })
-    }
     const { chatModal } = this.state;
     this.setState({ chatModal: !chatModal });
     if (chatModal) {
       this.setState({ chatMemberID: null })
+    } else if (chatMember) {
+      this.setState({ chatMemberID: chatMember.target.getAttribute('name') })
     }
   }
 
@@ -41,6 +40,7 @@ class App extends React.Component {
         <div>
           <Header />
           <Chat userID={userID} onClick={this.chatOnClick} modal={this.state.chatModal} chatMemberID={this.state.chatMemberID}/>
+          {/* Example use of MessageMember component */}
           <MessageMember name={"Jane Waterson"} id={8} onClick={this.chatOnClick}/>
         </div>
         <Switch>

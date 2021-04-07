@@ -6,14 +6,6 @@ import Select from 'react-select';
 class Sub_conversation extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      newRecipientID: null,
-      newMessageChats: [],
-      newMessage: ''
-    }
-    this.changeNewRecipient = this.changeNewRecipient.bind(this);
-    this.updateNewMessage = this.updateNewMessage.bind(this);
-    this.sendNewMessage = this.sendNewMessage.bind(this);
   }
 
   componentDidUpdate() {
@@ -21,44 +13,6 @@ class Sub_conversation extends React.Component {
     if (messageBody) {
       messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
     }
-  }
-
-  changeNewRecipient(e) {
-    this.setState({ newRecipientID: e });
-    if (this.props.chats[e.value]) {
-      this.setState({ newMessageChats: this.props.chats[e.value] });
-    } else {
-      this.setState({ newMessageChats: [] });
-    }
-  }
-
-  updateNewMessage(e) {
-    this.setState({ newMessage: e.target.value });
-  }
-
-  sendNewMessage() {
-    if (!this.state.newRecipientID) {
-      return alert("Please enter a valid recipient name");
-    }
-    if (this.props.newRecipient) {
-      var receiver_id = this.state.newRecipientID.value;
-    } else {
-      var receiver_id = this.props.active;
-    }
-    axios.post('/api/dms', {
-      sender_id: this.props.userID,
-      receiver_id,
-      message: this.state.newMessage
-    })
-    .then(() => {
-      this.setState({ newMessage: '' });
-      this.props.getMessages();
-      if (this.props.newRecipient) {
-        this.props.changeActiveConversationAfterNewMessage(this.state.newRecipientID.value);
-        this.props.closeNewMessage();
-      }
-    })
-    .catch(err => console.log('error:', err));
   }
 
   renderConversationMessages(chats) {
@@ -86,8 +40,7 @@ class Sub_conversation extends React.Component {
   }
 
   render() {
-    const { userID, activeName, chats, active, newRecipient, allUsers, closeNewMessage, memberNameClick } = this.props;
-    const { newMessage, newMessageChats } = this.state;
+    const { userID, activeName, chats, active, newRecipient, newRecipientID, allUsers, closeNewMessage, memberNameClick, newMessage, newMessageChats, changeNewRecipient, updateNewMessage, sendNewMessage } = this.props;
 
     if (newRecipient) {
       const options = allUsers.filter(user => user.user_id !== userID).map(user => {
@@ -98,8 +51,8 @@ class Sub_conversation extends React.Component {
       return (
         <div className="conversation">
           <Select
-            value={memberNameClick ? options.filter(user => Number(user.value) === Number(active)) : this.state.newRecipientID}
-            onChange={this.changeNewRecipient}
+            value={memberNameClick ? options.filter(user => Number(user.value) === Number(active)) : newRecipientID}
+            onChange={changeNewRecipient}
             options={options}
             className="select-new-message-recipient"
           />
@@ -109,8 +62,8 @@ class Sub_conversation extends React.Component {
           {memberNameClick ? this.renderConversationMessages(chats[active]) : this.renderConversationMessages(newMessageChats)}
           </div>
 
-          <Input className={"input"} type="text" onChange={this.updateNewMessage} value={newMessage}/>
-          <Button color="primary" disabled={newMessage === ''} onClick={this.sendNewMessage}>
+          <Input className={"input"} type="text" onChange={updateNewMessage} value={newMessage}/>
+          <Button color="primary" disabled={newMessage === ''} onClick={sendNewMessage}>
             <i className="send-message fas fa-paper-plane"></i>
             Send
           </Button>
@@ -123,8 +76,8 @@ class Sub_conversation extends React.Component {
         <div className="conversation-messages">
           {chats[active] ? this.renderConversationMessages(chats[active]) : null}
         </div>
-        <Input className={"input"} type="text" onChange={this.updateNewMessage} value={newMessage}/>
-        <Button color="primary" disabled={newMessage === ''} onClick={this.sendNewMessage}>
+        <Input className={"input"} type="text" onChange={updateNewMessage} value={newMessage}/>
+        <Button color="primary" disabled={newMessage === ''} onClick={sendNewMessage}>
           <i className="send-message fas fa-paper-plane"></i>
           Send
         </Button>
