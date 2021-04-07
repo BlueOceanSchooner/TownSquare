@@ -55,7 +55,7 @@ class App extends React.Component {
         </div>
         <Switch>
           <Route exact path="/">
-            <Homepage />
+            <Homepage userID={userID} />
           </Route>
           <Route path="/allgroups">
             <ExploreGroups />

@@ -45,7 +45,7 @@ class Homepage extends Component {
     const { events, announcements, groups } = this.state;
     return (
       <div className="container">
-        <GroupCarousel />
+        <GroupCarousel groups={groups} />
         <div className="row">
           <Events events={events} />
           <Announcements announcements={announcements} groups={groups}/>

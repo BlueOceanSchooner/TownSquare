@@ -8,7 +8,7 @@ const EventItem = ({ event, updateSelectedEvent }) => {
 
   console.log('DATE: ', date);
   return (
-    <div className="row border border-dark m-2" onClick={() => updateSelectedEvent(event)}>
+    <div className="row border border-dark m-2" style={{cursor: 'pointer'}} onClick={() => updateSelectedEvent(event)}>
       <div className="col-9 p-2" style={{height: "6em"}}>
         <h5>{event.title} <span className="badge badge-pill badge-info">{event.group.group_name}</span></h5>
         <p className="text-justify">{event.description}</p>
