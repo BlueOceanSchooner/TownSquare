@@ -41,7 +41,12 @@ class Header extends Component {
         category: false
       },
       nameTaken: false,
-      otherModal: false
+      otherModal: false,
+      group: {
+        group_id: 1,
+        group_name: "JavaScript Meet Up",
+        category: "religious"
+      }
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -147,7 +152,7 @@ class Header extends Component {
   render() {
     return (
       <div className='main-header'>
-          <Navbar  className='py-3' color='primary' expand='md'>
+          <Navbar  className='py-3' color='secondary' expand='md'>
             <Login toggleLogin={this.props.toggleLogin} isLoginOpen={this.props.isLoginOpen} />
             <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
               <ModalHeader toggle={this.toggleModal}>Create New Group</ModalHeader>
@@ -272,7 +277,7 @@ class Header extends Component {
                 </NavItem>
                 <NavItem>
                   <Button  onClick={this.toggleOther}>Button</Button>
-                  <CreateEventModal isModalOpen={this.state.otherModal} toggleModal={this.toggleOther}/>
+                  <CreateEventModal group={this.state.group} isModalOpen={this.state.otherModal} toggleModal={this.toggleOther}/>
                 </NavItem>
               </Nav>
             </div>

@@ -32,16 +32,21 @@ const CreateEventModal = (props) => {
       e.preventDefault();
       console.log(inputs, value.toISOString());
       let data = inputs;
-      data.
-      setInputs(inputs => ({}))
-      props.toggleModal();
+      data.event_date = value.toISOString().slice(0, 19);
+      props.group.group_id = props.group.group_id.toString();
+      data.group_id = props.group.group_id;
+      axios.post('/api/events', data)
+        .then((res) => {
+          setInputs(inputs => ({}))
+          props.toggleModal();
+        })
     }
 
     return (
       <div>
-        <Modal isOpen={props.isModalOpen} toggle={props.toggleModal}>
+        <Modal className='create-event-modal modal-dialog'  isOpen={props.isModalOpen} toggle={props.toggleModal}>
               <ModalHeader toggle={props.toggleModal}>Create Event</ModalHeader>
-              <ModalBody>
+              <ModalBody className='create-event-modal-body'>
               <Form onSubmit={onSubmit}>
                   <FormGroup>
                     <Label for='title'>Event Name</Label>
@@ -51,9 +56,7 @@ const CreateEventModal = (props) => {
                       name='title'
                       value={inputs.title || ''}
                       onChange={onInputChange}
-                      // onChange={this.handleChange}
-                      // valid={this.state.validations.group_name && !this.state.nameTaken ? true : false}
-                      // invalid={(this.state.nameTaken && !this.state.validations.group_name) ? true : false}
+                      required
                     />
                     <FormText>e.g. Bake Sale</FormText>
                     <FormFeedback valid>Looks good!</FormFeedback>
@@ -66,8 +69,7 @@ const CreateEventModal = (props) => {
                       name='description'
                       value={inputs.description || ''}
                       onChange={onInputChange}
-                      // onChange={this.handleChange}
-                      // valid={this.state.validations.description}
+                      required
                     />
                     <FormText>Please provide a description of the event.</FormText>
                     <FormFeedback valid>Great description!</FormFeedback>
@@ -80,8 +82,7 @@ const CreateEventModal = (props) => {
                       name='address_1'
                       value={inputs.address_1 || ''}
                       onChange={onInputChange}
-                      // onChange={this.handleChange}
-                      // valid={this.state.validations.description}
+                      required
                     />
                     <FormText>e.g. 123 Fake Street</FormText>
                     {/* <FormFeedback valid>Great description!</FormFeedback> */}
@@ -94,16 +95,48 @@ const CreateEventModal = (props) => {
                       name='address_2'
                       value={inputs.address_2 || ''}
                       onChange={onInputChange}
-                      // onChange={this.handleChange}
-                      // valid={this.state.validations.description}
                     />
                     <FormText>e.g. Apartment 2</FormText>
-                    {/* <FormFeedback valid>Great description!</FormFeedback> */}
                   </FormGroup>
                   <FormGroup>
-                    <Label for='address_2'>Date and Time</Label>
+                    <Label for='city'>City</Label>
+                    <Input
+                      type='text'
+                      id='city'
+                      name='city'
+                      value={inputs.city || ''}
+                      onChange={onInputChange}
+                      required
+                    />
+                    <FormText>e.g. Springfield</FormText>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for='city'>State</Label>
+                    <Input
+                      type='text'
+                      id='state'
+                      name='state'
+                      value={inputs.state || ''}
+                      onChange={onInputChange}
+                      required
+                    />
+                    <FormText>e.g. Springfield</FormText>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for='zipcode'>Zipcode</Label>
+                    <Input
+                      type='text'
+                      id='zipcode'
+                      name='zipcode'
+                      value={inputs.zipcode || ''}
+                      onChange={onInputChange}
+                      required
+                    />
+                    <FormText>e.g. 12345</FormText>
+                  </FormGroup>
+                  <FormGroup>
+                    <div>Date and Time</div>
                     <DateTimePicker value={value} onChange={onChange} />
-                    {/* <FormFeedback valid>Great description!</FormFeedback> */}
                   </FormGroup>
 
                   <Button type='submit' value='submit' color='primary'>

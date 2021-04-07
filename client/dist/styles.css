@@ -209,15 +209,15 @@
   object-fit: cover;
 }
 
-<<<<<<< HEAD
 
 
 
 /* JOE'S STUFF DON'T TOUCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
 
+/*group browse page*/
 .group-list {
   text-align: left;
-  width: 50%;
+  width: 60%;
   justify-self: center;
 }
 
@@ -298,9 +298,16 @@
   margin-left: '10px';
   margin-top: '16px';
 }
+/*event modal*/
+.modal-dialog {
+  width: 1000px;
+}
+.create-event-modal-body {
+  height: 460px;
+  overflow: scroll;
+}
 
 /* HERE ENDS JOE'S STUFF ::::) */
-=======
 .group-tab-header {
   margin-right: 20px;
 }
@@ -365,4 +372,3 @@
 }
 
 /* End of Group Page Section */
->>>>>>> master
