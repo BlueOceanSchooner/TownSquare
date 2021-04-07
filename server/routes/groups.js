@@ -2,7 +2,7 @@ const connection = require('../../db/connection.js');
 const axios = require('axios');
 
 const getAllGroups = (req, res) => {
-  connection.query('SELECT g.group_id, g.group_name, g.description, g.category, g.owner_id, u.first_name, u.last_name, u.email FROM groups_table g LEFT JOIN users u ON g.owner_id = u.user_id', (err, results) => {
+  connection.query('SELECT g.group_id, g.image_url, g.group_name, g.description, g.category, g.owner_id, u.first_name, u.last_name, u.email FROM groups_table g LEFT JOIN users u ON g.owner_id = u.user_id', (err, results) => {
     if (err) {
       return res.json({
         error: err
@@ -11,6 +11,7 @@ const getAllGroups = (req, res) => {
     results = results.map((row) => {
       return {
         group_id: row.group_id,
+        image_url: row.image_url,
         group_name: row.group_name,
         description: row.description,
         category: row.category,
@@ -37,7 +38,7 @@ const findGroupByName = (req, res) => {
   const isExactMatch = req.query.exact && req.query.exact === 'true';
   let sql, term;
   const sqlBase = `
-    SELECT g.group_id, g.group_name, g.description, g.category, g.owner_id,
+    SELECT g.group_id, g.image_url, g.group_name, g.description, g.category, g.owner_id,
       u.first_name, u.last_name, u.email
     FROM groups_table g
     LEFT JOIN users u ON g.owner_id = u.user_id
@@ -58,6 +59,7 @@ const findGroupByName = (req, res) => {
     results = results.map((row) => {
       return {
         group_id: row.group_id,
+        image_url: row.image_url,
         group_name: row.group_name,
         description: row.description,
         category: row.category,
@@ -76,7 +78,7 @@ const findGroupByName = (req, res) => {
 const getGroupsByCategory = (req, res) => {
   const category = req.params.category;
   const sql = `
-    SELECT g.group_id, g.group_name, g.description, g.category, g.owner_id,
+    SELECT g.group_id, g.image_url, g.group_name, g.description, g.category, g.owner_id,
       u.first_name, u.last_name, u.email
     FROM groups_table g
     LEFT JOIN users u ON g.owner_id = u.user_id
@@ -91,6 +93,7 @@ const getGroupsByCategory = (req, res) => {
     results = results.map((row) => {
       return {
         group_id: row.group_id,
+        image_url: row.image_url,
         group_name: row.group_name,
         description: row.description,
         category: row.category,
@@ -108,7 +111,7 @@ const getGroupsByCategory = (req, res) => {
 
 const getGroupById = (req, res) => {
   const group_id = req.params.group_id;
-  connection.query('SELECT g.group_id, g.group_name, g.description, g.category, g.owner_id, u.first_name, u.last_name, u.email FROM groups_table g LEFT JOIN users u ON g.owner_id = u.user_id WHERE g.group_id = ?', [group_id], (err, results) => {
+  connection.query('SELECT g.group_id, g.image_url, g.group_name, g.description, g.category, g.owner_id, u.first_name, u.last_name, u.email FROM groups_table g LEFT JOIN users u ON g.owner_id = u.user_id WHERE g.group_id = ?', [group_id], (err, results) => {
     if (err) {
       return res.json({
         error: err
@@ -118,6 +121,7 @@ const getGroupById = (req, res) => {
       const row = results[0];
       return res.json({
         group_id: row.group_id,
+        image_url: row.image_url,
         group_name: row.group_name,
         description: row.description,
         category: row.category,
