@@ -3,25 +3,24 @@ import EventsItem from './EventsItem';
 
 import {
   Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, CardHeader, Button, ListGroup, ListGroupItem
+  CardTitle, CardSubtitle, CardHeader, Button, ListGroup, ListGroupItem, Container, Row, Col
 } from 'reactstrap';
-import { Container, Row, Col } from 'reactstrap';
 
 class EventsList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      array: [1, 2, 3, 4, 5],
     }
   }
 
   render() {
+    const { events } = this.props;
     return (
       <div>
         <ListGroup>
-          {this.state.array.map((item) => (
-            <EventsItem key={item}/>
+          {events.map((event) => (
+            <EventsItem key={event.event_id} event={event} />
           ))}
         </ListGroup>
       </div>

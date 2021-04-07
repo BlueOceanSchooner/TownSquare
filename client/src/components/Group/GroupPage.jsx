@@ -14,6 +14,7 @@ class GroupPage extends React.Component {
     this.state = {
       groupInfo: {},
       members: [],
+      events: [],
     }
   }
 
@@ -28,25 +29,31 @@ class GroupPage extends React.Component {
     const info = `/api/groups/${groupId}`;
     // get members of a group
     const memb = `/api/groups/${groupId}/members`;
+    // get events for a group
+    const events = `/api/groups/${groupId}/events`;
 
     const requestInfo = axios.get(info);
     const requestMembers = axios.get(memb);
+    const requestEvents = axios.get(events);
 
-    axios.all([requestInfo, requestMembers])
+    axios.all([requestInfo, requestMembers, requestEvents])
       .then(axios.spread((...responses) => {
         const responseInfo = responses[0];
         const responseMembers = responses[1];
+        const responseEvents = responses[2];
         console.log('responseInfo', responseInfo.data);
         console.log('responseMembers', responseMembers.data);
+        console.log('responseEvents', responseEvents.data);
         this.setState({
           groupInfo: responseInfo.data,
           members: responseMembers.data,
+          events: responseEvents.data,
         });
       }))
   }
 
   render() {
-    const { groupInfo, members } = this.state;
+    const { groupInfo, members, events } = this.state;
     return (
       <Container className="group-container">
         {/* Group Info */}
@@ -58,7 +65,7 @@ class GroupPage extends React.Component {
         {/* Activities Tabs */}
         <Row>
           <Col>
-            <ActivityList />
+            <ActivityList events={events} />
           </Col>
         </Row>
       </Container>
