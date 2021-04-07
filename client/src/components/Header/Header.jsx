@@ -185,21 +185,43 @@ class Header extends Component {
                     <FormFeedback valid>Great description!</FormFeedback>
                   </FormGroup>
                   <FormGroup>
-                  <Label for='modal-category'>Select Category</Label>
+                    <Label for='url'>Image url</Label>
                     <Input
-                    onChange={this.handleChange}
-                    type='select'
-                    name='category'
-                    id='modal-category'
-                    valid={this.state.validations.category}
-                    >
+                      type='text'
+                      id='url'
+                      name='url'
+                      onChange={this.handleChange}
+                      required
+                    />
+                    <FormText>Please provide a link to an image for your group.</FormText>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for='url'>Zipcode</Label>
+                    <Input
+                      type='text'
+                      id='url'
+                      name='url'
+                      onChange={this.handleChange}
+                      required
+                    />
+                    <FormText>Please provide a link to an image for your group.</FormText>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for='modal-category'>Select Category</Label>
+                      <Input
+                      onChange={this.handleChange}
+                      type='select'
+                      name='category'
+                      id='modal-category'
+                      valid={this.state.validations.category}
+                      >
                       {this.state.options.map((option, i) => {
                         return <option value={option} key={i}>{option}</option>
                       })}
                     </Input>
                     <FormText>Select a category for your group.</FormText>
                     <FormFeedback valid></FormFeedback>
-                </FormGroup>
+                  </FormGroup>
                   <Button type='submit' value='submit' color='primary'>
                     Create Group
                   </Button>

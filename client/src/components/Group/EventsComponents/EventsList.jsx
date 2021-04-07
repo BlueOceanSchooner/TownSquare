@@ -1,5 +1,6 @@
 import React from 'react';
 import EventsItem from './EventsItem';
+import CreateEventModal from '../../Events/CreateEventModal.jsx';
 
 import {
   Card, CardImg, CardText, CardBody,
@@ -11,13 +12,24 @@ class EventsList extends React.Component {
     super(props);
 
     this.state = {
+      isModalOpen: false
     }
+  }
+
+  toggleModal() {
+    this.setState({
+      isModalOpen: !this.state.isModalOpen
+    })
   }
 
   render() {
     const { events } = this.props;
     return (
       <div>
+        <div>
+          <Button onClick={this.toggleModal.bind(this)}>Add Event</Button>
+          <CreateEventModal group={events[0] ? events[0].group : []} isModalOpen={this.state.isModalOpen} toggleModal={this.toggleModal.bind(this)}/>
+        </div>
         <ListGroup>
           {events.map((event) => (
             <EventsItem key={event.event_id} event={event} />
