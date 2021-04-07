@@ -46,7 +46,7 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <Header isLoginOpen={this.state.isLoginOpen} toggleLogin={this.toggleLogin.bind(this)}/>
+          <Header userID={userID} isLoginOpen={this.state.isLoginOpen} toggleLogin={this.toggleLogin.bind(this)}/>
           <Chat userID={userID} onClick={this.chatOnClick} modal={this.state.chatModal} chatMemberID={this.state.chatMemberID}/>
 
           {/* Example use of MessageMember component */}

@@ -209,6 +209,105 @@
   object-fit: cover;
 }
 
+
+
+
+/* JOE'S STUFF DON'T TOUCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
+
+/*group browse page*/
+.group-list {
+  text-align: left;
+  width: 60%;
+  justify-self: center;
+}
+
+.group-list-container {
+  display: flex;
+  justify-content: center;
+}
+
+.group-heading-container {
+  display: flex;
+  justify-content: left;
+}
+
+
+.group-list-name {
+  color: inherit;
+  justify-self: left;
+  text-decoration: none;
+}
+
+.group-list-item {
+  padding: 5px;
+}
+
+.group-list-item:hover {
+  background-color: rgb(238, 238, 238);
+}
+
+.group-list-name:hover {
+  text-decoration: none;
+}
+
+.groups-header {
+  display: flex;
+  width: 90%;
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 10pxpx;
+  height: 60px;
+  align-content: center;
+  justify-content: center;
+  background-color: #6c757d;
+  color: #fff;
+  vertical-align: center;
+}
+
+.g-header {
+  display: inline-flex;
+  align-self: center;
+}
+
+
+.browse-group-btn:hover {
+  color: grey;
+}
+
+.group-select {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.filter-label {
+  margin-right: 5px;
+}
+
+.select-box-option {
+  height: 10px;
+}
+
+#logo {
+  margin-bottom: 5px;
+}
+
+.createGroupBtn {
+  margin-left: '10px';
+  margin-top: '16px';
+}
+/*event modal*/
+.modal-dialog {
+  width: 1000px;
+}
+.create-event-modal-body {
+  height: 460px;
+  overflow: scroll;
+}
+
+/* HERE ENDS JOE'S STUFF ::::) */
 .group-tab-header {
   margin-right: 20px;
 }
