@@ -174,7 +174,7 @@ class Header extends Component {
                       name='description'
                       onChange={this.handleChange}
                       value={this.state.description}
-                      invalid={this.state.validations.description ? 1 : undefined}
+                      valid={this.state.validations.description}
                       required
                     />
                     <FormText>Please provide a description of your group.</FormText>
