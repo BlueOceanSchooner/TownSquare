@@ -1,7 +1,6 @@
 const express = require('express');
 const session = require('express-session');
-const MySQLStore = require('express-mysql-session')(session);
-const connection = require('../db/connection.js')
+const sessionOptions = require('./auth/session.js');
 const cookieParser = require('cookie-parser');
 const app = express();
 const router = require('./routes/index.js');
@@ -15,28 +14,15 @@ app.use(express.json());
 app.set('json spaces', 2);
 app.use(express.static('client/dist'));
 
-app.use('/api', router);
+// Session Middleware
 app.use(cookieParser())
-var options = {
-  connectionLimit: 10,
-  host: 'localhost',
-  port: 3306,
-  database: process.env.DB_NAME,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-};
-var sessionStore = new MySQLStore({}, connection);
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,
-  store: sessionStore,
-  cookie: {
-    maxAge: 1000 * 60 * 60 * 24
-  }
-}));
+app.use(session(sessionOptions));
+
+// Authentication Middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/api', router);
 app.post('/signup', auth.signup);
 app.post('/login', auth.login);
 
