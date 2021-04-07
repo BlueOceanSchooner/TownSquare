@@ -167,12 +167,12 @@ const addGroup = (req, res) => {
   }
 
   const defaultImages = {
-    outdoors: 'assets/images/default-outdoors.jpg',
-    music: 'assets/images/default-music.jpb',
-    cooking: 'assets/images/default-cooking.jpg',
-    animals: 'assets/images/default-animals.jpg',
-    hobbies: 'assets/images/default-hobbies.jpg',
-    religious: 'assets/images/default-religious.jpg'
+    outdoors: '/assets/images/default-outdoors.jpg',
+    music: '/assets/images/default-music.jpb',
+    cooking: '/assets/images/default-cooking.jpg',
+    animals: '/assets/images/default-animals.jpg',
+    hobbies: '/assets/images/default-hobbies.jpg',
+    religious: '/assets/images/default-religious.jpg'
   };
 
   if (!process.env.hasOwnProperty('P_STACK_API_KEY')) {
