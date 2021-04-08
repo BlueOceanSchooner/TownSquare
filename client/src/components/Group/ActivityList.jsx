@@ -31,6 +31,7 @@ class Announcements extends React.Component {
           <TabList className="tab-list-container">
             <Tab className="tab-name">
               Upcoming Events
+              {/* Checking if current user is the group owner */}
               {!groupInfo.owner || groupInfo.owner.user_id !== currentUser.user_id ? '' : <Button onClick={this.toggleModal.bind(this)} className="add-event-button">+</Button>}
 
             </Tab>
@@ -42,10 +43,10 @@ class Announcements extends React.Component {
             <EventsList events={events} groupInfo={groupInfo} />
           </TabPanel>
           <TabPanel>
-            <AnnouncementsList posts={posts} groupInfo={groupInfo} currentUser={currentUser}/>
+            <AnnouncementsList posts={posts} groupInfo={groupInfo} currentUser={currentUser} />
           </TabPanel>
           <TabPanel>
-            <Forum forum={forum} groupId={groupId} currentUser={currentUser} user={user} />
+            <Forum forum={forum} groupId={groupId} currentUser={currentUser} user={user} groupInfo={groupInfo} />
           </TabPanel>
         </Tabs>
       </div>

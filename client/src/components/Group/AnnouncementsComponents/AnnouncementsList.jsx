@@ -38,9 +38,10 @@ class AnnouncementsList extends React.Component {
     return (
       <div className="announcements-container">
 
+        {/* Checking if current user is the group owner */}
         {!groupInfo.owner || groupInfo.owner.user_id !== currentUser.user_id ? '' :
           // Form container for the group owner to add an announcement
-          < Container className="group-new-announcement-section">
+          <Container className="group-new-announcement-section">
             <Form>
               <Card>
                 <CardBody>
@@ -59,13 +60,10 @@ class AnnouncementsList extends React.Component {
           </Container>
         }
 
-
         {/* List of announcements for everyone to see */}
-        {
-          posts.map((post) => (
-            <AnnouncementsItem key={post.post_id} post={post} />
-          ))
-        }
+        {posts.map((post) => (
+          <AnnouncementsItem key={post.post_id} post={post} />
+        ))}
       </div >
     );
   }

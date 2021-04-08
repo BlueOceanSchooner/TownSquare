@@ -16,7 +16,6 @@ const ParentMessage = ({ thread, groupId, currentUser, user }) => {
   const toggle = () => setIsOpen(!isOpen);
 
   const addChildPost = function () {
-    event.preventDefault();
     axios.post(`/api/groups/${thread.parent.group_id}/forum-reply`, {
       "group_id": groupId,
       "user_id": currentUser.user_id,
@@ -30,6 +29,7 @@ const ParentMessage = ({ thread, groupId, currentUser, user }) => {
       <Container>
         <Row>
           <Col>
+            {/* Parent forum post */}
             <Card className="forum-parent-card">
               <CardBody>
                 <div className="forum-card-header-section">
@@ -40,6 +40,7 @@ const ParentMessage = ({ thread, groupId, currentUser, user }) => {
                 <Button className="forum-reply-button" color="primary" onClick={toggle}>Reply</Button>
               </CardBody>
             </Card>
+            {/* Reply dropdown section */}
             <Collapse isOpen={isOpen}>
               <Form>
                 <Container>
@@ -59,6 +60,7 @@ const ParentMessage = ({ thread, groupId, currentUser, user }) => {
             </Collapse>
           </Col>
         </Row>
+        {/* Children reply posts to the parent */}
         {thread.children.map((child) => (
           <ChildMessage key={child.reply_id} child={child} />
         ))}
