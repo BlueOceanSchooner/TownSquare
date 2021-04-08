@@ -213,6 +213,8 @@ Include data in the following format:
 }
 ```
 
+If successful the data will be returned in the same format as when you GET request a group by group_id.
+
 ### Search For Group By Name
 
 GET request to /api/groups/search?name=searchTerm (replace "searchTerm" with name you are searching for)
@@ -299,21 +301,6 @@ GET request to /api/groups/:id/members
 ```
 [
   {
-    "user_id": 1,
-    "first_name": "Stephen",
-    "last_name": "Hyde"
-  },
-  {
-    "user_id": 2,
-    "first_name": "Fred",
-    "last_name": "Flintstone"
-  },
-  {
-    "user_id": 11,
-    "first_name": "Colleen",
-    "last_name": "McCohort"
-  },
-  {
     "user_id": 12,
     "first_name": "JiHang",
     "last_name": "McCohort"
@@ -321,16 +308,6 @@ GET request to /api/groups/:id/members
   {
     "user_id": 13,
     "first_name": "Adrian",
-    "last_name": "McCohort"
-  },
-  {
-    "user_id": 14,
-    "first_name": "Joe",
-    "last_name": "McCohort"
-  },
-  {
-    "user_id": 15,
-    "first_name": "Ross",
     "last_name": "McCohort"
   }
 ]
@@ -443,6 +420,7 @@ POST request to /api/groups/:group_id/forum with data having the structure:
 }
 ```
 
+If successful the data will be in the same format as when you request all posts, but not in an array.
 
 ### Add a Reply to a Top-Level Post on a Forum
 
@@ -456,6 +434,21 @@ POST request to /api/groups/:group_id/forum-reply with data having the structure
 }
 ```
 
+If successful the data returned will be in the format:
+
+```
+{
+    "reply_id": 3,
+    "posted": "2021-04-08T00:03:10.000Z",
+    "message": "That joke was dumb! Also you replied to your own post.",
+    "author": {
+        "user_id": 2,
+        "first_name": "Fred",
+        "last_name": "Flintstone",
+        "email": "fred@gmail.com"
+    }
+}
+```
 
 ### List ALL Events
 
@@ -497,58 +490,26 @@ GET request to /api/events
       "category": "religious"
     }
   },
-  {
-    "event_id": 4,
-    "title": "Outdoor Lecture",
-    "description": "A.G. Pennypacker will be giving a talk on his new book titled \"Horses: Man's Best Friend? The Case Against Dogs\"",
-    "address_1": "123 Park Street",
-    "address_2": "",
-    "city": null,
-    "state": "OH",
-    "zipcode": "44124",
-    "time": "2021-04-16T18:00:00.000Z",
-    "group": {
-      "group_id": 2,
-      "group_name": "Cleveland Horse Enthusiasts",
-      "description": "We are enthusiastic about horses!",
-      "category": "animals"
-    }
-  },
-  {
-    "event_id": 3,
-    "title": "Syntax Error Cookout",
-    "description": "We will be eating non-expired beef in the park",
-    "address_1": "123 Park Street",
-    "address_2": "",
-    "city": null,
-    "state": "OH",
-    "zipcode": "44124",
-    "time": "2021-04-20T21:30:00.000Z",
-    "group": {
-      "group_id": 1,
-      "group_name": "JavaScript Meet Up",
-      "description": "We meet up and write code",
-      "category": "religious"
-    }
-  },
-  {
-    "event_id": 5,
-    "title": "Cookout in the Park",
-    "description": "We will be hosting our annual cookout serving our four legged friends who didn't make it this year.",
-    "address_1": "123 Park Street",
-    "address_2": "",
-    "city": null,
-    "state": "OH",
-    "zipcode": "44124",
-    "time": "2021-04-28T22:00:00.000Z",
-    "group": {
-      "group_id": 2,
-      "group_name": "Cleveland Horse Enthusiasts",
-      "description": "We are enthusiastic about horses!",
-      "category": "animals"
-    }
-  }
+  ...
 ]
+```
+
+### Add an Event
+
+POST request to /api/events with data of the structure: (Note: Address MUST be valid!)
+
+```
+{
+    "group_id": 1,
+    "title": "Underwater Whiteboarding",
+    "description": "AKA Waterboarding",
+    "address_1": "1385 Merry Oaks Trail",
+    "address_2": "",
+    "city": "Chagrin Falls",
+    "state": "OH",
+    "zipcode": "44022",
+    "event_date": "2021-05-28 21:15:00"
+}
 ```
 
 ### Data for One Specific Event
@@ -584,34 +545,6 @@ attending: 1 = yes they are attending
 attending: 0 = they responded no, they are not attending
 ```
 [
-  {
-    "user_id": 1,
-    "first_name": "Stephen",
-    "last_name": "Hyde",
-    "email": "stephen@friend.horse",
-    "attending": 1
-  },
-  {
-    "user_id": 11,
-    "first_name": "Colleen",
-    "last_name": "McCohort",
-    "email": "colleen@gmail.com",
-    "attending": 1
-  },
-  {
-    "user_id": 12,
-    "first_name": "JiHang",
-    "last_name": "McCohort",
-    "email": "jihang@gmail.com",
-    "attending": 0
-  },
-  {
-    "user_id": 13,
-    "first_name": "Adrian",
-    "last_name": "McCohort",
-    "email": "adrain@gmail.com",
-    "attending": 1
-  },
   {
     "user_id": 14,
     "first_name": "Joe",
