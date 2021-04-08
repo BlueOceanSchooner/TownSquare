@@ -23,12 +23,12 @@ class EventsList extends React.Component {
   }
 
   render() {
-    const { events } = this.props;
+    const { groupInfo, events } = this.props;
     return (
       <div>
         <div>
           <Button onClick={this.toggleModal.bind(this)}>Add Event</Button>
-          <CreateEventModal group={events[0] ? events[0].group : []} isModalOpen={this.state.isModalOpen} toggleModal={this.toggleModal.bind(this)}/>
+          <CreateEventModal group={groupInfo} isModalOpen={this.state.isModalOpen} toggleModal={this.toggleModal.bind(this)}/>
         </div>
         <ListGroup>
           {events.map((event) => (
