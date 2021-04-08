@@ -3,14 +3,9 @@ import {
   Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button
 } from 'reactstrap';
+import MembersModal from '../Members/MembersModal.jsx';
 
-// uncomment this line to implement MembersModal in Group Page
-// import MembersModal from '../Members/MembersModal.jsx';
-
-const GroupInfo = ({ groupInfo, members }) => {
-
-// uncomment this line and delete previous line to implement MembersModal in Group Page
-// const GroupInfo = ({ groupInfo, members, userID, memberOnClick }) => {
+const GroupInfo = ({ groupInfo, members, userID, memberOnClick }) => {
 
   return (
     <div>
@@ -19,14 +14,13 @@ const GroupInfo = ({ groupInfo, members }) => {
         <CardBody>
           <CardTitle tag="h5">{groupInfo.group_name}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
-            <div>
+            {/* <div>
               {members.map((member) => (
                 <span className="group-member" key={member.user_id}>{member.first_name}</span>
               ))}
-            </div>
+            </div> */}
 
-            {/* uncomment this line and delete previous line to implement MembersModal in Group Page */}
-            {/* <MembersModal event={false} name={groupInfo.group_name} users={members} userID={userID} messageMemberOnClick={memberOnClick} /> */}
+            <MembersModal event={false} name={groupInfo.group_name} users={members} userID={userID} messageMemberOnClick={memberOnClick} />
 
           </CardSubtitle>
           <CardText>{groupInfo.description}</CardText>

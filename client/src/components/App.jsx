@@ -61,9 +61,8 @@ class App extends React.Component {
             const group_id = props.match.params.id;
             // replace <h1> tags with your component
             return (
-              <GroupPage groupId={group_id} userId={userID}/>
-              // uncomment this line and delete previous line to implement MembersModal in Group Page
-              // <GroupPage groupId={group_id} userID={userID} memberOnClick={this.chatOnClick}/>
+              // <GroupPage groupId={group_id} userId={userID}/>
+              <GroupPage groupId={group_id} userID={userID} memberOnClick={this.chatOnClick}/>
             );
           }} />
           <Route path="/signup">
