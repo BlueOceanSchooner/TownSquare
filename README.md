@@ -11,7 +11,8 @@ All API endpoints begin with /api.
   - [GET Data for Group by group_id](#info-for-specific-group)
   - [GET Search for Group by Name](#search-for-group-by-name)
   - [GET List Groups by Category](#list-groups-by-category)
-  - [GET List Groups for User](#list-groups-for-specific-user)
+  - [GET List Groups User is Member Of](#list-groups-user-is-member-of)
+  - [GET List Groups User is Owner Of](#list-groups-user-is-owner-of)
   - [GET List of Members of a Group](#members-in-specific-group)
   - [POST Create Group](#create-group)
 - [Events](#Events)
@@ -166,26 +167,50 @@ Same format as data at /api/groups
 
 
 
-### List Groups for specific user:
+### List Groups User is Member Of
 
-GET request to /api/users/:id/groups
+GET request to /api/users/:id/groups-member
 
 ```
 [
   {
     "group_id": 1,
-    "image_url": "assets/images/default-religious.jpg",
+    "image_url": "/assets/images/default-religious.jpg",
     "group_name": "JavaScript Meet Up",
-    "description": "We meet up and write code",
-    "category": "religious"
+    "description": "We like to code",
+    "category": "religious",
+    "owner": {
+      "user_id": 1,
+      "first_name": "Stephen",
+      "last_name": "Hyde",
+      "email": "stephen@friend.horse"
+    }
   },
+  ...
+]
+
+```
+
+### List Groups User is Owner Of
+
+GET request to /api/users/:id/groups-owned
+
+```
+[
   {
-    "group_id": 2,
-    "image_url": "assets/images/default-animals.jpg",
-    "group_name": "Cleveland Horse Enthusiasts",
-    "description": "We are enthusiastic about horses!",
-    "category": "animals"
-  }
+    "group_id": 1,
+    "image_url": "/assets/images/default-religious.jpg",
+    "group_name": "JavaScript Meet Up",
+    "description": "We like to code",
+    "category": "religious",
+    "owner": {
+      "user_id": 1,
+      "first_name": "Stephen",
+      "last_name": "Hyde",
+      "email": "stephen@friend.horse"
+    }
+  },
+  ...
 ]
 
 ```
