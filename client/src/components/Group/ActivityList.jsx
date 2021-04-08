@@ -11,7 +11,7 @@ class Announcements extends React.Component {
   }
 
   render() {
-    const { events, posts } = this.props;
+    const { groupInfo, events, posts } = this.props;
     return (
       <div className="activities-container">
         <Tabs selectedTabClassName="group-tab-selected">
@@ -22,7 +22,7 @@ class Announcements extends React.Component {
           </TabList>
 
           <TabPanel>
-            <EventsList events={events} />
+            <EventsList groupInfo={groupInfo} events={events} />
           </TabPanel>
           <TabPanel>
             <AnnouncementsList posts={posts} />

@@ -167,12 +167,12 @@ const addGroup = (req, res) => {
   }
 
   const defaultImages = {
-    outdoors: 'assets/images/default-outdoors.jpg',
-    music: 'assets/images/default-music.jpb',
-    cooking: 'assets/images/default-cooking.jpg',
-    animals: 'assets/images/default-animals.jpg',
-    hobbies: 'assets/images/default-hobbies.jpg',
-    religious: 'assets/images/default-religious.jpg'
+    outdoors: '/assets/images/default-outdoors.jpg',
+    music: '/assets/images/default-music.jpb',
+    cooking: '/assets/images/default-cooking.jpg',
+    animals: '/assets/images/default-animals.jpg',
+    hobbies: '/assets/images/default-hobbies.jpg',
+    religious: '/assets/images/default-religious.jpg'
   };
 
   if (!process.env.hasOwnProperty('P_STACK_API_KEY')) {
@@ -210,7 +210,33 @@ const addGroup = (req, res) => {
             errors: [err]
           });
         }
-        return res.json(results);
+        const group_id = results.insertId;
+        connection.query('SELECT g.group_id, g.image_url, g.group_name, g.description, g.category, g.owner_id, u.first_name, u.last_name, u.email FROM groups_table g LEFT JOIN users u ON g.owner_id = u.user_id WHERE g.group_id = ?', [group_id], (err, results) => {
+          if (err) {
+            return res.json({
+              error: err
+            });
+          }
+          if (results.length === 1) {
+            const row = results[0];
+            return res.json({
+              group_id: row.group_id,
+              image_url: row.image_url,
+              group_name: row.group_name,
+              description: row.description,
+              category: row.category,
+              owner: {
+                user_id: row.owner_id,
+                first_name: row.first_name,
+                last_name: row.last_name,
+                email: row.email
+              }
+            });
+          }
+          return res.json({
+            error: `no group found with id ${user_id}`
+          });
+        });
       });
     })
     .catch(error => {

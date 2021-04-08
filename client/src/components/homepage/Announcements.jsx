@@ -10,6 +10,16 @@ class Announcements extends Component {
   }
 
   render() {
+
+    const { announcements, groups } = this.props;
+    const announcementItems = [];
+    let keyCount = 0;
+    announcements.forEach((a) => {
+      announcementItems.push((
+        <AnnouncementItem key={keyCount++} announcement={a} groups={groups}/>
+      ));
+    });
+
     return (
       <div className="col ml-5">
         <div className="row">
@@ -17,8 +27,7 @@ class Announcements extends Component {
             <h5>RECENT ANNOUNCEMENTS</h5>
           </div>
         </div>
-        <AnnouncementItem />
-        <AnnouncementItem />
+        {announcementItems}
       </div>
     );
   }

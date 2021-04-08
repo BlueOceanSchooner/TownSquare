@@ -94,20 +94,17 @@ class App extends React.Component {
       <Router>
         <div>
           <Header
+            userID={userID}
             isLoginOpen={this.state.isLoginOpen}
             toggleLogin={this.toggleLogin}
             loggedIn={this.state.loggedIn}
             currentUser={this.state.currentUser}
             handleLogout={this.handleLogout}/>
           <Chat userID={userID} onClick={this.chatOnClick} modal={this.state.chatModal} chatMemberID={this.state.chatMemberID}/>
-
-          {/* Example use of MessageMember component */}
-          {/* <MessageMember name={"Jane Waterson"} id={8} onClick={this.chatOnClick}/> */}
-
         </div>
         <Switch>
           <Route exact path="/">
-            <Homepage />
+            <Homepage userID={userID} chatOnClick={this.chatOnClick} />
           </Route>
           <Route exact path="/login">
             <LoginPage />

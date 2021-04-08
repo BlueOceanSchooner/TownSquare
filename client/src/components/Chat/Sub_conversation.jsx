@@ -16,32 +16,34 @@ class Sub_conversation extends React.Component {
   }
 
   renderConversationMessages(chats) {
-    return chats.map(message => {
-      return (
-        <div key={message.dm_id} className={message.sender.user_id === this.props.userID ? "conversation-you" : "conversation-other"}>
-        {message.sender.user_id === this.props.userID ? null : <i className="user-picture fas fa-user"></i>}
-        <div className="conversation-content">
-          <span className="name">
-            {`${message.sender.first_name} ${message.sender.last_name}`}
-          </span>
-          <br/>
-          <span className="timestamp">
-            {this.props.getProperTimestamp(message.timestamp)}
-          </span>
-          <br />
-          <span className="message-content">
-            {message.message}
-          </span>
-        </div>
-          {message.sender.user_id !== this.props.userID ? null : <i className="user-picture fas fa-user"></i>}
-        </div>
-      )
-    })
+    if (chats) {
+      return chats.map(message => {
+        return (
+          <div key={message.dm_id} className={message.sender.user_id === this.props.userID ? "conversation-you" : "conversation-other"}>
+          {message.sender.user_id === this.props.userID ? null : <i className="user-picture fas fa-user"></i>}
+          <div className="conversation-content">
+            <span className="name">
+              {`${message.sender.first_name} ${message.sender.last_name}`}
+            </span>
+            <br/>
+            <span className="timestamp">
+              {this.props.getProperTimestamp(message.timestamp)}
+            </span>
+            <br />
+            <span className="message-content">
+              {message.message}
+            </span>
+          </div>
+            {message.sender.user_id !== this.props.userID ? null : <i className="user-picture fas fa-user"></i>}
+          </div>
+        )
+      });
+    }
+    return null;
   }
 
   render() {
     const { userID, activeName, chats, active, newRecipient, newRecipientID, allUsers, closeNewMessage, memberNameClick, newMessage, newMessageChats, changeNewRecipient, updateNewMessage, sendNewMessage } = this.props;
-
     if (newRecipient) {
       const options = allUsers.filter(user => user.user_id !== userID).map(user => {
         return (

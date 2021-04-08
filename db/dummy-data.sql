@@ -53,7 +53,7 @@ CREATE TABLE `dms` (
   `sent` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `message` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`dm_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -84,8 +84,9 @@ CREATE TABLE `events` (
   `state` char(2) DEFAULT NULL,
   `zipcode` char(5) DEFAULT NULL,
   `event_date` datetime DEFAULT NULL,
+  `location` point NOT NULL /*!80003 SRID 4326 */,
   PRIMARY KEY (`event_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +95,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
-INSERT INTO `events` VALUES (1,1,'Group Coding at Stephen\'s','We\'re gonna write some JavaScript while watching Sister Wives','1600 Pennsylvania Avenue','Apartment 3',NULL,'OH','44124','2021-04-10 20:00:00'),(2,1,'Extra Self Assessment','We miss having self assessments, so we\'re gonna make some for ourselves','1600 Pennsylvania Avenue','Apartment 3',NULL,'OH','44124','2021-04-12 16:00:00'),(3,1,'Syntax Error Cookout','We will be eating non-expired beef in the park','123 Park Street','',NULL,'OH','44124','2021-04-20 17:30:00'),(4,2,'Outdoor Lecture','A.G. Pennypacker will be giving a talk on his new book titled \"Horses: Man\'s Best Friend? The Case Against Dogs\"','123 Park Street','',NULL,'OH','44124','2021-04-16 14:00:00'),(5,2,'Cookout in the Park','We will be hosting our annual cookout serving our four legged friends who didn\'t make it this year.','123 Park Street','',NULL,'OH','44124','2021-04-28 18:00:00');
+INSERT INTO `events` VALUES (1,1,'Uncaught Reference Error Themed Party','Please wear a costume and it will be a fun party. I am just so tired. But really it would be cool to see everyone in a costume','1400 Ranchland Drive','','Mayfield Heights','OH','44124','2021-05-08 12:00:00',0xE61000000101000000174850FC185E54C0A0DE8C9AAFC24440),(2,2,'Hikathon to Raise Awareness about Photosynthesis','The whole gang will be there - dont miss it!','8361 Canterbury Court','','Chagrin Falls','OH','44023','2021-05-08 12:00:00',0xE610000001010000007EE4D6A4DB5854C05AF5B9DA8AB74440),(3,3,'Zucchini Eating Contest','Be there or be square','87 West Street','','Chagrin Falls','OH','44022','2021-05-08 12:00:00',0xE61000000101000000B16EBC3B325954C0DE59BBED42B74440),(4,1,'Social Hack Night','You know the deal','44 North Main Street','','Chagrin Falls','OH','44022','2021-05-10 20:00:00',0xE6100000010100000093FE5E0A0F5954C0D862B7CF2AB74440),(5,1,'Sleep','If its not on the schedule then you probably wont do it','1420 Golden Gate Blvc','','Mayfield Heights','OH','44124','2021-05-14 22:30:00',0xE6100000010100000033A5F5B7045D54C0323D618907C24440),(6,1,'Underwater Whiteboarding','AKA Waterboarding','1385 Merry Oaks Trail','','Chagrin Falls','OH','44022','2021-05-28 21:15:00',0xE610000001010000007EE4D6A4DB5854C05AF5B9DA8AB74440);
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -112,7 +113,7 @@ CREATE TABLE `forum` (
   `posted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `message` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`forum_post_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,7 +141,7 @@ CREATE TABLE `forum_replies` (
   `posted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `message` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`reply_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -170,7 +171,7 @@ CREATE TABLE `groups_table` (
   `location` point NOT NULL /*!80003 SRID 4326 */,
   `image_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,7 +180,22 @@ CREATE TABLE `groups_table` (
 
 LOCK TABLES `groups_table` WRITE;
 /*!40000 ALTER TABLE `groups_table` DISABLE KEYS */;
-INSERT INTO `groups_table` VALUES (1,'JavaScript Meet Up','We like to code','religious',1,'44124',0xE610000001010000009CDD5A26C35D54C0E8A38CB800C04440,'assets/images/default-religious.jpg'),(2,'Cleveland Horse Enthusiasts','We are enthusiastic about horses','animals',2,'44128',0xE61000000101000000AB933314776254C0BABA63B14DB84440,'assets/images/default-animals.jpg'),(3,'Chicago Hikers Association','We hike in Chicago','outdoors',11,'60601',0xE610000001010000009BC6F65AD0E755C07D06D49B51F14440,'assets/images/default-outdoors.jpg'),(4,'Philly Musicians','We music in Philly','music',14,'19103',0xE610000001010000008670CCB227CB52C09F3E027FF8F94340,'assets/images/default-music.jpb'),(5,'Pennsylvannia Cookers','We cook in Pennsylvannia','cooking',12,'15001',0xE610000001010000005CE84A04AA1454C06AC2F693314C4440,'assets/images/default-cooking.jpg'),(6,'DOTA 4 Gamers','We Dota in Michigan','hobbies',13,'49503',0xE610000001010000006F4BE482336A55C0EC6987BF267B4540,'assets/images/default-hobbies.jpg'),(7,'Okalahoma Cattle Ranglers','We rangle in Okalahoma','outdoors',15,'73101',0xE610000001010000004016A243E048C8BF1EA7E8482EAF1640,'assets/images/default-outdoors.jpg');
+INSERT INTO `groups_table` VALUES (1,'JavaScript Meet Up','We like to code','religious',1,'44124',0xE610000001010000009CDD5A26C35D54C0E8A38CB800C04440,'/assets/images/default-religious.jpg'),
+(2,'Cleveland Hikers','You can hike if you want to.','outdoors',1,'44124',0xE610000001010000009CDD5A26C35D54C0E8A38CB800C04440,'/assets/images/default-outdoors.jpg'),
+(3,'NE OH Zucchini Addict Recovery Group','Nobody should have to go through Zucchini recovery alone.','hobbies',1,'44124',0xE610000001010000009CDD5A26C35D54C0E8A38CB800C04440,'/assets/images/default-hobbies.jpg'),
+(4,'Cleveland Bird Watchers','Come watch birds with us.','animals',1,'44124',0xE610000001010000009CDD5A26C35D54C0E8A38CB800C04440,'/assets/images/default-animals.jpg'),
+(5,'Cleveland Moose Watchers','Come watch moose with us.','animals',1,'44124',0xE610000001010000009CDD5A26C35D54C0E8A38CB800C04440,'/assets/images/default-animals.jpg'),
+(6,'Cleveland Horse Enthusiasts','We are enthusiastic about horses','animals',2,'44128',0xE61000000101000000AB933314776254C0BABA63B14DB84440,'/assets/images/default-animals.jpg'),
+(7,'Chicago Hikers Association','We hike in Chicago','outdoors',11,'60601',0xE610000001010000009BC6F65AD0E755C07D06D49B51F14440,'/assets/images/default-outdoors.jpg'),
+(8,'Chicago Pretzel Magicians','We pretzle magic in Chicago','hobbies',11,'60601',0xE610000001010000009BC6F65AD0E755C07D06D49B51F14440,'/assets/images/default-hobbies.jpg'),
+(9,'Philly Musicians','We music in Philly','music',14,'19103',0xE610000001010000008670CCB227CB52C09F3E027FF8F94340,'/assets/images/default-music.jpg'),
+(10,'Milly Phusicians','We phusic in Milly','hobbies',14,'19103',0xE610000001010000008670CCB227CB52C09F3E027FF8F94340,'/assets/images/default-hobbies.jpg'),
+(11,'Pennsylvannia Cookers','We cook in Pennsylvannia','cooking',12,'15001',0xE610000001010000005CE84A04AA1454C06AC2F693314C4440,'/assets/images/default-cooking.jpg'),
+(12,'Pennsylvannia Morticians','We embalm in Pennsylvannia','hobbies',12,'15001',0xE610000001010000005CE84A04AA1454C06AC2F693314C4440,'/assets/images/default-hobbies.jpg'),
+(13,'DOTA 4 Gamers','We Dota in Michigan','hobbies',13,'49503',0xE610000001010000006F4BE482336A55C0EC6987BF267B4540,'/assets/images/default-hobbies.jpg'),
+(14,'DOTA 5 Gamers','We Dota5 in Michigan','hobbies',13,'49503',0xE610000001010000006F4BE482336A55C0EC6987BF267B4540,'/assets/images/default-hobbies.jpg'),
+(15,'Okalahoma Cattle Ranglers','We rangle in Okalahoma','animals',15,'73101',0xE610000001010000004016A243E048C8BF1EA7E8482EAF1640,'/assets/images/default-animals.jpg'),
+(16,'Okalahoma Tumbleweeders','We rangle weeds in Okalahoma','outdoors',15,'73101',0xE610000001010000004016A243E048C8BF1EA7E8482EAF1640,'/assets/images/default-outdoors.jpg');
 /*!40000 ALTER TABLE `groups_table` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -222,7 +238,7 @@ CREATE TABLE `posts` (
   `title` varchar(255) DEFAULT NULL,
   `body` text,
   PRIMARY KEY (`post_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -231,9 +247,7 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` VALUES
-(1, 1, 1, '2021-04-05 14:00:00','Dont forget to bring your own food to the cookout!','Last time we had a cookout some people forgot to bring their own food (Jane), and then caused a scene (Jane). Lets not have that happen again.'),
-(2, 1, 1, '2021-04-05 14:00:00', 'Thank You Everyone Who Attended Last Months Coding Exercise','It was dope');
+INSERT INTO `posts` VALUES (1,1,1,'2021-04-05 14:00:00','Dont forget to bring your own food to the cookout!','Last time we had a cookout some people forgot to bring their own food (Jane), and then caused a scene (Jane). Lets not have that happen again.'),(2,1,1,'2021-04-05 14:00:00','Thank You Everyone Who Attended Last Months Coding Exercise','It was dope');
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -251,7 +265,7 @@ CREATE TABLE `users` (
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -260,22 +274,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES
-(1,'Stephen','Hyde','stephen@friend.horse','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
-(2,'Fred','Flintstone','fred@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
-(3,'Sam','Smith','arbyslover@email.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
-(4,'Dante','Alghieri','author@inferno.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
-(5,'Thomas','McHorseradish','thomas@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
-(6,'Billy','Jones','billy@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
-(7,'Timmy','McLastname','timmy@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
-(8,'Jane','Waterson','jane@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
-(9,'Alfred','Freeman','alf@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
-(10,'Ezekial','McHarrypotter','em@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
-(11,'Colleen','McCohort','colleen@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
-(12,'JiHang','McCohort','jihang@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
-(13,'Adrian','McCohort','adrian@spelledright.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
-(14,'Joe','McCohort','joe@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),
-(15,'Ross','McCohort','ross@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2');
+INSERT INTO `users` VALUES (1,'Stephen','Hyde','stephen@friend.horse','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(2,'Fred','Flintstone','fred@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(3,'Sam','Smith','arbyslover@email.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(4,'Dante','Alghieri','author@inferno.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(5,'Thomas','McHorseradish','thomas@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(6,'Billy','Jones','billy@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(7,'Timmy','McLastname','timmy@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(8,'Jane','Waterson','jane@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(9,'Alfred','Freeman','alf@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(10,'Ezekial','McHarrypotter','em@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(11,'Colleen','McCohort','colleen@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(12,'JiHang','McCohort','jihang@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(13,'Adrian','McCohort','adrian@spelledright.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(14,'Joe','McCohort','joe@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(15,'Ross','McCohort','ross@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -288,4 +287,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-07 14:51:54
+-- Dump completed on 2021-04-07 19:39:59
