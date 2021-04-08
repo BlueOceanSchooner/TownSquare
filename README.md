@@ -15,6 +15,8 @@ All API endpoints begin with /api.
   - [GET List Groups User is Owner Of](#list-groups-user-is-owner-of)
   - [GET List of Members of a Group](#members-in-specific-group)
   - [POST Create Group](#create-group)
+  - [POST Add User to Group](#add-user-to-group)
+  - [POST Remove User From Group](#remove-user-from-group)
 - [Events](#Events)
   - [GET List All Events](#list-all-events)
   - [GET Events in Specific Group](#events-in-specific-group)
@@ -254,6 +256,42 @@ Include data in the following format:
 
 If successful the data will be returned in the same format as when you GET request a group by group_id.
 
+
+### Add User to Group
+
+POST request to /api/users/:user_id/groups/:group_id
+
+Include data in the following format:
+```
+{
+  "status": 1 // 1 means add user to group
+}
+```
+
+If successful the data returned will be of type:
+```
+{
+  success: true
+}
+```
+
+### Remove User from Group
+
+POST request to /api/users/:user_id/groups/:group_id
+
+Include data in the following format:
+```
+{
+  "status": 0 // 0 means remove from group
+}
+```
+
+If successful the data returned will be of type:
+```
+{
+  success: true
+}
+```
 
 -------------------------------
 ## Events
