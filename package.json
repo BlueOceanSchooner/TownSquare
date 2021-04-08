@@ -38,6 +38,7 @@
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
     "react": "^17.0.2",
     "react-datetime": "^3.0.4",
