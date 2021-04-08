@@ -5,6 +5,8 @@ import { Button, Modal, ModalHeader, ModalBody, Input } from 'reactstrap';
 import Sub_previews from './Sub_previews.jsx';
 import Sub_conversation from './Sub_conversation.jsx';
 
+var userID = 0;
+
 class Chat extends React.Component {
   constructor(props) {
     super(props);
@@ -46,6 +48,21 @@ class Chat extends React.Component {
       }
     } else if (props.modal && !this.props.modal) {
       this.setState({ active: 0 });
+    }
+    if (Number(this.props.userID) !== Number(userID)) {
+      this.setState({
+        chats: {},
+        chatIDsOrderedByTime: [],
+        active: 0,
+        allUsers: [],
+        newRecipient: false,
+        newRecipientChanged: false,
+        newRecipientID: null,
+        newMessageViaNameClickClose: false,
+        newMessageChats: [],
+        newMessage: ''
+      });
+      userID = this.props.userID;
     }
   }
 
