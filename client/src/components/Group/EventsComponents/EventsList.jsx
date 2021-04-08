@@ -15,8 +15,6 @@ class EventsList extends React.Component {
 
   render() {
     const { events, groupInfo } = this.props;
-    console.log('events', events);
-    console.log('groupInfo', groupInfo);
     return (
       <div>
         <ListGroup>
