@@ -50,7 +50,15 @@ class App extends React.Component {
       })
     })
     .catch(err => {
-      console.log(err)
+      this.setState({
+        currentUser: {
+          user_id: 0,
+          first_name: '',
+          last_name: '',
+          email: '',
+        },
+        loggedIn: false
+      })
     })
   }
 
