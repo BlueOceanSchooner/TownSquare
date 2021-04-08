@@ -3,8 +3,10 @@ import {
   Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button
 } from 'reactstrap';
+import MembersModal from '../Members/MembersModal.jsx';
 
-const GroupInfo = ({ groupInfo, members }) => {
+const GroupInfo = ({ groupInfo, members, userID, memberOnClick }) => {
+
   return (
     <div>
       <Card>
@@ -12,11 +14,14 @@ const GroupInfo = ({ groupInfo, members }) => {
         <CardBody>
           <CardTitle tag="h5">{groupInfo.group_name}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
-            <div>
+            {/* <div>
               {members.map((member) => (
                 <span className="group-member" key={member.user_id}>{member.first_name}</span>
               ))}
-            </div>
+            </div> */}
+
+            <MembersModal event={false} name={groupInfo.group_name} users={members} userID={userID} messageMemberOnClick={memberOnClick} />
+
           </CardSubtitle>
           <CardText>{groupInfo.description}</CardText>
           <Button>Join!</Button>

@@ -23,7 +23,7 @@ class GroupCarousel extends Component {
 
     return (
       <div className="row mb-3 mt-3">
-        <div className="col-12 text-center text-white bg-primary pt-2">
+        <div className="col-12 text-center text-white bg-secondary rounded-pill pt-2">
           <h5>MY GROUPS</h5>
         </div>
         <div className="row justify-content-md-center">

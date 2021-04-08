@@ -81,7 +81,9 @@ class GroupPage extends React.Component {
         {/* Group Info */}
         <Row>
           <Col>
-            <GroupInfo groupInfo={groupInfo} members={members} />
+            {/* <GroupInfo groupInfo={groupInfo} members={members} /> */}
+            <GroupInfo groupInfo={groupInfo} members={members} userID={this.props.userID} memberOnClick={this.props.memberOnClick}/>
+
           </Col>
         </Row>
         {/* Activities Tabs */}
