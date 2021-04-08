@@ -78,6 +78,7 @@ const addPost = (req, res) => {
         post_id: data.post_id,
         group_id: data.group_id,
         created_at: data.created_at,
+        title: data.title,
         body: data.body,
         description: data.description,
         author: {
