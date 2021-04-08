@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Member = ({ name, id, onClick, userID }) => {
-  if (id === userID) {
+  if (Number(id) === Number(userID)) {
     return (
       <div>
         {name}
