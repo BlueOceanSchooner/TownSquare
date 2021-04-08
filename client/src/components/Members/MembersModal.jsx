@@ -1,80 +1,121 @@
 import React from 'react';
-import Member from './MessageMember.jsx';
+import MessageMember from './MessageMember.jsx';
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 
-const MembersModal = ({ event, name, users }) => {
-  if (event) {
-    var ending = ` going to ${name}`;
-  } else {
-    var ending = ` part of ${name}`;
+class MembersModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modal: false
+    }
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
-  if (users.length === 1) {
-    var names = `${user.first_name} ${user.last_name} is`;
-  } else if (users.length < 4) {
-    var names = users.reduce((names, user, index) => {
-      var name = `${user.first_name} ${user.last_name}`;
-      if (index === users.length - 2) {
-        return names + `${name}, and `
-      }
-      if (index === users.lenth - 1) {
-        return names + `${name} are`
-      }
-      return names + `${name}, `
-    }, '')
-  } else {
-    var names = `${users[0].first_name} ${users[0].last_name}, ${users[1].first_name} ${users[1].last_name}, and ${users.length - 2} others are`
+  toggleModal() {
+    this.setState({ modal: !this.state.modal });
   }
 
-  var description = names + ending;
+  render() {
+    const { users, name, event, userID, messageMemberOnClick } = this.props;
 
-  // console.log(description);
-  return (
-    <div>
-      {description}
-         {/* <i className="fas fa-comment-alt" onClick={onClick}></i>
-        <Modal isOpen={this.props.modal} toggle={onClick} className={"chat-modal"}>
-          <ModalHeader className={"modal-header"} toggle={onClick}>
-            Messages
-          </ModalHeader>
-          <ModalBody className={"modal-body"}>
+    if (!users.length) {
+      return null;
+    }
 
-            <Sub_previews
-              userID={this.props.userID}
-              chats={this.state.chats}
-              active={activeID}
-              changeActiveConversation={this.changeActiveConversation}
-              openNewMessage={this.openNewMessage}
-              newRecipient={newRecipient}
-              chatIDsOrderedByTime={this.state.chatIDsOrderedByTime}
-              getProperTimestamp={this.getProperTimestamp}
-            />
+    if (event) {
+      var ending = `going to ${name}`;
+    } else {
+      if (users.length === 1) {
+        var ending = `a member of ${name}`;
+      } else {
+        var ending = `members of ${name}`;
+      }
+    }
 
-            <Sub_conversation
-              userID={this.props.userID}
-              activeName={activeName}
-              chats={this.state.chats}
-              active={activeID}
-              newRecipient={newRecipient}
-              newRecipientID={this.state.newRecipientID}
-              allUsers={this.state.allUsers}
-              closeNewMessage={this.closeNewMessage}
-              memberNameClick={Boolean(this.props.chatMemberID) && !this.state.newMessageViaNameClickClose && !this.state.newRecipientChanged}
-              newMessage={this.state.newMessage}
-              newMessageChats={this.state.newMessageChats}
-              changeNewRecipient={this.changeNewRecipient}
-              updateNewMessage={this.updateNewMessage}
-              sendNewMessage={this.sendNewMessage}
-              getProperTimestamp={this.getProperTimestamp}
-            />
+    if (users.length === 1) {
+      const name = `${users[0].first_name} ${users[0].last_name}`
+      return (
+        <div>
+          <MessageMember style={{ display: "inline-block" }} name={name} id={users[0].user_id} onClick={messageMemberOnClick} userID={userID}/>
+          <span>
+            {users[0].user_id === userID ? ` are ${ending}` : ` is ${ending}`}
+          </span>
+        </div>
+      )
+    }
 
-          </ModalBody>
-        </Modal>
+    if (users.length === 2) {
+      if (users.some(user => user.user_id === userID)) {
+        var first = users.filter(user => user.user_id === userID)[0];
+        var second = users.filter(user => user.user_id !== userID)[0];
+      } else {
+        var first = users[0];
+        var second = users[1];
+      }
+      return (
+        <div>
+          <MessageMember style={{ display: "inline-block" }} name={`${first.first_name} ${first.last_name}`} id={first.user_id} onClick={messageMemberOnClick} userID={userID}/>
+          {' and '}
+          <MessageMember style={{ display: "inline-block" }} name={`${second.first_name} ${second.last_name}`} id={second.user_id} onClick={messageMemberOnClick} userID={userID}/>
+          {` are ${ending}`}
+        </div>
+      )
+    }
+
+    if (users.length === 3) {
+      if (users.some(user => user.user_id === userID)) {
+        var first = users.filter(user => user.user_id === userID)[0];
+        var second = users.filter(user => user.user_id !== userID)[0];
+        var third = users.filter(user => user.user_id !== userID)[1];
+      } else {
+        var first = users[0];
+        var second = users[1];
+        var third = users[2];
+      }
+      return (
+        <div>
+          <MessageMember style={{ display: "inline-block" }} name={`${first.first_name} ${first.last_name}`} id={first.user_id} onClick={messageMemberOnClick} userID={userID}/>
+          {', '}
+          <MessageMember style={{ display: "inline-block" }} name={`${second.first_name} ${second.last_name}`} id={second.user_id} onClick={messageMemberOnClick} userID={userID}/>
+          {', and '}
+          <MessageMember style={{ display: "inline-block" }} name={`${third.first_name} ${third.last_name}`} id={third.user_id} onClick={messageMemberOnClick} userID={userID}/>
+          {` are ${ending}`}
+        </div>
+      )
+    }
+
+    if (users.some(user => user.user_id === userID)) {
+      var first = users.filter(user => user.user_id === userID)[0];
+      var second = users.filter(user => user.user_id !== userID)[0];
+    } else {
+      var first = users[0];
+      var second = users[1];
+    }
+
+    return (
+      <div>
+        <MessageMember style={{ display: "inline-block" }} name={`${first.first_name} ${first.last_name}`} id={first.user_id} onClick={messageMemberOnClick} userID={userID}/>
+        {', '}
+        <MessageMember style={{ display: "inline-block" }} name={`${second.first_name} ${second.last_name}`} id={second.user_id} onClick={messageMemberOnClick} userID={userID}/>
+        {', and '}
+        <span onClick={this.toggleModal} className="members-description" style={{ cursor: "pointer", textDecoration: "underline" }}>
+          {`${users.length - 2} others`}
+          <Modal isOpen={this.state.modal} toggle={this.toggleModal} className={"members-modal"}>
+            <ModalHeader toggle={this.toggleModal}>
+              {`Members in ${name}`}
+            </ModalHeader>
+            <ModalBody>
+              {users.some(user => user.user_id === userID) ?
+              <MessageMember style={{ display: "inline-block" }} name={''} id={userID} onClick={messageMemberOnClick} userID={userID}/>
+              : null}
+              {users.filter(user => user.user_id !== userID).map(user => <MessageMember key={user.user_id} name={`${user.first_name} ${user.last_name}`} id={user.user_id} onClick={messageMemberOnClick} userID={userID}/>)}
+            </ModalBody>
+          </Modal>
+        </span>
+        <span>{` are ${ending}`}</span>
       </div>
-    <div name={id} onClick={onClick} className={'message-member'}>
-      {name} */}
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default MembersModal;
