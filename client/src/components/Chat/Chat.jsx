@@ -14,6 +14,7 @@ class Chat extends React.Component {
       active: 0,
       allUsers: [],
       newRecipient: false,
+      newRecipientChanged: false,
       newRecipientID: null,
       newMessageViaNameClickClose: false,
       newMessageChats: [],
@@ -41,7 +42,11 @@ class Chat extends React.Component {
     if (!props.modal) {
       return {
         newMessageViaNameClickClose: false,
-        newRecipient: false
+        newRecipient: false,
+        newRecipientChanged: false,
+        newRecipientID: null,
+        newMessageChats: [],
+        newMessage: ''
       };
     }
     return null;
@@ -102,7 +107,7 @@ class Chat extends React.Component {
   }
 
   closeNewMessage() {
-    this.setState({ newRecipient: false, newMessageViaNameClickClose: true, newRecipientID: null, newMessageChats: [], newMessage: '' });
+    this.setState({ newRecipient: false, newMessageViaNameClickClose: true, newRecipientID: null, newMessageChats: [], newMessage: '', newRecipientChanged: false });
   }
 
   getProperTimestamp(timestamp) {
@@ -150,7 +155,7 @@ class Chat extends React.Component {
   }
 
   changeNewRecipient(e) {
-    this.setState({ newRecipientID: e });
+    this.setState({ newRecipientID: e, newRecipientChanged: true });
     if (this.state.chats[e.value]) {
       this.setState({ newMessageChats: this.state.chats[e.value] });
     } else {
@@ -212,7 +217,7 @@ class Chat extends React.Component {
               newRecipientID={this.state.newRecipientID}
               allUsers={this.state.allUsers}
               closeNewMessage={this.closeNewMessage}
-              memberNameClick={Boolean(this.props.chatMemberID) && !this.state.newMessageViaNameClickClose}
+              memberNameClick={Boolean(this.props.chatMemberID) && !this.state.newMessageViaNameClickClose && !this.state.newRecipientChanged}
               newMessage={this.state.newMessage}
               newMessageChats={this.state.newMessageChats}
               changeNewRecipient={this.changeNewRecipient}

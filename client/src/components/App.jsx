@@ -46,12 +46,8 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <Header isLoginOpen={this.state.isLoginOpen} toggleLogin={this.toggleLogin.bind(this)}/>
+          <Header userID={userID} isLoginOpen={this.state.isLoginOpen} toggleLogin={this.toggleLogin.bind(this)}/>
           <Chat userID={userID} onClick={this.chatOnClick} modal={this.state.chatModal} chatMemberID={this.state.chatMemberID}/>
-
-          {/* Example use of MessageMember component */}
-          {/* <MessageMember name={"Jane Waterson"} id={8} onClick={this.chatOnClick}/> */}
-
         </div>
         <Switch>
           <Route exact path="/">
@@ -65,7 +61,8 @@ class App extends React.Component {
             const group_id = props.match.params.id;
             // replace <h1> tags with your component
             return (
-              <GroupPage groupId={group_id} />
+              // <GroupPage groupId={group_id} userId={userID}/>
+              <GroupPage groupId={group_id} userID={userID} memberOnClick={this.chatOnClick}/>
             );
           }} />
           <Route path="/signup">

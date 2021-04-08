@@ -202,6 +202,18 @@
   padding: 0;
 }
 
+.members-modal h5.modal-title {
+    text-align: center;
+    width: 100%;
+    font-size: 24px;
+    line-height: 24px;
+}
+
+.message-member {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 /* Group Page Section */
 
 .group-poster {
@@ -259,6 +271,10 @@
   border-right: 1px solid black;
 }
 
+.group-post-title {
+  margin-right: 8px;
+}
+
 .group-event-description {
   border-right: 1px solid black;
 }
@@ -272,4 +288,174 @@
   margin-top: 11px;
 }
 
+.announcement-card-header-section {
+  display: flex;
+  align-items: baseline;
+}
+
+.forum-container {
+  border: 1px solid rgba(0,0,0,.125);
+  padding-bottom: 25px
+}
+
+.forum-parent-card {
+  margin-top: 25px;
+  background-color: #d0d0d0 !important;
+}
+
+.forum-child-card {
+  background-color: #eaeaea !important;
+}
+
+.forum-card-header-section {
+  display: flex;
+  align-items: baseline;
+}
+
+.forum-card-title {
+  margin-right: 8px;
+}
+
+.forum-reply-area {
+  margin: 10px 0;
+}
+
+.forum-reply-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.forum-send-button {
+  margin-top: 10px;
+}
+
+.add-event-button {
+  height: 30px;
+  width: 30px;
+  padding: 0 !important;
+  margin-left: 7px;
+}
+
 /* End of Group Page Section */
+
+
+/* JOE'S STUFF DON'T TOUCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
+
+/*group browse page*/
+.group-list {
+  text-align: left;
+  width: 50%;
+  justify-self: center;
+}
+
+.group-card-container {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+
+.card-img {
+  width: 100%!important;
+  height: 350px!important;
+  object-fit: cover;
+}
+
+.group-list-container {
+  display: flex;
+  justify-content: center;
+}
+
+.group-heading-container {
+  display: flex;
+  justify-content: left;
+}
+
+.group-list {
+  display: flex;
+  justify-content: center;
+}
+
+
+.group-list-name {
+  color: inherit;
+  justify-self: left;
+  text-decoration: none;
+}
+
+.group-list-item {
+  padding: 5px;
+}
+
+.group-list-item:hover {
+  background-color: rgb(238, 238, 238);
+}
+
+.group-list-name:hover {
+  text-decoration: none;
+}
+
+.group-list-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.groups-header {
+  display: flex;
+  width: 90%;
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 10pxpx;
+  height: 60px;
+  align-content: center;
+  justify-content: center;
+  background-color: #6c757d;
+  color: #fff;
+  vertical-align: center;
+}
+
+.g-header {
+  display: inline-flex;
+  align-self: center;
+}
+
+
+.browse-group-btn:hover {
+  color: grey;
+}
+
+.group-select {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.filter-label {
+  margin-right: 5px;
+}
+
+.select-box-option {
+  height: 10px;
+}
+
+#logo {
+  margin-bottom: 5px;
+}
+
+.createGroupBtn {
+  margin-left: '10px';
+  margin-top: '16px';
+}
+/*event modal*/
+.modal-dialog {
+  width: 1000px;
+}
+.create-event-modal-body {
+  height: 460px;
+  overflow: scroll;
+}
+
+/* HERE ENDS JOE'S STUFF ::::) */
