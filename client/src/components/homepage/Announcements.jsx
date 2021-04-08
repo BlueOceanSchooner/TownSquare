@@ -23,7 +23,7 @@ class Announcements extends Component {
     return (
       <div className="col ml-5">
         <div className="row">
-          <div className="col align-self-center text-center text-white bg-primary pt-2">
+          <div className="col align-self-center text-center text-white bg-secondary rounded-pill pt-2">
             <h5>RECENT ANNOUNCEMENTS</h5>
           </div>
         </div>

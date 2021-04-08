@@ -8,11 +8,11 @@ const EventItem = ({ event, updateSelectedEvent }) => {
 
   return (
     <div className="row border border-dark m-2" style={{cursor: 'pointer'}} onClick={() => updateSelectedEvent(event)}>
-      <div className="col-9 p-2" style={{height: "6em"}}>
+      <div className="col-9 p-2" style={{minHeight: "6em"}}>
         <h5>{event.title} <span className="badge badge-pill badge-info">{event.group.group_name}</span></h5>
-        <p className="text-justify">{event.description}</p>
+        <p className="text-justify mb-0">{event.description}</p>
       </div>
-      <div className="col-3 border-left border-dark p-2" style={{height: "6em"}}>
+      <div className="col-3 border-left border-dark p-2" style={{minHeight: "6em"}}>
         <p className="text-center mb-0">{date}</p>
         <p className="text-center mt-0 mb-0">{hour}</p>
         <div className="row justify-content-center">
