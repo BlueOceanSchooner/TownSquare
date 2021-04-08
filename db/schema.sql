@@ -64,7 +64,8 @@ CREATE TABLE dms (
   sender INT REFERENCES users(user_id),
   receiver INT REFERENCES users(user_id),
   sent TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  message VARCHAR(255)
+  message VARCHAR(255),
+  wasRead BOOLEAN DEFAULT '0'
 );
 
 DROP TABLE IF EXISTS forum;
