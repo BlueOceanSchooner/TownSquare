@@ -333,8 +333,20 @@
 /*group browse page*/
 .group-list {
   text-align: left;
-  width: 60%;
+  width: 50%;
   justify-self: center;
+}
+
+.group-card-container {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+
+.card-img {
+  width: 100%!important;
+  height: 350px!important;
+  object-fit: cover;
 }
 
 .group-list-container {
@@ -345,6 +357,11 @@
 .group-heading-container {
   display: flex;
   justify-content: left;
+}
+
+.group-list {
+  display: flex;
+  justify-content: center;
 }
 
 
@@ -364,6 +381,12 @@
 
 .group-list-name:hover {
   text-decoration: none;
+}
+
+.group-list-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
 }
 
 .groups-header {
