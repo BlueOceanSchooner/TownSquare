@@ -2,21 +2,45 @@ import React, { Component } from 'react';
 import MessageMember from '../Members/MessageMember.jsx';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import axios from 'axios';
+import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
+// const Map = new ReactMapboxGl({
+//   accessToken: ''
+// });
+
+var Map;
 
 class EventInfoModal extends Component {
   constructor(props) {
       super(props);
       this.state = {
-        attendees: null
+        attendees: null,
+        mapReady: false
       };
   }
 
   componentDidMount() {
     axios.get(`/api/events/${this.props.event.event_id}/attendees`)
-      .then((results) => {
+      .then((res) => {
         this.setState({
-          attendees: results.data
+          attendees: res.data
         });
+      })
+    .catch((err) => console.log(err));
+
+    axios.get(`/api/maps`)
+      .then((res) => {
+        console.log(res);
+        if (res && res.data && res.data.key) {
+          const API_KEY = res.data.key;
+          Map = new ReactMapboxGl({
+            accessToken: API_KEY
+          });
+          this.setState({
+            mapReady: true
+          });
+        }
       })
       .catch((err) => console.log(err));
   }
@@ -24,7 +48,8 @@ class EventInfoModal extends Component {
   render() {
     const { event, isModalOpen, toggleModal, chatOnClick, userID } = this.props;
     const { attendees } = this.state;
-
+    const coords = [event.coords.lat, event.coords.long];
+    console.log('coords', coords);
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     let date = new Date(event.time);
     const hour = `${date.getHours()}:${date.getMinutes() === 0 ? '00' : date.getMinutes()}`;
@@ -44,15 +69,15 @@ class EventInfoModal extends Component {
     }
 
     return (
-      <Modal isOpen={isModalOpen} toggle={toggleModal}>
+      <Modal isOpen={isModalOpen} toggle={toggleModal} style={{maxWidth: "60vw"}}>
         <ModalHeader toggle={toggleModal}>
           {event.title}
           <button type="button" className="btn btn-sm btn-success ml-3">Attending</button>
         </ModalHeader>
         <ModalBody>
           <div className="row">
-            <div className="col">
-              {event.description}
+            <div className="col-6">
+              <h3>{event.description}</h3>
               <ul>
                 <li className="font-weight-bold">LOCATION:{<br></br>}
                   <span className="font-weight-normal">
@@ -63,13 +88,28 @@ class EventInfoModal extends Component {
                 <li className="font-weight-bold">DATE: <span className="font-weight-normal">{date}</span></li>
                 <li className="font-weight-bold">TIME: <span className="font-weight-normal">{hour}</span></li>
               </ul>
+              <div>
+                <div className="font-weight-bold">MEMBERS ATTENDING:</div>
+                {(attendees !== null && attendeeNames.length > 0) && attendeeNames}
+              </div>
             </div>
-            <div className="col">[MAP]</div>
-          </div>
-          <div className="row">
-            <div className="col">
-              <div className="font-weight-bold">MEMBERS ATTENDING:</div>
-              {(attendees !== null && attendeeNames.length > 0) && attendeeNames}
+            <div className="col-6">
+              { this.state.mapReady &&
+              <div>
+                <Map
+                  style="mapbox://styles/mapbox/streets-v9"
+                  centerPosition={{latitude: event.coords.lat, longitude: event.coords.long}}
+                  containerStyle={{
+                    height: '25vw',
+                    width: '25vw',
+                  }}
+                >
+                <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
+                    <Feature coordinates={coords} />
+                  </Layer>
+                </Map>
+              </div> }
+
             </div>
           </div>
         </ModalBody>
