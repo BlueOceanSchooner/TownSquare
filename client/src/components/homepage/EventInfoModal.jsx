@@ -5,15 +5,18 @@ import axios from 'axios';
 import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-const Map = new ReactMapboxGl({
-  accessToken: MAPBOX_ACCESS_TOKEN
-});
+// const Map = new ReactMapboxGl({
+//   accessToken: ''
+// });
+
+var Map;
 
 class EventInfoModal extends Component {
   constructor(props) {
       super(props);
       this.state = {
         attendees: null,
+        mapReady: false
       };
   }
 
@@ -25,6 +28,21 @@ class EventInfoModal extends Component {
         });
       })
     .catch((err) => console.log(err));
+
+    axios.get(`/api/maps`)
+      .then((res) => {
+        console.log(res);
+        if (res && res.data && res.data.key) {
+          const API_KEY = res.data.key;
+          Map = new ReactMapboxGl({
+            accessToken: API_KEY
+          });
+          this.setState({
+            mapReady: true
+          });
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   render() {
@@ -75,17 +93,21 @@ class EventInfoModal extends Component {
               </div>
             </div>
             <div className="col-6">
-              <Map
-                style="mapbox://styles/mapbox/streets-v9"
-                containerStyle={{
-                  height: '25vw',
-                  width: '25vw'
-                }}
-              >
+              { this.state.mapReady &&
+              <div>
+                <Map
+                  style="mapbox://styles/mapbox/streets-v9"
+                  containerStyle={{
+                    height: '25vw',
+                    width: '25vw'
+                  }}
+                >
                 <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-                  <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
-                </Layer>
-              </Map>
+                    <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
+                  </Layer>
+                </Map>
+              </div> }
+
             </div>
           </div>
         </ModalBody>
