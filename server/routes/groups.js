@@ -139,6 +139,70 @@ const getGroupById = (req, res) => {
   });
 };
 
+const getGroupsByOwnerId = (req, res) => {
+  const owner_id = req.params.user_id;
+  connection.query('SELECT g.group_id, g.image_url, g.group_name, g.description, g.category, g.owner_id, u.first_name, u.last_name, u.email FROM groups_table g LEFT JOIN users u ON g.owner_id = u.user_id WHERE g.owner_id = ?', [owner_id], (err, results) => {
+    if (err) {
+      return res.json({
+        error: err
+      });
+    }
+    const rows = results.map((row) => {
+      return {
+        group_id: row.group_id,
+        image_url: row.image_url,
+        group_name: row.group_name,
+        description: row.description,
+        category: row.category,
+        owner: {
+          user_id: row.owner_id,
+          first_name: row.first_name,
+          last_name: row.last_name,
+          email: row.email
+        }
+      }
+    });
+    return res.json(rows);
+  });
+}
+
+const getGroupsByMemberId = (req, res) => {
+  const member_id = req.params.user_id;
+  const sql = `
+    SELECT
+      g.group_id, g.image_url, g.group_name, g.description, g.category, g.owner_id,
+      u.first_name, u.last_name, u.email
+    FROM
+      groups_table g
+    LEFT JOIN users u ON g.owner_id = u.user_id
+    RIGHT JOIN members m ON g.group_id = m.group_id
+    WHERE m.user_id = ?
+  `;
+  connection.query(sql, [member_id], (err, results) => {
+    if (err) {
+      return res.json({
+        error: err
+      });
+    }
+    const rows = results.map((row) => {
+      return {
+        group_id: row.group_id,
+        image_url: row.image_url,
+        group_name: row.group_name,
+        description: row.description,
+        category: row.category,
+        owner: {
+          user_id: row.owner_id,
+          first_name: row.first_name,
+          last_name: row.last_name,
+          email: row.email
+        }
+      }
+    });
+    return res.json(rows);
+  });
+}
+
 const addGroup = (req, res) => {
   const errors = [];
   const validCategories = ['outdoors', 'music', 'cooking', 'animals', 'hobbies', 'religious'];
@@ -250,6 +314,8 @@ module.exports = {
   getAllGroups,
   findGroupByName,
   getGroupById,
+  getGroupsByOwnerId,
+  getGroupsByMemberId,
   getGroupsByCategory,
   addGroup
 };

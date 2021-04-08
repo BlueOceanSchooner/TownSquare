@@ -17,6 +17,8 @@ router.get('/users/:user_id', users.getUserById);
 router.get('/users/:user_id/groups', members.getUserGroups);
 router.get('/users/:user_id/events', attendees.getUserEvents);
 router.get('/users/:user_id/dms', dms.getConversations);
+router.get('/users/:user_id/groups-owned', groups.getGroupsByOwnerId);
+router.get('/users/:user_id/groups-member', groups.getGroupsByMemberId);
 
 router.post('/users', users.addUser);
 router.post('/users/:user_id/groups/:group_id', members.addUserToGroup);
