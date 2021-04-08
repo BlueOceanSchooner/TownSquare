@@ -4,11 +4,18 @@ import {
   CardTitle, CardSubtitle, Button
 } from 'reactstrap';
 
+// uncomment this line to implement MembersModal in Group Page
+// import MembersModal from '../Members/MembersModal.jsx';
+
 const GroupInfo = ({ groupInfo, members }) => {
+
+// uncomment this line and delete previous line to implement MembersModal in Group Page
+// const GroupInfo = ({ groupInfo, members, userID, memberOnClick }) => {
+
   return (
     <div>
       <Card>
-        <CardImg top width="100%" src="https://superiorhiking.org/wp-content/uploads/2020/09/SHTA-Homepage_-Castle-Danger.png" alt="Group poster" className="group-poster" />
+        <CardImg top width="100%" src={`../${groupInfo.image_url}`} alt="Group poster" className="group-poster" />
         <CardBody>
           <CardTitle tag="h5">{groupInfo.group_name}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
@@ -17,6 +24,10 @@ const GroupInfo = ({ groupInfo, members }) => {
                 <span className="group-member" key={member.user_id}>{member.first_name}</span>
               ))}
             </div>
+
+            {/* uncomment this line and delete previous line to implement MembersModal in Group Page */}
+            {/* <MembersModal event={false} name={groupInfo.group_name} users={members} userID={userID} messageMemberOnClick={memberOnClick} /> */}
+
           </CardSubtitle>
           <CardText>{groupInfo.description}</CardText>
           <Button>Join!</Button>

@@ -88,7 +88,38 @@ const postOnForum = (req, res) => {
         error: err
       });
     }
-    return res.json(results);
+    const sql = `
+      SELECT f.forum_post_id, f.group_id, f.user_id, f.posted, f.message,
+        u.first_name, u.last_name, u.email
+      FROM forum f
+      LEFT JOIN users u ON f.user_id = u.user_id
+      WHERE f.forum_post_id = ?
+    `;
+    const forumPostId = results.insertId;
+    connection.query(sql, [forumPostId], (err, results) => {
+      if (err) {
+        return res.json({
+          errors: [err]
+        });
+      }
+      const row = results[0];
+      const data = {
+        parent: {
+          forum_post_id: row.forum_post_id,
+          group_id: row.group_id,
+          posted: row.posted,
+          message: row.message,
+          author: {
+            user_id: row.user_id,
+            first_name: row.first_name,
+            last_name: row.last_name,
+            email: row.email
+          }
+        },
+        children: []
+      };
+      return res.json(data);
+    })
   });
 }
 
@@ -110,7 +141,34 @@ const replyOnForum = (req, res) => {
         error: err
       });
     }
-    return res.json(results);
+    const insertId = results.insertId;
+    const sql2 = `
+      SELECT fr.reply_id, fr.group_id, fr.forum_post_id, fr.user_id, fr.posted, fr.message,
+        u.first_name, u.last_name, u.email
+      FROM forum_replies fr
+      LEFT JOIN users u ON fr.user_id = u.user_id
+      WHERE fr.reply_id = ?
+    `;
+    connection.query(sql2, [insertId], (err, data) => {
+      if (err) {
+        return res.json({
+          errors: [err]
+        });
+      }
+      const row = data[0];
+      const reply = {
+        reply_id: row.reply_id,
+        posted: row.posted,
+        message: row.message,
+        author: {
+          user_id: row.user_id,
+          first_name: row.first_name,
+          last_name: row.last_name,
+          email: row.email
+        }
+      }
+      return res.json(reply);
+    });
   });
 }
 
