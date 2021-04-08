@@ -30,7 +30,8 @@ CREATE TABLE events (
   city VARCHAR(255),
   state CHAR(2),
   zipcode CHAR(5),
-  event_date DATETIME
+  event_date DATETIME,
+  location POINT NOT NULL SRID 4326
 );
 
 DROP TABLE IF EXISTS members;
