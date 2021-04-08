@@ -34,18 +34,19 @@ const Signup = ({toggleLogin}) => {
   const handleSubmit = e => {
     e.preventDefault();
     if (Object.values(inputValid).every(item => item === true)) {
-      // navigator.geolocation.getCurrentPosition((position) => {
-      //   let latitude = position.coords.latitude
-      //   let longitude = position.coords.longitude;
-        axios.post('/signup', {...queries})
-        .then(data => {
-          if (data.data.msg === 'used') {
-            setShowEmailUsed(true);
-          } else {
-
-          }
-        })
-      // })
+      axios.post('/signup', {...queries})
+      .then(data => {
+        console.log(data)
+        if (data.data.msg === 'used') {
+          setShowEmailUsed(true);
+        } else if (data.data.msg === 'success') {
+          window.location.href = '/login';
+          toggleLogin();
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
     } else {
       setShowError(true);
     }
@@ -65,12 +66,12 @@ const Signup = ({toggleLogin}) => {
   }
 
   return (
-    <div>
       <Container style={{width: 500}}>
         <br />
         <br />
         <h2>Sign up</h2>
-        <FormText>Already signed up? <a style={{color: 'blue'}} onClick={toggleLogin}>Login</a></FormText>
+        Already signed up? <a href="#" onClick={toggleLogin}>Log in</a>
+        <br />
         <br />
           <Form>
             <FormGroup>
@@ -102,7 +103,6 @@ const Signup = ({toggleLogin}) => {
           <br />
           <div className="g-signin2" data-width="470" data-height="50" data-longtitle="true" data-theme="dark"></div>
       </Container>
-    </div>
   );
 };
 
