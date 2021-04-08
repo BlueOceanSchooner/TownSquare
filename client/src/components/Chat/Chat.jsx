@@ -38,9 +38,14 @@ class Chat extends React.Component {
     this.getAllUsers();
   }
 
-  componentDidUpdate() {
-    if (this.props.modal) {
-      this.markConversationAsRead(this.state.active);
+  componentDidUpdate(props) {
+    if (!props.modal && this.props.modal) {
+      if (this.state.chatIDsOrderedByTime[0]) {
+        this.setState({ active: this.state.chatIDsOrderedByTime[0] });
+        this.markConversationAsRead(this.state.chatIDsOrderedByTime[0]);
+      }
+    } else if (props.modal && !this.props.modal) {
+      this.setState({ active: 0 });
     }
   }
 
@@ -52,8 +57,7 @@ class Chat extends React.Component {
         newRecipientChanged: false,
         newRecipientID: null,
         newMessageChats: [],
-        newMessage: '',
-        active: state.chatIDsOrderedByTime[0] ?? 0
+        newMessage: ''
       };
     }
     return null;
