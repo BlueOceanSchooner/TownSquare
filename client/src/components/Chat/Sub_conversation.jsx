@@ -10,8 +10,8 @@ class Sub_conversation extends React.Component {
     super(props);
   }
 
-  componentDidUpdate() {
-    if (Number(this.props.active) !== Number(active)) {
+  componentDidUpdate(props) {
+    if (Number(this.props.active) !== Number(active) || JSON.stringify(this.props.chats[this.props.active]) !== JSON.stringify(props.chats[this.props.active])) {
       this.props.scrollDown();
       active = this.props.active;
     }
