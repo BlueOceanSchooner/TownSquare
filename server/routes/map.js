@@ -1,4 +1,4 @@
-
+require('dotenv').config();
 const getMapsKey = (req, res) => {
   const MAPS_KEY = process.env.MAPS_KEY;
 
