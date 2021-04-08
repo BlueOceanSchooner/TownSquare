@@ -6,6 +6,12 @@ import {
   ListGroupItem,
   ListGroupItemText,
   ListGroupItemHeading,
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
   Form,
   FormGroup,
   FormFeedback,
@@ -94,16 +100,22 @@ class ExploreGroups extends React.Component {
             <div className='group-list'>
                 <ListGroup >
                   {this.state.groups.map((group, i) => {
+                    group.category = group.category.slice(0, 1).toUpperCase() + group.category.slice(1);
                     return (
-                      <ListGroupItem className='group-list-item' key={i}>
-                      <div className='group-heading-container'>
-                        <Link className='group-list-name' to={`/groups/${group.group_id}`} >
-                          <ListGroupItemHeading >{group.group_name}</ListGroupItemHeading>
-                        </Link>
+                      <div className='group-card-container'>
+                        <Card style={{ width: '40rem'}} key={i}>
+                          <Link to={`/groups/${group.group_id}`} >
+                            <CardImg className='card-img' top width="100%" src={group.image_url} alt="Image of group." />
+                          </Link>
+                          <CardBody>
+                            <Link className='group-list-name' to={`/groups/${group.group_id}`} >
+                              <CardTitle tag="h4">{group.group_name}</CardTitle>
+                            </Link>
+                            <CardSubtitle tag="h6" className="mb-2 text-muted">{group.category}</CardSubtitle>
+                            <CardText>{group.description}</CardText>
+                          </CardBody>
+                        </Card>
                       </div>
-
-                      <ListGroupItemText>{group.description}</ListGroupItemText>
-                      </ListGroupItem>
                     )
                   })}
                 </ListGroup>
