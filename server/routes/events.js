@@ -3,7 +3,7 @@ const axios = require('axios');
 
 const getAllEvents = (req, res) => {
   const sql = `
-    SELECT e.event_id, e.group_id, e.title, e.description as event_description, e.address_1, e.address_2, e.city, e.state, e.zipcode, e.event_date, g.group_id, g.group_name, g.description as group_description, g.category
+    SELECT e.event_id, e.group_id, e.title, e.description as event_description, e.address_1, e.address_2, e.city, e.state, e.zipcode, e.event_date, g.group_id, g.group_name, g.description as group_description, g.category, ST_Latitude(e.location) AS latitude, ST_Longitude(e.location) AS longitude
     FROM
       events e
     LEFT JOIN
@@ -28,6 +28,10 @@ const getAllEvents = (req, res) => {
         state: row.state,
         zipcode: row.zipcode,
         time: row.event_date,
+        coords: {
+          lat: row.latitude,
+          long: row.longitude
+        },
         group: {
           group_id: row.group_id,
           group_name: row.group_name,
@@ -43,7 +47,7 @@ const getAllEvents = (req, res) => {
 const getEventsByGroup = (req, res) => {
   const group_id = req.params.group_id;
   const sql = `
-    SELECT e.event_id, e.group_id, e.title, e.description as event_description, e.address_1, e.address_2, e.city, e.state, e.zipcode, e.event_date, g.group_id, g.group_name, g.description as group_description, g.category
+    SELECT e.event_id, e.group_id, e.title, e.description as event_description, e.address_1, e.address_2, e.city, e.state, e.zipcode, e.event_date, g.group_id, g.group_name, g.description as group_description, g.category, ST_Latitude(e.location) AS latitude, ST_Longitude(e.location) AS longitude
     FROM
       events e
     LEFT JOIN
@@ -69,6 +73,10 @@ const getEventsByGroup = (req, res) => {
         state: row.state,
         zipcode: row.zipcode,
         time: row.event_date,
+        coords: {
+          lat: row.latitude,
+          long: row.longitude
+        },
         group: {
           group_id: row.group_id,
           group_name: row.group_name,
@@ -84,7 +92,7 @@ const getEventsByGroup = (req, res) => {
 const getEventsByGroupCategory = (req, res) => {
   const category = req.params.category;
   const sql = `
-    SELECT e.event_id, e.group_id, e.title, e.description as event_description, e.address_1, e.address_2, e.city, e.state, e.zipcode, e.event_date, g.group_id, g.group_name, g.description as group_description, g.category
+    SELECT e.event_id, e.group_id, e.title, e.description as event_description, e.address_1, e.address_2, e.city, e.state, e.zipcode, e.event_date, g.group_id, g.group_name, g.description as group_description, g.category, ST_Latitude(e.location) AS latitude, ST_Longitude(e.location) AS longitude
     FROM
       events e
     LEFT JOIN
@@ -110,6 +118,10 @@ const getEventsByGroupCategory = (req, res) => {
         state: row.state,
         zipcode: row.zipcode,
         time: row.event_date,
+        coords: {
+          lat: row.latitude,
+          long: row.longitude
+        },
         group: {
           group_id: row.group_id,
           group_name: row.group_name,
@@ -126,7 +138,7 @@ const getEventsByGroupCategory = (req, res) => {
 const getEventById = (req, res) => {
   const event_id = req.params.event_id;
   const sql = `
-    SELECT e.event_id, e.group_id, e.title, e.description as event_description, e.address_1, e.address_2, e.city, e.state, e.zipcode, e.event_date, g.group_id, g.group_name, g.description as group_description, g.category
+    SELECT e.event_id, e.group_id, e.title, e.description as event_description, e.address_1, e.address_2, e.city, e.state, e.zipcode, e.event_date, g.group_id, g.group_name, g.description as group_description, g.category, ST_Latitude(e.location) AS latitude, ST_Longitude(e.location) AS longitude
     FROM
       events e
     LEFT JOIN
@@ -156,6 +168,10 @@ const getEventById = (req, res) => {
       state: row.state,
       zipcode: row.zipcode,
       time: row.event_date,
+      coords: {
+        lat: row.latitude,
+        long: row.longitude
+      },
       group: {
         group_id: row.group_id,
         group_name: row.group_name,

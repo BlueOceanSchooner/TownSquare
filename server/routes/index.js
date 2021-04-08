@@ -8,6 +8,9 @@ const attendees = require('./attendees.js');
 const posts = require('./posts.js');
 const dms = require('./dms.js');
 const forum = require('./forum.js');
+const login = require('./login.js');
+const isAuth = require('../auth/isAuth.js');
+const maps = require('./map.js');
 
 router.get('/users', users.getAllUsers);
 router.get('/users/:user_id', users.getUserById);
@@ -42,5 +45,10 @@ router.post('/events/:event_id/attendees', attendees.doRsvp);
 
 router.get('/dms', dms.getAllDms);
 router.post('/dms', dms.addDm);
+
+router.get('/login', login.getUserInfo);
+router.get('/logout', login.logout);
+
+router.get('/maps', maps.getMapsKey);
 
 module.exports = router;

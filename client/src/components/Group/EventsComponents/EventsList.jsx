@@ -11,25 +11,12 @@ class EventsList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isModalOpen: false
-    }
-  }
-
-  toggleModal() {
-    this.setState({
-      isModalOpen: !this.state.isModalOpen
-    })
   }
 
   render() {
-    const { groupInfo, events } = this.props;
+    const { events, groupInfo } = this.props;
     return (
       <div>
-        <div>
-          <Button onClick={this.toggleModal.bind(this)}>Add Event</Button>
-          <CreateEventModal group={groupInfo} isModalOpen={this.state.isModalOpen} toggleModal={this.toggleModal.bind(this)}/>
-        </div>
         <ListGroup>
           {events.map((event) => (
             <EventsItem key={event.event_id} event={event} />
