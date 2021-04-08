@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 
 const signup = (req, res) => {
   req.body.password = bcrypt.hashSync(req.body.password, 10);
-  connection.query('SELECT password oauth_provider FROM users WHERE email = ?', req.body.email, (err, results) => {
+  connection.query('SELECT password,oauth_provider FROM users WHERE email = ?', req.body.email, (err, results) => {
     if (err) {
       console.log(err)
       return res.json({
@@ -22,7 +22,11 @@ const signup = (req, res) => {
         res.json({ msg: 'success' })
       });
     } else {
-      res.json({ msg: 'used' })
+      if (results[0].oauth_provider === 'google') {
+        res.json({ msg: 'google' })
+      } else {
+        res.json({ msg: 'used' })
+      }
     }
   });
 };
@@ -32,32 +36,23 @@ const login = (req, res) => {
   } else {
     req.session.cookie.expires = false;
   }
-  const resUser = {
-    user_id: req.user.user_id,
-    first_name: req.user.first_name,
-    last_name: req.user.last_name,
-    email: req.user.email,
-    oauth_provider: req.user.oauth_provider,
-  }
-  console.log(resUser)
   res.json({
-    user: resUser,
     msg: 'success'
   })
 };
 const googleLogin = (req, res) => {
-  const resUser = {
-    user_id: req.user.user_id,
-    first_name: req.user.first_name,
-    last_name: req.user.last_name,
-    email: req.user.email,
-    oauth_provider: req.user.oauth_provider,
-  }
-  console.log(resUser)
-  res.json({
-    user: resUser,
-    msg: 'success'
-  })
+  res.redirect('/')
+  // const resUser = {
+  //   user_id: req.user.user_id,
+  //   first_name: req.user.first_name,
+  //   last_name: req.user.last_name,
+  //   email: req.user.email,
+  //   oauth_provider: req.user.oauth_provider,
+  // }
+  // res.json({
+  //   user: resUser,
+  //   msg: 'success'
+  // })
 };
 
 module.exports = {
