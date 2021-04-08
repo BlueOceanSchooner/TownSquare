@@ -8,7 +8,7 @@ const GroupInfo = ({ groupInfo, members }) => {
   return (
     <div>
       <Card>
-        <CardImg top width="100%" src="https://superiorhiking.org/wp-content/uploads/2020/09/SHTA-Homepage_-Castle-Danger.png" alt="Group poster" className="group-poster" />
+        <CardImg top width="100%" src={`../${groupInfo.image_url}`} alt="Group poster" className="group-poster" />
         <CardBody>
           <CardTitle tag="h5">{groupInfo.group_name}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
