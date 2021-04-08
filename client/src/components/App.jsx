@@ -28,6 +28,7 @@ class App extends React.Component {
         first_name: '',
         last_name: '',
         email: '',
+        oauth_provider: 'local'
       },
       loggedIn: false
     }

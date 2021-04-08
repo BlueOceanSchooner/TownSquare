@@ -26,6 +26,10 @@ app.use(passport.session());
 app.use('/api', router);
 app.post('/signup', auth.signup);
 app.post('/login', passport.authenticate('local'), auth.login);
+app.get("/google-login", passport.authenticate("google", {
+  scope: ["profile", "email"]
+}));
+app.get("/google-login/redirect", passport.authenticate('google'), auth.googleLogin);
 
 const file = path.join(__dirname, '../client/dist/index.html');
 app.get('*', (req, res) => {
