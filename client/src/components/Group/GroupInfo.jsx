@@ -22,7 +22,7 @@ const GroupInfo = ({ groupInfo, members }) => {
             <div>
               {members.map((member) => (
                 <span className="group-member" key={member.user_id}>{member.first_name}</span>
-                ))}
+              ))}
             </div>
 
             {/* uncomment this line and delete previous line to implement MembersModal in Group Page */}
