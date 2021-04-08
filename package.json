@@ -31,11 +31,8 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
-<<<<<<< HEAD
     "mapbox-gl": "^2.2.0",
-=======
     "file-loader": "^6.2.0",
->>>>>>> master
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "passport": "^0.4.1",
