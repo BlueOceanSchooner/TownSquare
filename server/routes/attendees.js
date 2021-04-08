@@ -27,7 +27,7 @@ const getUserEvents = (req, res) => {
     SELECT
     e.event_id, e.group_id, e.title, e.description, e.address_1, e.address_2, e.city, e.state, e.zipcode, e.event_date,
     a.attending,
-    g.group_id, g.group_name, g.description, g.category
+    g.group_id, g.group_name, g.description, g.category, ST_Latitude(e.location) AS latitude, ST_Longitude(e.location) AS longitude
     FROM
       events e
     LEFT JOIN
@@ -53,6 +53,10 @@ const getUserEvents = (req, res) => {
         zipcode: row.zipcode,
         time: row.event_date,
         attending: row.attending,
+        coords: {
+          lat: row.latitude,
+          long: row.longitude
+        },
         group: {
           group_id: row.group_id,
           group_name: row.group_name,

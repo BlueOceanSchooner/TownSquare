@@ -48,7 +48,8 @@ class EventInfoModal extends Component {
   render() {
     const { event, isModalOpen, toggleModal, chatOnClick, userID } = this.props;
     const { attendees } = this.state;
-
+    const coords = [event.coords.lat, event.coords.long];
+    console.log('coords', coords);
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     let date = new Date(event.time);
     const hour = `${date.getHours()}:${date.getMinutes() === 0 ? '00' : date.getMinutes()}`;
@@ -97,13 +98,14 @@ class EventInfoModal extends Component {
               <div>
                 <Map
                   style="mapbox://styles/mapbox/streets-v9"
+                  centerPosition={{latitude: event.coords.lat, longitude: event.coords.long}}
                   containerStyle={{
                     height: '25vw',
-                    width: '25vw'
+                    width: '25vw',
                   }}
                 >
                 <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-                    <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
+                    <Feature coordinates={coords} />
                   </Layer>
                 </Map>
               </div> }
