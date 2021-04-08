@@ -23,7 +23,11 @@ const Sub_previews = ({ userID, chats, active, changeActiveConversation, openNew
               </span>
               <div className="content">
                 <span className="other-user-name">
-                  {conversation[0].sender.user_id === userID ? `${conversation[0].receiver.first_name} ${conversation[0].receiver.last_name}` : `${conversation[0].sender.first_name} ${conversation[0].sender.last_name}`}
+                  {
+                    conversation ?
+                    conversation[0].sender.user_id === userID ? `${conversation[0].receiver.first_name} ${conversation[0].receiver.last_name}` : `${conversation[0].sender.first_name} ${conversation[0].sender.last_name}`
+                    : null
+                  }
                 </span>
                 <br/>
                 <span className="last-message">
@@ -33,7 +37,7 @@ const Sub_previews = ({ userID, chats, active, changeActiveConversation, openNew
                     : null
                   }
 
-                  {conversation[conversation.length - 1].message}
+                  {conversation ? conversation[conversation.length - 1].message : null}
                 </span>
               </div>
             </div>

@@ -32,12 +32,20 @@ class Chat extends React.Component {
     this.changeNewRecipient = this.changeNewRecipient.bind(this);
     this.updateNewMessage = this.updateNewMessage.bind(this);
     this.sendNewMessage = this.sendNewMessage.bind(this);
+    this.scrollDown = this.scrollDown.bind(this);
   }
 
   componentDidMount() {
     this.getMessages();
     setInterval(this.getMessages, 5000);
     this.getAllUsers();
+  }
+
+  scrollDown() {
+    var messageBody = document.querySelector('.chat-modal .modal-body .conversation-messages');
+    if (messageBody) {
+    messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+    }
   }
 
   componentDidUpdate(props) {
@@ -196,6 +204,9 @@ class Chat extends React.Component {
       }
       this.setState({ newMessage: '', newRecipientID: null, newMessageChats: [] });
     })
+    .then(() => {
+      setTimeout(this.scrollDown, 100);
+    })
     .catch(err => console.log('error:', err));
   }
 
@@ -280,6 +291,7 @@ class Chat extends React.Component {
               updateNewMessage={this.updateNewMessage}
               sendNewMessage={this.sendNewMessage}
               getProperTimestamp={this.getProperTimestamp}
+              scrollDown={this.scrollDown}
             />
 
           </ModalBody>

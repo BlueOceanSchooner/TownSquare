@@ -12,10 +12,7 @@ class Sub_conversation extends React.Component {
 
   componentDidUpdate() {
     if (Number(this.props.active) !== Number(active)) {
-      var messageBody = document.querySelector('.chat-modal .modal-body .conversation-messages');
-      if (messageBody) {
-      messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
-      }
+      this.props.scrollDown();
       active = this.props.active;
     }
   }
