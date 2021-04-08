@@ -81,10 +81,8 @@ class GroupPage extends React.Component {
         {/* Group Info */}
         <Row>
           <Col>
-            <GroupInfo groupInfo={groupInfo} members={members} />
-
-            {/* uncomment this line and delete previous line to implement MembersModal in Group Page */}
-            {/* <GroupInfo groupInfo={groupInfo} members={members} userID={this.props.userID} memberOnClick={this.props.memberOnClick}/> */}
+            {/* <GroupInfo groupInfo={groupInfo} members={members} /> */}
+            <GroupInfo groupInfo={groupInfo} members={members} userID={this.props.userID} memberOnClick={this.props.memberOnClick}/>
 
           </Col>
         </Row>
