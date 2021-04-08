@@ -45,6 +45,7 @@ router.post('/events/:event_id/attendees', attendees.doRsvp);
 
 router.get('/dms', dms.getAllDms);
 router.post('/dms', dms.addDm);
+router.put('/dms', dms.readDms);
 
 router.get('/login', login.getUserInfo);
 router.get('/logout', login.logout);

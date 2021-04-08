@@ -34,8 +34,14 @@ class Chat extends React.Component {
 
   componentDidMount() {
     this.getMessages();
-    setInterval(this.getMessages, 10000);
+    setInterval(this.getMessages, 5000);
     this.getAllUsers();
+  }
+
+  componentDidUpdate() {
+    if (this.props.modal) {
+      this.markConversationAsRead(this.state.active);
+    }
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -46,7 +52,8 @@ class Chat extends React.Component {
         newRecipientChanged: false,
         newRecipientID: null,
         newMessageChats: [],
-        newMessage: ''
+        newMessage: '',
+        active: state.chatIDsOrderedByTime[0] ?? 0
       };
     }
     return null;
@@ -79,14 +86,31 @@ class Chat extends React.Component {
         } else {
           this.setState({ chatIDsOrderedByTime: chatIDs, chats: response.data, active: chatIDs[0] })
         }
+      } else {
+        this.setState({ chats: response.data })
       }
-      this.setState({ chats: response.data })
     })
     .catch(err => console.log('error:', err));
   }
 
+  markConversationAsRead(otherUserID) {
+    if (this.state.chats[otherUserID]) {
+      var unreadIDs = this.state.chats[otherUserID].filter(message => message.receiver.user_id === this.props.userID && message.read === 0).map(message => message.dm_id);
+      if (unreadIDs.length) {
+        axios.put('/api/dms', {
+          DMs: unreadIDs
+        })
+        .then(() => {
+          this.getMessages();
+        })
+      }
+    }
+  }
+
   changeActiveConversation(e) {
-    this.setState({ active: e.currentTarget.getAttribute('name') });
+    var active = e.currentTarget.getAttribute('name');
+    this.setState({ active });
+    this.markConversationAsRead(active);
   }
 
   changeActiveConversationAfterNewMessage(id) {
@@ -188,9 +212,20 @@ class Chat extends React.Component {
 
     var { onClick } = this.props;
 
+    if (Object.keys(this.state.chats).length) {
+      var newMessageCount = Object.keys(this.state.chats).reduce((newMessageCount, otherUserID) => {
+        return newMessageCount + this.state.chats[otherUserID].filter(chat => chat.receiver.user_id === this.props.userID && chat.read === 0).length;
+      }, 0);
+    } else {
+      var newMessageCount = null;
+    }
+
     return (
       <div className="chat-icon">
          <i className="fas fa-comment-alt" onClick={onClick}></i>
+         <div style={newMessageCount ? {display: "block"} : {display: "none"}} className="new-messages">
+          {newMessageCount}
+        </div>
         <Modal isOpen={this.props.modal} toggle={onClick} className={"chat-modal"}>
           <ModalHeader className={"modal-header"} toggle={onClick}>
             Messages
