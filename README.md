@@ -28,6 +28,8 @@ All API endpoints begin with /api.
   - [GET List DMS Involving User](#list-dms-involving-user)
 - [Announcements](#announcements)
   - [GET List Announcements for Group](#announcements-for-group)
+  - [POST Create Announcement](#add-announcement)
+- [Forum](#forum)
   - [GET List Forum Posts with Children](#forum-posts-with-children)
   - [POST Create Top Level Forum Post](#add-top-level-forum-post)
   - [POST Create Reply to Forum Post](#add-reply-to-forum-post)
@@ -547,6 +549,27 @@ GET request to /api/groups/:id/posts
 ]
 ```
 
+### Add Announcement
+
+POST request to /api/groups/:id/posts
+
+Send data in the following format:
+
+```
+{
+  "title": "Title of Announcement",
+  "user_id": 1, // (the author of the post)
+  "body": "This is the body of the announcement"
+}
+
+```
+
+If successful it will return the data for the created announcement
+
+--------------------------------
+# Forum
+
+
 ### Forum Posts With Children
 
 GET request to /api/groups/:id/forum
@@ -650,10 +673,3 @@ If successful the data returned will be in the format:
     }
 }
 ```
-
-
-
-
-
-
-
