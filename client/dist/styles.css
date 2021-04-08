@@ -288,13 +288,29 @@
   margin-top: 11px;
 }
 
+.group-new-announcement-section {
+
+}
+
+#announcement-title-textbox {
+  resize: none;
+  height: 2.5em;
+}
+
 .announcement-card-header-section {
   display: flex;
   align-items: baseline;
 }
 
+.announcements-container {
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  padding-bottom: 25px
+}
+
 .forum-container {
   border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
   padding-bottom: 25px
 }
 

@@ -24,8 +24,6 @@ class Announcements extends React.Component {
 
   render() {
     const { events, posts, forum, groupId, currentUser, user, groupInfo } = this.props;
-    console.log('at this point, currentUser:', currentUser);
-    console.log('at this point, groupInfo:', groupInfo);
     return (
       <div className="activities-container">
         <CreateEventModal group={groupInfo} isModalOpen={this.state.isModalOpen} toggleModal={this.toggleModal.bind(this)} />
@@ -44,7 +42,7 @@ class Announcements extends React.Component {
             <EventsList events={events} groupInfo={groupInfo} />
           </TabPanel>
           <TabPanel>
-            <AnnouncementsList posts={posts} />
+            <AnnouncementsList posts={posts} groupInfo={groupInfo} currentUser={currentUser}/>
           </TabPanel>
           <TabPanel>
             <Forum forum={forum} groupId={groupId} currentUser={currentUser} user={user} />

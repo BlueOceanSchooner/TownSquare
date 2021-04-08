@@ -10,19 +10,20 @@ const AnnouncementsItem = ({ post }) => {
   const date = moment(post.created_at).format("MMMM Do h:mm a");
 
   return (
-    <ListGroupItem className="group-post-item" >
-      <Container>
+    <div>
+      <Container className="group-post-item">
         <Card>
           <CardBody>
             <div className="announcement-card-header-section">
-              <CardTitle tag="h5" className="group-post-title">{post.author.first_name} {post.author.last_name}</CardTitle>
+              <CardTitle tag="h5" className="group-post-title">{post.title}</CardTitle>
+              <CardSubtitle>{post.author.first_name} {post.author.last_name}</CardSubtitle>
               <CardSubtitle tag="h6" className="mb-2 text-muted">{date}</CardSubtitle>
             </div>
             <CardText>{post.body}</CardText>
           </CardBody>
         </Card>
       </Container>
-    </ListGroupItem>
+    </div>
   )
 }
 
