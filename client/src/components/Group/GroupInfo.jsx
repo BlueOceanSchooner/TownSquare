@@ -4,7 +4,14 @@ import {
   CardTitle, CardSubtitle, Button
 } from 'reactstrap';
 
+// uncomment this line to implement MembersModal in Group Page
+// import MembersModal from '../Members/MembersModal.jsx';
+
 const GroupInfo = ({ groupInfo, members }) => {
+
+// uncomment this line and delete previous line to implement MembersModal in Group Page
+// const GroupInfo = ({ groupInfo, members, userID, memberOnClick }) => {
+
   return (
     <div>
       <Card>
@@ -17,6 +24,10 @@ const GroupInfo = ({ groupInfo, members }) => {
                 <span className="group-member" key={member.user_id}>{member.first_name}</span>
               ))}
             </div>
+
+            {/* uncomment this line and delete previous line to implement MembersModal in Group Page */}
+            {/* <MembersModal event={false} name={groupInfo.group_name} users={members} userID={userID} messageMemberOnClick={memberOnClick} /> */}
+
           </CardSubtitle>
           <CardText>{groupInfo.description}</CardText>
           <Button>Join!</Button>
