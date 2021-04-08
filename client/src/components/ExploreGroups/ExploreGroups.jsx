@@ -102,8 +102,8 @@ class ExploreGroups extends React.Component {
                   {this.state.groups.map((group, i) => {
                     group.category = group.category.slice(0, 1).toUpperCase() + group.category.slice(1);
                     return (
-                      <div className='group-card-container'>
-                        <Card style={{ width: '40rem'}} key={i}>
+                      <div key={i} className='group-card-container'>
+                        <Card style={{ width: '40rem'}} >
                           <Link to={`/groups/${group.group_id}`} >
                             <CardImg className='card-img' top width="100%" src={group.image_url} alt="Image of group." />
                           </Link>
