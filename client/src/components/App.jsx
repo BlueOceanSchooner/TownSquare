@@ -46,16 +46,12 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <Header isLoginOpen={this.state.isLoginOpen} toggleLogin={this.toggleLogin.bind(this)}/>
+          <Header userID={userID} isLoginOpen={this.state.isLoginOpen} toggleLogin={this.toggleLogin.bind(this)}/>
           <Chat userID={userID} onClick={this.chatOnClick} modal={this.state.chatModal} chatMemberID={this.state.chatMemberID}/>
-
-          {/* Example use of MessageMember component */}
-          {/* <MessageMember name={"Jane Waterson"} id={8} onClick={this.chatOnClick}/> */}
-
         </div>
         <Switch>
           <Route exact path="/">
-            <Homepage />
+            <Homepage userID={userID} chatOnClick={this.chatOnClick} />
           </Route>
           <Route path="/allgroups">
             <ExploreGroups />

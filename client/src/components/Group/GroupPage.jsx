@@ -60,9 +60,8 @@ class GroupPage extends React.Component {
         // console.log('responseMembers', responseMembers.data);
         // console.log('responseEvents', responseEvents.data);
         // console.log('responsePosts', responsePosts.data);
-        console.log('responseForum', responseForum.data);
-        console.log('responseUser', responseUser.data);
-        console.log('userId:', userId);
+        // console.log('responseForum', responseForum.data);
+        // console.log('responseUser', responseUser.data);
         this.setState({
           groupInfo: responseInfo.data,
           members: responseMembers.data,
@@ -88,7 +87,7 @@ class GroupPage extends React.Component {
         {/* Activities Tabs */}
         <Row>
           <Col>
-            <ActivityList events={events} posts={posts} forum={forum} groupId={groupId} userId={userId} user={user}/>
+            <ActivityList events={events} posts={posts} forum={forum} groupId={groupId} userId={userId} user={user} groupInfo={groupInfo}/>
           </Col>
         </Row>
       </Container>

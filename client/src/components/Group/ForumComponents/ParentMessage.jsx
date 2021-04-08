@@ -55,8 +55,6 @@ const ParentMessage = ({ thread, groupId, userId, user }) => {
                     </Col>
                   </Row>
                 </Container>
-
-
               </Form>
             </Collapse>
           </Col>

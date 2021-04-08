@@ -11,17 +11,24 @@ class GroupCarousel extends Component {
 
   render() {
 
+    const { groups } = this.props;
+
+    const groupItems = [];
+    let keyCount = 0;
+    groups.forEach((g) => {
+      groupItems.push((
+        <GroupItem key={keyCount++} group={g} />
+      ));
+    });
+
     return (
       <div className="row mb-3 mt-3">
         <div className="col-12 text-center text-white bg-primary pt-2">
           <h5>MY GROUPS</h5>
         </div>
-          <GroupItem />
-          <GroupItem />
-          <GroupItem />
-          <GroupItem />
-          <GroupItem />
-          <GroupItem />
+        <div className="row justify-content-md-center">
+          {groupItems.length > 0 && groupItems}
+        </div>
       </div>
     );
   }

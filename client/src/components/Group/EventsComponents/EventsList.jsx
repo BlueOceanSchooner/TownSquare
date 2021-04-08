@@ -1,5 +1,6 @@
 import React from 'react';
 import EventsItem from './EventsItem';
+import CreateEventModal from '../../Events/CreateEventModal.jsx';
 
 import {
   Card, CardImg, CardText, CardBody,
@@ -10,12 +11,12 @@ class EventsList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-    }
   }
 
   render() {
-    const { events } = this.props;
+    const { events, groupInfo } = this.props;
+    console.log('events', events);
+    console.log('groupInfo', groupInfo);
     return (
       <div>
         <ListGroup>
