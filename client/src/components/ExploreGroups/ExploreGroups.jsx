@@ -1,26 +1,13 @@
 import React from 'react';
 import {
-  Jumbotron,
-  Button,
-  ListGroup,
-  ListGroupItem,
-  ListGroupItemText,
-  ListGroupItemHeading,
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
   Form,
   FormGroup,
-  FormFeedback,
-  FormText,
   Input,
-  Label, } from 'reactstrap';
-import Header from '../Header/Header.jsx'
+  Label,
+} from 'reactstrap';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import GroupsListGrid from './GroupsListGrid.jsx';
+import GroupsList from './GroupsList.jsx';
 
 class ExploreGroups extends React.Component {
   constructor(props) {
@@ -28,7 +15,8 @@ class ExploreGroups extends React.Component {
     this.state = {
       groups: null,
       selectVal: '',
-      options: ['all', 'outdoors', 'music', 'cooking', 'animals', 'hobbies', 'religious']
+      options: ['all', 'outdoors', 'music', 'cooking', 'animals', 'hobbies', 'religious'],
+      listView: 'grid'
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleFilter = this.handleFilter.bind(this);
@@ -62,11 +50,17 @@ class ExploreGroups extends React.Component {
   }
 
   handleChange(e) {
-    this.setState({
-      selectVal: e.target.value
-    }, () => {
-      this.handleFilter(this.state.selectVal)
-    })
+    if (e.target.name === 'view-select') {
+      this.setState({
+        listView: e.target.value
+      })
+    } else {
+      this.setState({
+        selectVal: e.target.value
+      }, () => {
+        this.handleFilter(this.state.selectVal)
+      })
+    }
   }
 
   render() {
@@ -78,10 +72,11 @@ class ExploreGroups extends React.Component {
           <div className='groups-header'>
               <h3 className='g-header'>Groups In Your Area</h3>
           </div>
+          <div className='group-select-form'>
             <div className='group-select'>
               <Form className="form-inline">
                 <FormGroup>
-                  <Label className='filter-label' for='category-filter'>Browse by category</Label>
+                  <Label className='filter-label' for='category-filter'>Browse by</Label>
                       <Input
                       onChange={this.handleChange}
                       type='select'
@@ -96,30 +91,27 @@ class ExploreGroups extends React.Component {
                   </FormGroup>
               </Form>
             </div>
+            <div className='group-view'>
+              <Form className="form-inline">
+                <FormGroup>
+                  <Label className='filter-label' for='category-filter'>View as</Label>
+                      <Input
+                      onChange={this.handleChange}
+                      type='select'
+                      name='view-select'
+                      value={this.state.listView}
+                      className='select-box'
+                      style={{width: '110px'}}
+                      >
+                        <option className='select-box-option' value={'grid'}>grid</option>
+                        <option className='select-box-option' value={'list'}>list</option>
+                      </Input>
+                  </FormGroup>
+              </Form>
+            </div>
+          </div>
           <div className='group-list-container'>
-            <div className='group-list'>
-                <ListGroup >
-                  {this.state.groups.map((group, i) => {
-                    group.category = group.category.slice(0, 1).toUpperCase() + group.category.slice(1);
-                    return (
-                      <div key={i} className='group-card-container'>
-                        <Card style={{ width: '40rem'}} >
-                          <Link to={`/groups/${group.group_id}`} >
-                            <CardImg className='card-img' top width="100%" src={group.image_url} alt="Image of group." />
-                          </Link>
-                          <CardBody>
-                            <Link className='group-list-name' to={`/groups/${group.group_id}`} >
-                              <CardTitle tag="h4">{group.group_name}</CardTitle>
-                            </Link>
-                            <CardSubtitle tag="h6" className="mb-2 text-muted">{group.category}</CardSubtitle>
-                            <CardText>{group.description}</CardText>
-                          </CardBody>
-                        </Card>
-                      </div>
-                    )
-                  })}
-                </ListGroup>
-              </div>
+            {this.state.listView === 'grid' ? <GroupsListGrid groups={this.state.groups} /> : <GroupsList groups={this.state.groups} />}
           </div>
         </div>
       )
