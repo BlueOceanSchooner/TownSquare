@@ -2,23 +2,29 @@ import React, { Component } from 'react';
 import MessageMember from '../Members/MessageMember.jsx';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import axios from 'axios';
+import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
+const Map = new ReactMapboxGl({
+  accessToken: MAPBOX_ACCESS_TOKEN
+});
 
 class EventInfoModal extends Component {
   constructor(props) {
       super(props);
       this.state = {
-        attendees: null
+        attendees: null,
       };
   }
 
   componentDidMount() {
     axios.get(`/api/events/${this.props.event.event_id}/attendees`)
-      .then((results) => {
+      .then((res) => {
         this.setState({
-          attendees: results.data
+          attendees: res.data
         });
       })
-      .catch((err) => console.log(err));
+    .catch((err) => console.log(err));
   }
 
   render() {
@@ -44,15 +50,15 @@ class EventInfoModal extends Component {
     }
 
     return (
-      <Modal isOpen={isModalOpen} toggle={toggleModal}>
+      <Modal isOpen={isModalOpen} toggle={toggleModal} style={{maxWidth: "60vw"}}>
         <ModalHeader toggle={toggleModal}>
           {event.title}
           <button type="button" className="btn btn-sm btn-success ml-3">Attending</button>
         </ModalHeader>
         <ModalBody>
           <div className="row">
-            <div className="col">
-              {event.description}
+            <div className="col-6">
+              <h3>{event.description}</h3>
               <ul>
                 <li className="font-weight-bold">LOCATION:{<br></br>}
                   <span className="font-weight-normal">
@@ -63,13 +69,23 @@ class EventInfoModal extends Component {
                 <li className="font-weight-bold">DATE: <span className="font-weight-normal">{date}</span></li>
                 <li className="font-weight-bold">TIME: <span className="font-weight-normal">{hour}</span></li>
               </ul>
+              <div>
+                <div className="font-weight-bold">MEMBERS ATTENDING:</div>
+                {(attendees !== null && attendeeNames.length > 0) && attendeeNames}
+              </div>
             </div>
-            <div className="col">[MAP]</div>
-          </div>
-          <div className="row">
-            <div className="col">
-              <div className="font-weight-bold">MEMBERS ATTENDING:</div>
-              {(attendees !== null && attendeeNames.length > 0) && attendeeNames}
+            <div className="col-6">
+              <Map
+                style="mapbox://styles/mapbox/streets-v9"
+                containerStyle={{
+                  height: '25vw',
+                  width: '25vw'
+                }}
+              >
+                <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
+                  <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
+                </Layer>
+              </Map>
             </div>
           </div>
         </ModalBody>
