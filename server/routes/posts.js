@@ -33,6 +33,7 @@ const getPostsByGroupId = (req, res) => {
         post_id: row.post_id,
         group_id: row.group_id,
         created_at: row.created_at,
+        title: row.title,
         body: row.body,
         description: row.description,
         author: {
@@ -77,6 +78,7 @@ const addPost = (req, res) => {
         post_id: data.post_id,
         group_id: data.group_id,
         created_at: data.created_at,
+        title: data.title,
         body: data.body,
         description: data.description,
         author: {

@@ -3,15 +3,20 @@ import axios from 'axios';
 import { Button, Input } from 'reactstrap';
 import Select from 'react-select';
 
+var active = 0;
+
 class Sub_conversation extends React.Component {
   constructor(props) {
     super(props);
   }
 
   componentDidUpdate() {
-    var messageBody = document.querySelector('.chat-modal .modal-body .conversation-messages');
-    if (messageBody) {
+    if (Number(this.props.active) !== Number(active)) {
+      var messageBody = document.querySelector('.chat-modal .modal-body .conversation-messages');
+      if (messageBody) {
       messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+      }
+      active = this.props.active;
     }
   }
 
