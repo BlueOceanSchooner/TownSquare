@@ -3,7 +3,38 @@
 ## API
 All API endpoints begin with /api.
 
-### Errors
+- [Users](#Users)
+  - [GET List of Users](#list-all-users)
+  - [GET Data for User via user_id](#data-for-specific-user)
+- [Groups](#Groups)
+  - [GET List of All Groups](#list-all-groups)
+  - [GET Data for Group by group_id](#info-for-specific-group)
+  - [GET Search for Group by Name](#search-for-group-by-name)
+  - [GET List Groups by Category](#list-groups-by-category)
+  - [GET List Groups for User](#list-groups-for-specific-user)
+  - [GET List of Members of a Group](#members-in-specific-group)
+  - [POST Create Group](#create-group)
+- [Events](#Events)
+  - [GET List All Events](#list-all-events)
+  - [GET Events in Specific Group](#events-in-specific-group)
+  - [GET Events in Groups User Belongs To](#events-in-user-groups)
+  - [GET Data for Specific Event](#data-for-specific-event)
+  - [GET List of Attendees for Event](#list-attendees-for-event)
+  - [GET List Events by Category](#list-events-by-category)
+  - [POST Create an Event](#add-an-event)
+  - [POST RSVP to an Event](#rsvp-to-event)
+- [DMS](#dms)
+  - [GET List All DMS](#list-all-dms)
+  - [GET List DMS Involving User](#list-dms-involving-user)
+- [Announcements](#announcements)
+  - [GET List Announcements for Group](#announcements-for-group)
+  - [GET List Forum Posts with Children](#forum-posts-with-children)
+  - [POST Create Top Level Forum Post](#add-top-level-forum-post)
+  - [POST Create Reply to Forum Post](#add-reply-to-forum-post)
+
+
+-------------------------------
+## Errors
 
 If there is an error than the JSON object returned will have one key, errors, with an array of the errors encountered.
 ```
@@ -15,7 +46,8 @@ If there is an error than the JSON object returned will have one key, errors, wi
 }
 ```
 
-### Users
+-------------------------------
+## Users
 
 ### List all users:
 
@@ -50,115 +82,8 @@ GET request to /api/users/:id (for example /api/users/1 for user #1)
   "email": "stephen@friend.horse"
 }
 ```
-
-### List Groups for specific user:
-
-GET request to /api/users/:id/groups
-
-```
-[
-  {
-    "group_id": 1,
-    "image_url": "assets/images/default-religious.jpg",
-    "group_name": "JavaScript Meet Up",
-    "description": "We meet up and write code",
-    "category": "religious"
-  },
-  {
-    "group_id": 2,
-    "image_url": "assets/images/default-animals.jpg",
-    "group_name": "Cleveland Horse Enthusiasts",
-    "description": "We are enthusiastic about horses!",
-    "category": "animals"
-  }
-]
-
-```
-
-### List Events in Groups User is Member of
-
-GET request to /api/users/:id/events
-
-```
-[
-  {
-    "event_id": 1,
-    "title": "Group Coding at Stephen's",
-    "description": "We meet up and write code",
-    "address_1": "1600 Pennsylvania Avenue",
-    "address_2": "Apartment 3",
-    "city": null,
-    "zipcode": "44124",
-    "time": "2021-04-11T00:00:00.000Z",
-    "attending": 1,
-    "group": {
-    "group_id": 1,
-      "group_name": "JavaScript Meet Up",
-      "category": "religious"
-    }
-  },
-  {
-    "event_id": 2,
-    "title": "Extra Self Assessment",
-    "description": "We meet up and write code",
-    "address_1": "1600 Pennsylvania Avenue",
-    "address_2": "Apartment 3",
-    "city": null,
-    "zipcode": "44124",
-    "time": "2021-04-12T20:00:00.000Z",
-    "attending": 1,
-    "group": {
-      "group_id": 1,
-      "group_name": "JavaScript Meet Up",
-      "category": "religious"
-    }
-  }
-]
-```
-
-### List DMS involving User
-
-GET request to /api/users/:id/dms
-
-```
-{
-  "2": [
-    {
-      "dm_id": 2,
-      "timestamp": "2021-04-05T16:28:09.000Z",
-      "message": "Hi",
-      "sender": {
-        "user_id": 1,
-        "first_name": "Stephen",
-        "last_name": "Hyde"
-      },
-      "receiver": {
-        "user_id": 2,
-        "first_name": "Fred",
-        "last_name": "Flintstone"
-      }
-    },
-    {
-      "dm_id": 4,
-      "timestamp": "2021-04-05T16:28:42.000Z",
-      "message": "May we have a conversation?",
-      "sender": {
-        "user_id": 1,
-        "first_name": "Stephen",
-        "last_name": "Hyde"
-      },
-      "receiver": {
-        "user_id": 2,
-        "first_name": "Fred",
-        "last_name": "Flintstone"
-      }
-    }
-  ],
-  "3": [
-    // messages between user_id 3 and user_id 1
-  ]
-}
-```
+-------------------------------
+## Groups
 
 ### List all Groups
 
@@ -195,7 +120,94 @@ GET request to /api/groups
 ]
 ```
 
-## Create Group
+### Info for Specific Group
+
+GET request to /api/groups/:id
+
+```
+{
+  "group_id": 1,
+  "image_url": "assets/images/default-religious.jpg",
+  "group_name": "JavaScript Meet Up",
+  "description": "We meet up and write code",
+  "category": "religious",
+  "owner": {
+    "user_id": 1,
+    "first_name": "Stephen",
+    "last_name": "Hyde",
+    "email": "stephen@friend.horse"
+  }
+}
+```
+
+### Search For Group By Name
+
+GET request to /api/groups/search?name=searchTerm (replace "searchTerm" with name you are searching for)
+
+- If the search term contains spaces you will need to URL encode it before making the request
+- If you want an exact match, add "&exact=true" to the end of the URL
+- Data is in the same format as other group data requests
+- Letter case does not matter
+
+Examples:
+
+`/api/groups/search?name=ends` WILL match the group name "Friends"
+
+`/api/groups/search?name=ends&exact=true` WILL NOT match the group name "Friends"
+
+
+### List Groups by Category
+
+GET request to /api/groups/category/:category_name (for example: /api/groups/category/animals)
+
+Same format as data at /api/groups
+
+
+
+### List Groups for specific user:
+
+GET request to /api/users/:id/groups
+
+```
+[
+  {
+    "group_id": 1,
+    "image_url": "assets/images/default-religious.jpg",
+    "group_name": "JavaScript Meet Up",
+    "description": "We meet up and write code",
+    "category": "religious"
+  },
+  {
+    "group_id": 2,
+    "image_url": "assets/images/default-animals.jpg",
+    "group_name": "Cleveland Horse Enthusiasts",
+    "description": "We are enthusiastic about horses!",
+    "category": "animals"
+  }
+]
+
+```
+
+### Members in Specific Group
+
+GET request to /api/groups/:id/members
+
+```
+[
+  {
+    "user_id": 12,
+    "first_name": "JiHang",
+    "last_name": "McCohort"
+  },
+  {
+    "user_id": 13,
+    "first_name": "Adrian",
+    "last_name": "McCohort"
+  }
+]
+```
+
+### Create Group
 
 POST request to /api/groups
 
@@ -215,40 +227,52 @@ Include data in the following format:
 
 If successful the data will be returned in the same format as when you GET request a group by group_id.
 
-### Search For Group By Name
 
-GET request to /api/groups/search?name=searchTerm (replace "searchTerm" with name you are searching for)
+-------------------------------
+## Events
 
-- If the search term contains spaces you will need to URL encode it before making the request
-- If you want an exact match, add "&exact=true" to the end of the URL
-- Data is in the same format as other group data requests
-- Letter case does not matter
+### List All Events
 
-Examples:
-
-`/api/groups/search?name=ends` WILL match the group name "Friends"
-
-`/api/groups/search?name=ends&exact=true` WILL NOT match the group name "Friends"
-
-
-### Info for Specific Group
-
-GET request to /api/groups/:id
+GET request to /api/events
 
 ```
-{
-  "group_id": 1,
-  "image_url": "assets/images/default-religious.jpg",
-  "group_name": "JavaScript Meet Up",
-  "description": "We meet up and write code",
-  "category": "religious",
-  "owner": {
-    "user_id": 1,
-    "first_name": "Stephen",
-    "last_name": "Hyde",
-    "email": "stephen@friend.horse"
-  }
-}
+[
+  {
+    "event_id": 1,
+    "title": "Group Coding at Stephen's",
+    "description": "We're gonna write some JavaScript while watching Sister Wives",
+    "address_1": "1600 Pennsylvania Avenue",
+    "address_2": "Apartment 3",
+    "city": null,
+    "state": "OH",
+    "zipcode": "44124",
+    "time": "2021-04-11T00:00:00.000Z",
+    "group": {
+      "group_id": 1,
+      "group_name": "JavaScript Meet Up",
+      "description": "We meet up and write code",
+      "category": "religious"
+    }
+  },
+  {
+    "event_id": 2,
+    "title": "Extra Self Assessment",
+    "description": "We miss having self assessments, so we're gonna make some for ourselves",
+    "address_1": "1600 Pennsylvania Avenue",
+    "address_2": "Apartment 3",
+    "city": null,
+    "state": "OH",
+    "zipcode": "44124",
+    "time": "2021-04-12T20:00:00.000Z",
+    "group": {
+      "group_id": 1,
+      "group_name": "JavaScript Meet Up",
+      "description": "We meet up and write code",
+      "category": "religious"
+    }
+  },
+  ...
+]
 ```
 
 ### Events in Specific Group
@@ -294,26 +318,203 @@ GET request to /api/groups/:id/events
 ]
 ```
 
-### Members in Specific Group
 
-GET request to /api/groups/:id/members
+### Events in User Groups
+
+GET request to /api/users/:id/events
 
 ```
 [
   {
-    "user_id": 12,
-    "first_name": "JiHang",
-    "last_name": "McCohort"
+    "event_id": 1,
+    "title": "Group Coding at Stephen's",
+    "description": "We meet up and write code",
+    "address_1": "1600 Pennsylvania Avenue",
+    "address_2": "Apartment 3",
+    "city": null,
+    "zipcode": "44124",
+    "time": "2021-04-11T00:00:00.000Z",
+    "attending": 1,
+    "group": {
+    "group_id": 1,
+      "group_name": "JavaScript Meet Up",
+      "category": "religious"
+    }
   },
   {
-    "user_id": 13,
-    "first_name": "Adrian",
-    "last_name": "McCohort"
+    "event_id": 2,
+    "title": "Extra Self Assessment",
+    "description": "We meet up and write code",
+    "address_1": "1600 Pennsylvania Avenue",
+    "address_2": "Apartment 3",
+    "city": null,
+    "zipcode": "44124",
+    "time": "2021-04-12T20:00:00.000Z",
+    "attending": 1,
+    "group": {
+      "group_id": 1,
+      "group_name": "JavaScript Meet Up",
+      "category": "religious"
+    }
   }
 ]
 ```
 
-### Posts in Specific Group (owner announcements)
+
+### Data for Specific Event
+
+GET request to /api/events/:event_id
+
+```
+{
+  "event_id": 1,
+  "title": "Group Coding at Stephen's",
+  "description": "We're gonna write some JavaScript while watching Sister Wives",
+  "address_1": "1600 Pennsylvania Avenue",
+  "address_2": "Apartment 3",
+  "city": null,
+  "state": "OH",
+  "zipcode": "44124",
+  "time": "2021-04-11T00:00:00.000Z",
+  "group": {
+    "group_id": 1,
+    "group_name": "JavaScript Meet Up",
+    "description": "We meet up and write code",
+    "category": "religious"
+  }
+}
+```
+
+### List Attendees for Event
+
+GET request to /api/events/:event_id/attendees
+
+Not listed means they haven't responded.
+attending: 1 = yes they are attending
+attending: 0 = they responded no, they are not attending
+```
+[
+  {
+    "user_id": 14,
+    "first_name": "Joe",
+    "last_name": "McCohort",
+    "email": "joe@gmail.com",
+    "attending": 0
+  },
+  {
+    "user_id": 15,
+    "first_name": "Ross",
+    "last_name": "McCohort",
+    "email": "ross@gmail.com",
+    "attending": 1
+  }
+]
+```
+
+### List Events by Category
+
+GET request to /api/events/category/:category_name (for example: /api/groups/category/religious)
+
+Same format as data at /api/events
+
+
+### Add an Event
+
+POST request to /api/events with data of the structure: (Note: Address MUST be valid!)
+
+```
+{
+    "group_id": 1,
+    "title": "Underwater Whiteboarding",
+    "description": "AKA Waterboarding",
+    "address_1": "1385 Merry Oaks Trail",
+    "address_2": "",
+    "city": "Chagrin Falls",
+    "state": "OH",
+    "zipcode": "44022",
+    "event_date": "2021-05-28 21:15:00"
+}
+```
+
+### RSVP to Event
+
+POST request to /api/events/:event_id/attendees
+
+Send data in the format:
+
+```
+{
+  "user_id": 1,
+  "attending": 1 // 1 = attending, 0 = not attending
+}
+```
+
+
+
+
+
+
+-------------------------------
+## DMS
+
+### List ALL DMs
+
+GET request to /api/dms
+
+Same format as data at /api/users/:user_id/dms
+
+
+
+### List DMS involving User
+
+GET request to /api/users/:id/dms
+
+```
+{
+  "2": [
+    {
+      "dm_id": 2,
+      "timestamp": "2021-04-05T16:28:09.000Z",
+      "message": "Hi",
+      "sender": {
+        "user_id": 1,
+        "first_name": "Stephen",
+        "last_name": "Hyde"
+      },
+      "receiver": {
+        "user_id": 2,
+        "first_name": "Fred",
+        "last_name": "Flintstone"
+      }
+    },
+    {
+      "dm_id": 4,
+      "timestamp": "2021-04-05T16:28:42.000Z",
+      "message": "May we have a conversation?",
+      "sender": {
+        "user_id": 1,
+        "first_name": "Stephen",
+        "last_name": "Hyde"
+      },
+      "receiver": {
+        "user_id": 2,
+        "first_name": "Fred",
+        "last_name": "Flintstone"
+      }
+    }
+  ],
+  "3": [
+    // messages between user_id 3 and user_id 1
+  ]
+}
+```
+
+
+
+-------------------------------
+## Announcements
+
+### Announcements for Group
 
 GET request to /api/groups/:id/posts
 
@@ -346,7 +547,7 @@ GET request to /api/groups/:id/posts
 ]
 ```
 
-### Forum Posts (and nested children)
+### Forum Posts With Children
 
 GET request to /api/groups/:id/forum
 
@@ -408,7 +609,7 @@ GET request to /api/groups/:id/forum
 ]
 ```
 
-### Add a Top-Level Post to a Forum
+### Add Top Level Forum Post
 
 POST request to /api/groups/:group_id/forum with data having the structure:
 
@@ -422,7 +623,7 @@ POST request to /api/groups/:group_id/forum with data having the structure:
 
 If successful the data will be in the same format as when you request all posts, but not in an array.
 
-### Add a Reply to a Top-Level Post on a Forum
+### Add Reply to Forum Post
 
 POST request to /api/groups/:group_id/forum-reply with data having the structure:
 ```
@@ -450,145 +651,9 @@ If successful the data returned will be in the format:
 }
 ```
 
-### List ALL Events
 
-GET request to /api/events
 
-```
-[
-  {
-    "event_id": 1,
-    "title": "Group Coding at Stephen's",
-    "description": "We're gonna write some JavaScript while watching Sister Wives",
-    "address_1": "1600 Pennsylvania Avenue",
-    "address_2": "Apartment 3",
-    "city": null,
-    "state": "OH",
-    "zipcode": "44124",
-    "time": "2021-04-11T00:00:00.000Z",
-    "group": {
-      "group_id": 1,
-      "group_name": "JavaScript Meet Up",
-      "description": "We meet up and write code",
-      "category": "religious"
-    }
-  },
-  {
-    "event_id": 2,
-    "title": "Extra Self Assessment",
-    "description": "We miss having self assessments, so we're gonna make some for ourselves",
-    "address_1": "1600 Pennsylvania Avenue",
-    "address_2": "Apartment 3",
-    "city": null,
-    "state": "OH",
-    "zipcode": "44124",
-    "time": "2021-04-12T20:00:00.000Z",
-    "group": {
-      "group_id": 1,
-      "group_name": "JavaScript Meet Up",
-      "description": "We meet up and write code",
-      "category": "religious"
-    }
-  },
-  ...
-]
-```
 
-### Add an Event
 
-POST request to /api/events with data of the structure: (Note: Address MUST be valid!)
 
-```
-{
-    "group_id": 1,
-    "title": "Underwater Whiteboarding",
-    "description": "AKA Waterboarding",
-    "address_1": "1385 Merry Oaks Trail",
-    "address_2": "",
-    "city": "Chagrin Falls",
-    "state": "OH",
-    "zipcode": "44022",
-    "event_date": "2021-05-28 21:15:00"
-}
-```
 
-### Data for One Specific Event
-
-GET request to /api/events/:event_id
-
-```
-{
-  "event_id": 1,
-  "title": "Group Coding at Stephen's",
-  "description": "We're gonna write some JavaScript while watching Sister Wives",
-  "address_1": "1600 Pennsylvania Avenue",
-  "address_2": "Apartment 3",
-  "city": null,
-  "state": "OH",
-  "zipcode": "44124",
-  "time": "2021-04-11T00:00:00.000Z",
-  "group": {
-    "group_id": 1,
-    "group_name": "JavaScript Meet Up",
-    "description": "We meet up and write code",
-    "category": "religious"
-  }
-}
-```
-
-### List Attendees for Event
-
-GET request to /api/events/:event_id/attendees
-
-Not listed means they haven't responded.
-attending: 1 = yes they are attending
-attending: 0 = they responded no, they are not attending
-```
-[
-  {
-    "user_id": 14,
-    "first_name": "Joe",
-    "last_name": "McCohort",
-    "email": "joe@gmail.com",
-    "attending": 0
-  },
-  {
-    "user_id": 15,
-    "first_name": "Ross",
-    "last_name": "McCohort",
-    "email": "ross@gmail.com",
-    "attending": 1
-  }
-]
-```
-
-### RSVP to Event
-
-POST request to /api/events/:event_id/attendees
-
-Send data in the format:
-
-```
-{
-  "user_id": 1,
-  "attending": 1 // 1 = attending, 0 = not attending
-}
-```
-
-### List ALL DMs (may be useful for debugging)
-
-GET request to /api/dms
-
-Same format as data at /api/users/:user_id/dms
-
-### List Groups by Category
-
-GET request to /api/groups/category/:category_name (for example: /api/groups/category/animals)
-
-Same format as data at /api/groups
-
-### List Events by Category
-
-GET request to /api/events/category/:category_name (for example: /api/groups/category/religious)
-
-Same format as data at /api/events
