@@ -43,15 +43,36 @@ const addUserToGroup = (req, res) => {
     group_id: req.params.group_id,
     user_id: req.params.user_id
   }
-  console.log(data);
-  connection.query('INSERT INTO members SET ?', data, (err, results) => {
-    if (err) {
+  if (!req.body.hasOwnProperty('status')) {
+    return res.json({
+      errors: ['please specify status as 1 or 0']
+    });
+  }
+  const value = req.body.status == '1' ? 1 : 0;
+  if (value == 1) {
+    connection.query('INSERT INTO members SET ?', data, (err, results) => {
+      if (err) {
+        return res.json({
+          error: err
+        });
+      }
       return res.json({
-        error: err
+        success: true
       });
-    }
-    return res.json(results);
-  });
+    });
+  } else {
+    connection.query('DELETE FROM members WHERE members.user_id = ? AND members.group_id = ?', [data.user_id, data.group_id], (err, results) => {
+      if (err) {
+        return res.json({
+          errors: [err]
+        })
+      }
+      return res.json({
+        success: true
+      });
+    });
+  }
+
 }
 
 module.exports = {
