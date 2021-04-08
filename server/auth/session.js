@@ -9,7 +9,7 @@ var sessionOptions = {
   saveUninitialized: true,
   store: sessionStore,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24
+    maxAge: 1000 * 60 * 60 * 3 // Three hours session
   }
 };
 

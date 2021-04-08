@@ -4,8 +4,8 @@ const sessionOptions = require('./auth/session.js');
 const cookieParser = require('cookie-parser');
 const app = express();
 const router = require('./routes/index.js');
+const passport = require('./auth/passport');
 const auth = require('./auth/auth.js');
-const passport = require('passport');
 const morgan = require('morgan');
 const path = require('path');
 
@@ -24,7 +24,7 @@ app.use(passport.session());
 
 app.use('/api', router);
 app.post('/signup', auth.signup);
-app.post('/login', auth.login);
+app.post('/login', passport.authenticate('local'), auth.login);
 
 const file = path.join(__dirname, '../client/dist/index.html');
 app.get('*', (req, res) => {

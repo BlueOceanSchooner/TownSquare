@@ -13,6 +13,8 @@ import MessageMember from './Members/MessageMember.jsx';
 import GroupPage from './Group/GroupPage';
 import Homepage from './homepage/Homepage.jsx';
 import ExploreGroups from './ExploreGroups/ExploreGroups.jsx';
+import LoginPage from './Auth/LoginPage.jsx';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
@@ -20,10 +22,36 @@ class App extends React.Component {
     this.state = {
       chatModal: false,
       chatMemberID: null,
-      isLoginOpen: false
+      isLoginOpen: false,
+      currentUser: {
+        user_id: 0,
+        first_name: '',
+        last_name: '',
+        email: '',
+      },
+      loggedIn: false
     }
     this.chatOnClick = this.chatOnClick.bind(this);
     this.toggleLogin = this.toggleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get('/api/login')
+    .then(data => {
+      this.setState({
+        currentUser: {
+          user_id: data.data.user_id,
+          first_name: data.data.first_name,
+          last_name: data.data.last_name,
+          email: data.data.email,
+        },
+        loggedIn: true
+      })
+    })
+    .catch(err => {
+      console.log(err)
+    })
   }
 
   toggleLogin() {
@@ -31,6 +59,24 @@ class App extends React.Component {
       isLoginOpen: !this.state.isLoginOpen
     });
   };
+
+  handleLogout() {
+    axios.get('/api/logout')
+    .then(data => {
+      this.setState({
+        currentUser: {
+          user_id: 0,
+          first_name: '',
+          last_name: '',
+          email: '',
+        },
+        loggedIn: false
+      })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
 
   chatOnClick(chatMember) {
     const { chatModal } = this.state;
@@ -47,7 +93,12 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <Header isLoginOpen={this.state.isLoginOpen} toggleLogin={this.toggleLogin}/>
+          <Header
+            isLoginOpen={this.state.isLoginOpen}
+            toggleLogin={this.toggleLogin}
+            loggedIn={this.state.loggedIn}
+            currentUser={this.state.currentUser}
+            handleLogout={this.handleLogout}/>
           <Chat userID={userID} onClick={this.chatOnClick} modal={this.state.chatModal} chatMemberID={this.state.chatMemberID}/>
 
           {/* Example use of MessageMember component */}
@@ -57,6 +108,9 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/">
             <Homepage />
+          </Route>
+          <Route exact path="/login">
+            <LoginPage />
           </Route>
           <Route path="/allgroups">
             <ExploreGroups />
