@@ -11,9 +11,12 @@ All API endpoints begin with /api.
   - [GET Data for Group by group_id](#info-for-specific-group)
   - [GET Search for Group by Name](#search-for-group-by-name)
   - [GET List Groups by Category](#list-groups-by-category)
-  - [GET List Groups for User](#list-groups-for-specific-user)
+  - [GET List Groups User is Member Of](#list-groups-user-is-member-of)
+  - [GET List Groups User is Owner Of](#list-groups-user-is-owner-of)
   - [GET List of Members of a Group](#members-in-specific-group)
   - [POST Create Group](#create-group)
+  - [POST Add User to Group](#add-user-to-group)
+  - [POST Remove User From Group](#remove-user-from-group)
 - [Events](#Events)
   - [GET List All Events](#list-all-events)
   - [GET Events in Specific Group](#events-in-specific-group)
@@ -28,6 +31,8 @@ All API endpoints begin with /api.
   - [GET List DMS Involving User](#list-dms-involving-user)
 - [Announcements](#announcements)
   - [GET List Announcements for Group](#announcements-for-group)
+  - [POST Create Announcement](#add-announcement)
+- [Forum](#forum)
   - [GET List Forum Posts with Children](#forum-posts-with-children)
   - [POST Create Top Level Forum Post](#add-top-level-forum-post)
   - [POST Create Reply to Forum Post](#add-reply-to-forum-post)
@@ -164,26 +169,50 @@ Same format as data at /api/groups
 
 
 
-### List Groups for specific user:
+### List Groups User is Member Of
 
-GET request to /api/users/:id/groups
+GET request to /api/users/:id/groups-member
 
 ```
 [
   {
     "group_id": 1,
-    "image_url": "assets/images/default-religious.jpg",
+    "image_url": "/assets/images/default-religious.jpg",
     "group_name": "JavaScript Meet Up",
-    "description": "We meet up and write code",
-    "category": "religious"
+    "description": "We like to code",
+    "category": "religious",
+    "owner": {
+      "user_id": 1,
+      "first_name": "Stephen",
+      "last_name": "Hyde",
+      "email": "stephen@friend.horse"
+    }
   },
+  ...
+]
+
+```
+
+### List Groups User is Owner Of
+
+GET request to /api/users/:id/groups-owned
+
+```
+[
   {
-    "group_id": 2,
-    "image_url": "assets/images/default-animals.jpg",
-    "group_name": "Cleveland Horse Enthusiasts",
-    "description": "We are enthusiastic about horses!",
-    "category": "animals"
-  }
+    "group_id": 1,
+    "image_url": "/assets/images/default-religious.jpg",
+    "group_name": "JavaScript Meet Up",
+    "description": "We like to code",
+    "category": "religious",
+    "owner": {
+      "user_id": 1,
+      "first_name": "Stephen",
+      "last_name": "Hyde",
+      "email": "stephen@friend.horse"
+    }
+  },
+  ...
 ]
 
 ```
@@ -227,6 +256,42 @@ Include data in the following format:
 
 If successful the data will be returned in the same format as when you GET request a group by group_id.
 
+
+### Add User to Group
+
+POST request to /api/users/:user_id/groups/:group_id
+
+Include data in the following format:
+```
+{
+  "status": 1 // 1 means add user to group
+}
+```
+
+If successful the data returned will be of type:
+```
+{
+  success: true
+}
+```
+
+### Remove User from Group
+
+POST request to /api/users/:user_id/groups/:group_id
+
+Include data in the following format:
+```
+{
+  "status": 0 // 0 means remove from group
+}
+```
+
+If successful the data returned will be of type:
+```
+{
+  success: true
+}
+```
 
 -------------------------------
 ## Events
@@ -547,6 +612,27 @@ GET request to /api/groups/:id/posts
 ]
 ```
 
+### Add Announcement
+
+POST request to /api/groups/:id/posts
+
+Send data in the following format:
+
+```
+{
+  "title": "Title of Announcement",
+  "user_id": 1, // (the author of the post)
+  "body": "This is the body of the announcement"
+}
+
+```
+
+If successful it will return the data for the created announcement
+
+--------------------------------
+# Forum
+
+
 ### Forum Posts With Children
 
 GET request to /api/groups/:id/forum
@@ -650,10 +736,3 @@ If successful the data returned will be in the format:
     }
 }
 ```
-
-
-
-
-
-
-

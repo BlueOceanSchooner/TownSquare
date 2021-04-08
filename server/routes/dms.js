@@ -40,7 +40,7 @@ const getAllDms = (req, res) => {
 const getConversations = (req, res) => {
   const user_id = req.params.user_id;
   const sql = `
-    SELECT d.dm_id, d.sender, d.receiver, d.sent, d.message,
+    SELECT d.dm_id, d.sender, d.receiver, d.sent, d.message, d.wasRead,
       us.user_id as sender_id, us.first_name as sender_first_name, us.last_name as sender_last_name,
       ur.user_id as receiver_id, ur.first_name as receiver_first_name, ur.last_name as receiver_last_name
     FROM dms d
@@ -69,7 +69,8 @@ const getConversations = (req, res) => {
           user_id: row.receiver_id,
           first_name: row.receiver_first_name,
           last_name: row.receiver_last_name
-        }
+        },
+        read: row.wasRead
       };
     });
     const conversations = {};
@@ -105,8 +106,23 @@ const addDm = (req, res) => {
   });
 }
 
+const readDms = (req, res) => {
+  const DMs = req.body.DMs;
+  const placeholders = new Array(DMs.length).fill('?');
+  const sql = `UPDATE dms SET wasRead = true WHERE dm_id IN (${placeholders})`;
+  connection.query(sql, DMs, (err, results) => {
+    if (err) {
+      return res.json({
+        error: err
+      });
+    }
+    return res.json(results);
+  });
+}
+
 module.exports = {
   getAllDms,
   getConversations,
-  addDm
+  addDm,
+  readDms
 };

@@ -110,7 +110,7 @@ class App extends React.Component {
             loggedIn={this.state.loggedIn}
             currentUser={this.state.currentUser}
             handleLogout={this.handleLogout}/>
-          <Chat userID={userID} onClick={this.chatOnClick} modal={this.state.chatModal} chatMemberID={this.state.chatMemberID}/>
+          <Chat userID={this.state.loggedIn ? this.state.currentUser.user_id : 1} onClick={this.chatOnClick} modal={this.state.chatModal} chatMemberID={this.state.chatMemberID}/>
         </div>
         <Switch>
           <Route exact path="/">
