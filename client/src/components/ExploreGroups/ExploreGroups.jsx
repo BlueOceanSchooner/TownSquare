@@ -7,6 +7,7 @@ import {
   ListGroupItemText,
   ListGroupItemHeading,
   Card,
+  CardColumns,
   CardImg,
   CardText,
   CardBody,
@@ -18,9 +19,8 @@ import {
   FormText,
   Input,
   Label, } from 'reactstrap';
-import Header from '../Header/Header.jsx'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import ExploreGroupsList from './ExploreGroupsList.jsx';
 
 class ExploreGroups extends React.Component {
   constructor(props) {
@@ -97,29 +97,7 @@ class ExploreGroups extends React.Component {
               </Form>
             </div>
           <div className='group-list-container'>
-            <div className='group-list'>
-                <ListGroup >
-                  {this.state.groups.map((group, i) => {
-                    group.category = group.category.slice(0, 1).toUpperCase() + group.category.slice(1);
-                    return (
-                      <div key={i} className='group-card-container'>
-                        <Card style={{ width: '40rem'}} >
-                          <Link to={`/groups/${group.group_id}`} >
-                            <CardImg className='card-img' top width="100%" src={group.image_url} alt="Image of group." />
-                          </Link>
-                          <CardBody>
-                            <Link className='group-list-name' to={`/groups/${group.group_id}`} >
-                              <CardTitle tag="h4">{group.group_name}</CardTitle>
-                            </Link>
-                            <CardSubtitle tag="h6" className="mb-2 text-muted">{group.category}</CardSubtitle>
-                            <CardText>{group.description}</CardText>
-                          </CardBody>
-                        </Card>
-                      </div>
-                    )
-                  })}
-                </ListGroup>
-              </div>
+            <ExploreGroupsList groups={this.state.groups} />
           </div>
         </div>
       )

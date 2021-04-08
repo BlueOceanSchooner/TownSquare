@@ -351,19 +351,31 @@
 
 .group-card-container {
   margin-bottom: 10px;
-  width: 100%;
+  width: 50%;
 }
 
 
 .card-img {
   width: 100%!important;
-  height: 350px!important;
+  height: 300px!important;
   object-fit: cover;
+}
+
+.card-columns {
+  column-count: 1;
+}
+.group-card-body {
+  height: 175px;
+  overflow: auto;
+}
+.group-card:hover {
+  background-color: rgb(238, 238, 238);
 }
 
 .group-list-container {
   display: flex;
   justify-content: center;
+  width: 100%
 }
 
 .group-heading-container {
@@ -374,6 +386,7 @@
 .group-list {
   display: flex;
   justify-content: center;
+  width: 60%;
 }
 
 
