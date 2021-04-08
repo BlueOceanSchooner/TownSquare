@@ -562,6 +562,19 @@ attending: 0 = they responded no, they are not attending
 ]
 ```
 
+### RSVP to Event
+
+POST request to /api/events/:event_id/attendees
+
+Send data in the format:
+
+```
+{
+  "user_id": 1,
+  "attending": 1 // 1 = attending, 0 = not attending
+}
+```
+
 ### List ALL DMs (may be useful for debugging)
 
 GET request to /api/dms
