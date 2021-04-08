@@ -19,14 +19,10 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import ExploreGroups from '../ExploreGroups/ExploreGroups.jsx';
-<<<<<<< HEAD
 import LoginModal from '../Auth/LoginModal.jsx';
-=======
 import axios from 'axios';
 import logo from '../../../assets/townsquare.png';
 import CreateEventModal from '../Events/CreateEventModal.jsx';
-import Login from '../Auth/Login.jsx';
->>>>>>> master
 
 class Header extends Component {
   constructor(props) {
@@ -270,20 +266,18 @@ class Header extends Component {
                 <NavItem>
                   {this.props.loggedIn?
                   <Button
-                  outline
                   color='secondary'
                   size='small'
-                  style={{ backgroundColor: '#fff', marginLeft: '10px', marginTop: '16px'}}
+                  style={{marginLeft: '10px', marginTop: '16px'}}
                   onClick={this.props.handleLogout}
                   className='loginBtn'
                 >
                   Log Out
                 </Button> :
                   <Button
-                    outline
                     color='secondary'
                     size='small'
-                    style={{ backgroundColor: '#fff', marginLeft: '10px', marginTop: '16px'}}
+                    style={{marginLeft: '10px', marginTop: '16px'}}
                     onClick={this.props.toggleLogin}
                     className='loginBtn'
                   >
@@ -292,15 +286,20 @@ class Header extends Component {
                 </NavItem>
                 <NavItem>
                 {this.props.loggedIn?
-                  <h5 style={{ color: '#fff', marginLeft: '10px', marginTop: '21px'}}>
-                    &nbsp;&nbsp;{this.props.currentUser.first_name}&nbsp;{this.props.currentUser.last_name}&nbsp;&nbsp;
-                  </h5> :
-                  <Link to='/signup'>
                   <Button
                     outline
                     color='secondary'
                     size='small'
                     style={{ backgroundColor: '#fff', marginLeft: '10px', marginTop: '16px'}}
+                    className='signupBtn'
+                  >
+                {this.props.currentUser.first_name}&nbsp;{this.props.currentUser.last_name}
+                </Button> :
+                  <Link to='/signup'>
+                  <Button
+                    color='secondary'
+                    size='small'
+                    style={{marginLeft: '10px', marginTop: '16px'}}
                     className='signupBtn'
                   >
                     Sign Up

@@ -69,7 +69,7 @@ const LoginForm = () => {
         <Input type="checkbox" onChange={handleKeepLoginChange}/>{' '}Keep me signed in
       </Label>
     </FormGroup>
-  { showAuthError? <FormText color="danger">The email and password doesn't match.</FormText> : <br />}
+  { showAuthError? <FormText color="danger">The email or password is incorrect. Please verify</FormText> : <br />}
   <br />
   <Button color="success" onClick={handleSubmit}>Login</Button>
 
