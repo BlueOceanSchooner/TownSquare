@@ -8,7 +8,7 @@ import {
 } from 'reactstrap';
 import moment from 'moment';
 
-const ParentMessage = ({ thread, groupId, userId, user }) => {
+const ParentMessage = ({ thread, groupId, currentUser, user }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [childMessage, setChildMessage] = useState('');
   const date = moment(thread.parent.posted).format("MMMM Do h:mm a");
@@ -19,7 +19,7 @@ const ParentMessage = ({ thread, groupId, userId, user }) => {
     event.preventDefault();
     axios.post(`/api/groups/${thread.parent.group_id}/forum-reply`, {
       "group_id": groupId,
-      "user_id": userId,
+      "user_id": currentUser.user_id,
       "forum_post_id": `${thread.parent.forum_post_id}`,
       "message": childMessage,
     });

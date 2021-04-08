@@ -5,7 +5,7 @@ import {
 } from 'reactstrap';
 import MembersModal from '../Members/MembersModal.jsx';
 
-const GroupInfo = ({ groupInfo, members, userID, memberOnClick }) => {
+const GroupInfo = ({ groupInfo, members, currentUser, memberOnClick }) => {
 
   return (
     <div>
@@ -20,7 +20,7 @@ const GroupInfo = ({ groupInfo, members, userID, memberOnClick }) => {
               ))}
             </div> */}
 
-            <MembersModal event={false} name={groupInfo.group_name} users={members} userID={userID} messageMemberOnClick={memberOnClick} />
+            <MembersModal event={false} name={groupInfo.group_name} users={members} currentUser={currentUser.user_id} messageMemberOnClick={memberOnClick} />
 
           </CardSubtitle>
           <CardText>{groupInfo.description}</CardText>
