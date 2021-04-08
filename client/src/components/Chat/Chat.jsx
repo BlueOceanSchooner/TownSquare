@@ -11,6 +11,7 @@ class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      disabled: true,
       chats: {},
       chatIDsOrderedByTime: [],
       active: 0,
@@ -36,7 +37,9 @@ class Chat extends React.Component {
   }
 
   componentDidMount() {
-    this.getMessages();
+    this.getMessages(() => {
+      this.setState({ disabled: false })
+    });
     setInterval(this.getMessages, 5000);
     this.getAllUsers();
   }
@@ -88,7 +91,7 @@ class Chat extends React.Component {
     return null;
   }
 
-  getMessages() {
+  getMessages(callback) {
     axios.get(`/api/users/${this.props.userID}/dms`)
     .then(response => {
       if (response.data) {
@@ -105,18 +108,26 @@ class Chat extends React.Component {
           orderedChats.push(chat);
         })
         var chatIDs = orderedChats.map(chat => {
-          if (chat[0].sender.user_id === this.props.userID) {
+          if (Number(chat[0].sender.user_id) === Number(this.props.userID)) {
             return chat[0].receiver.user_id;
           }
           return chat[0].sender.user_id;
         });
+
+        var oldChats = this.state.chats;
         if (this.state.active) {
           this.setState({ chatIDsOrderedByTime: chatIDs, chats: response.data })
         } else {
           this.setState({ chatIDsOrderedByTime: chatIDs, chats: response.data, active: chatIDs[0] })
         }
-      } else {
-        this.setState({ chats: response.data })
+        if (JSON.stringify(oldChats[this.state.active]) !== JSON.stringify(this.state.chats[this.state.active])) {
+          this.markConversationAsRead(this.state.active);
+        }
+      }
+    })
+    .then(() => {
+      if (callback) {
+        callback();
       }
     })
     .catch(err => console.log('error:', err));
@@ -246,7 +257,9 @@ class Chat extends React.Component {
 
     if (Object.keys(this.state.chats).length) {
       var newMessageCount = Object.keys(this.state.chats).reduce((newMessageCount, otherUserID) => {
-        return newMessageCount + this.state.chats[otherUserID].filter(chat => chat.receiver.user_id === this.props.userID && chat.read === 0).length;
+        return newMessageCount + this.state.chats[otherUserID].filter(chat => {
+          return (!this.props.modal || Number(this.state.active) !== Number(chat.sender.user_id)) && Number(chat.receiver.user_id) === Number(this.props.userID) && Number(chat.read) === 0;
+        }).length;
       }, 0);
     } else {
       var newMessageCount = null;
@@ -254,7 +267,7 @@ class Chat extends React.Component {
 
     return (
       <div className="chat-icon">
-         <i className="fas fa-comment-alt" onClick={onClick}></i>
+         <i className="fas fa-comment-alt" style={this.state.disabled ? {display: "none"} : {display: "inline-block"}} onClick={onClick}></i>
          <div style={newMessageCount ? {display: "block"} : {display: "none"}} className="new-messages">
           {newMessageCount}
         </div>
@@ -273,6 +286,7 @@ class Chat extends React.Component {
               newRecipient={newRecipient}
               chatIDsOrderedByTime={this.state.chatIDsOrderedByTime}
               getProperTimestamp={this.getProperTimestamp}
+              modal={this.props.modal}
             />
 
             <Sub_conversation

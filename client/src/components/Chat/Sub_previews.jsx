@@ -1,15 +1,22 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 
-const Sub_previews = ({ userID, chats, active, changeActiveConversation, openNewMessage, newRecipient, chatIDsOrderedByTime, getProperTimestamp }) => {
+const Sub_previews = ({ modal, userID, chats, active, changeActiveConversation, openNewMessage, newRecipient, chatIDsOrderedByTime, getProperTimestamp }) => {
   return (
     <div>
-      <Button className={"new-message"} color="primary" onClick={openNewMessage} disabled={newRecipient}>
+      <Button className={"new-message"} style={{backgroundColor: "#344e64"}} onClick={openNewMessage} disabled={newRecipient}>
         New Message
       </Button>
       <div className="messages">
         {chatIDsOrderedByTime.map(otherUserID => {
           let conversation = chats[String(otherUserID)];
+          if (conversation) {
+            var unreadMessageCount = conversation.filter(message => {
+              return (!modal || Number(active) !== Number(message.sender.user_id)) && Number(message.receiver.user_id) === Number(userID) && Number(message.read) === 0;
+            }).length;
+          } else {
+            var unreadMessageCount = 0;
+          }
           return (
             <div className="message" key={otherUserID} name={otherUserID} onClick={changeActiveConversation}>
               <span className={Number(otherUserID) === Number(active) ? "active-bar" : null}></span>
@@ -21,6 +28,11 @@ const Sub_previews = ({ userID, chats, active, changeActiveConversation, openNew
                 : null
               }
               </span>
+
+              <span className="preview-unread-messages" style={ unreadMessageCount ? {display: "inline-block"} : {display: "none"} }>
+                {conversation && unreadMessageCount ? unreadMessageCount : null}
+              </span>
+
               <div className="content">
                 <span className="other-user-name">
                   {

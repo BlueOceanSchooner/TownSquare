@@ -7,7 +7,7 @@
   font-size: 40px;
   top: calc(100vh - 60px);
   left: calc(100vw - 70px);
-  color: #6c757d;
+  color: #344e64;
   text-shadow: -3px 3px 4px #a1aebb, 1px -1px #fff;
   display: flex;
   justify-content: center;
@@ -73,7 +73,6 @@
   left: 1%;
   margin-bottom: 10px;
   height: 30px;
-  line-height: 30px;
   font-size: 18px;
   padding: 0;
 }
@@ -98,7 +97,7 @@
 
 .chat-modal .modal-body .active-bar {
   grid-area: active-bar;
-  background-color: #aaa;
+  background-color: #344e64;
   width: 10px;
   height: 55px;
   margin: 2.5px;
@@ -134,6 +133,20 @@
   font-size: 12px;
   text-align: right;
   padding: 10px 10px 0 0;
+}
+
+.chat-modal .modal-body .preview-unread-messages {
+  grid-area: timestamp;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin: 30px auto;
+  display: inline-block;
+  background-color: #344e64;
+  color: #fff;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
 }
 
 .chat-modal .modal-body .last-message {

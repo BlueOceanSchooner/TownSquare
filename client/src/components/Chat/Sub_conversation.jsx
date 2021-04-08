@@ -67,7 +67,7 @@ class Sub_conversation extends React.Component {
           </div>
 
           <Input className={"input"} type="text" onChange={updateNewMessage} value={newMessage}/>
-          <Button color="primary" disabled={newMessage === ''} onClick={sendNewMessage}>
+          <Button style={{backgroundColor: "#344e64"}} disabled={newMessage === ''} onClick={sendNewMessage}>
             <i className="send-message fas fa-paper-plane"></i>
             Send
           </Button>
@@ -81,7 +81,7 @@ class Sub_conversation extends React.Component {
           {chats[active] ? this.renderConversationMessages(chats[active]) : null}
         </div>
         <Input className={"input"} type="text" onChange={updateNewMessage} value={newMessage}/>
-        <Button color="primary" disabled={newMessage === ''} onClick={sendNewMessage}>
+        <Button style={{backgroundColor: "#344e64"}} disabled={newMessage === ''} onClick={sendNewMessage}>
           <i className="send-message fas fa-paper-plane"></i>
           Send
         </Button>
