@@ -357,7 +357,7 @@
 
 .card-img {
   width: 100%!important;
-  height: 300px!important;
+  height: 250px!important;
   object-fit: cover;
 }
 
@@ -365,7 +365,7 @@
   column-count: 1;
 }
 .group-card-body {
-  height: 175px;
+  height: 160px;
   overflow: auto;
 }
 .group-card:hover {
@@ -414,12 +414,15 @@
   object-fit: cover;
 }
 
+
+
 .groups-header {
   display: flex;
-  width: 90%;
+  width: 95%;
   margin: auto;
-  margin-top: 50px;
-  margin-bottom: 10pxpx;
+  margin-top: 40px;
+  border-radius: 3px;
+  margin-bottom: 10px;
   height: 60px;
   align-content: center;
   justify-content: center;
@@ -438,12 +441,28 @@
   color: grey;
 }
 
+.group-select-form {
+  width: 95%;
+  margin: auto;
+  height: fit-content;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .group-select {
-  width: 100%;
   margin-top: 10px;
-  margin-bottom: 10px;
-  display: inline-flex;
+  margin-bottom: 20px;
+  margin-right: 200px;
+  display: inline-block;
   justify-content: center;
+  vertical-align: top;
+}
+.group-view {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: inline-block;
+  justify-content: center;
+  vertical-align: top;
 }
 
 .filter-label {

@@ -1,36 +1,25 @@
 import React from 'react';
 import {
-  Jumbotron,
-  Button,
   ListGroup,
-  ListGroupItem,
-  ListGroupItemText,
-  ListGroupItemHeading,
   Card,
-  CardColumns,
   CardImg,
   CardText,
   CardBody,
   CardTitle,
   CardSubtitle,
-  Form,
-  FormGroup,
-  FormFeedback,
-  FormText,
-  Input,
-  Label, } from 'reactstrap';
+} from 'reactstrap';
   import { Link } from 'react-router-dom';
 
-  const ExploreGroupsList = (props) => {
+  const GroupsListGrid = (props) => {
 
     return (
       <div className='group-list'>
-          <CardColumns className='card-columns ' >
+          <div className={props.groups.length < 3 ? 'list-group flex-md-row': 'card-columns'} >
             {props.groups.map((group, i) => {
               group.category = group.category.slice(0, 1).toUpperCase() + group.category.slice(1);
               return (
-                <div key={i} className='group-card-container'>
-                  <Card className='group-card h-100' style={{ width: '28rem'}} >
+                <div key={i} style={props.groups.length < 3 ? {marginRight: '20px'} : {}} className='group-card-container'>
+                  <Card className='group-card h-100' style={{ width: '22rem'}} >
                     <Link to={`/groups/${group.group_id}`} >
                       <CardImg className='card-img' top width="100%" src={group.image_url} alt="Image of group." />
                     </Link>
@@ -45,9 +34,9 @@ import {
                 </div>
               )
             })}
-          </CardColumns>
+          </div>
       </div>
     )
   }
 
-  export default ExploreGroupsList;
+  export default GroupsListGrid;
