@@ -2,8 +2,6 @@ const connection = require('../../db/connection.js');
 const bcrypt = require('bcrypt');
 
 const signup = (req, res) => {
-  console.log(req.body)
-  // let {first_name, last_name, email, password} = req.body;
   req.body.password = bcrypt.hashSync(req.body.password, 10);
   connection.query('SELECT 1 FROM users WHERE email = ?', req.body.email, (err, results) => {
     if (err) {
@@ -13,7 +11,6 @@ const signup = (req, res) => {
       });
     }
     if (results.length === 0) {
-      // var user = {first_name, last_name, email, password};
       connection.query('INSERT INTO users SET ?', req.body, (err, results) => {
         if (err) {
           console.log(err)
@@ -21,20 +18,30 @@ const signup = (req, res) => {
             error: err
           });
         }
+        res.json({ msg: 'success' })
       });
-      console.log(results)
-      return res.json(results);
     } else {
-      if (result[0]['1'] === 1) {
-        res.json({ msg: 'used' })
-      } else {
-        res.redirect('/login');
-      }
+      res.json({ msg: 'used' })
     }
   });
 };
 const login = (req, res) => {
-  console.log(req.body)
+  if (req.body.keepLogin) {
+    req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 365;
+  } else {
+    req.session.cookie.expires = false;
+  }
+  const resUser = {
+    user_id: req.user.user_id,
+    first_name: req.user.first_name,
+    last_name: req.user.last_name,
+    email: req.user.email
+  }
+  console.log(resUser)
+  res.json({
+    user: resUser,
+    msg: 'success'
+  })
 };
 
 module.exports = {

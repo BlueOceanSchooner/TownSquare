@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   Navbar,
   NavbarBrand,
+  NavbarText,
   Nav,
   NavItem,
   Button,
@@ -18,10 +19,10 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import ExploreGroups from '../ExploreGroups/ExploreGroups.jsx';
+import LoginModal from '../Auth/LoginModal.jsx';
 import axios from 'axios';
 import logo from '../../../assets/townsquare.png';
 import CreateEventModal from '../Events/CreateEventModal.jsx';
-import Login from '../Auth/Login.jsx';
 
 class Header extends Component {
   constructor(props) {
@@ -145,7 +146,7 @@ class Header extends Component {
     return (
       <div className='main-header'>
           <Navbar  className='py-3' color='secondary' expand='md'>
-            <Login toggleLogin={this.props.toggleLogin} isLoginOpen={this.props.isLoginOpen} />
+            <LoginModal toggleLogin={this.props.toggleLogin} isLoginOpen={this.props.isLoginOpen} />
             <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
               <ModalHeader toggle={this.toggleModal}>Create New Group</ModalHeader>
               <ModalBody>
@@ -263,19 +264,28 @@ class Header extends Component {
                   </Button>
                 </NavItem>
                 <NavItem>
+                  {this.props.loggedIn?
                   <Button
-                    outline
+                  color='secondary'
+                  size='small'
+                  style={{marginLeft: '10px', marginTop: '16px'}}
+                  onClick={this.props.handleLogout}
+                  className='loginBtn'
+                >
+                  Log Out
+                </Button> :
+                  <Button
                     color='secondary'
                     size='small'
-                    style={{ backgroundColor: '#fff', marginLeft: '10px', marginTop: '16px'}}
+                    style={{marginLeft: '10px', marginTop: '16px'}}
                     onClick={this.props.toggleLogin}
                     className='loginBtn'
                   >
                     Log In
-                  </Button>
+                  </Button>}
                 </NavItem>
                 <NavItem>
-                  <Link to='/signup'>
+                {this.props.loggedIn?
                   <Button
                     outline
                     color='secondary'
@@ -283,9 +293,18 @@ class Header extends Component {
                     style={{ backgroundColor: '#fff', marginLeft: '10px', marginTop: '16px'}}
                     className='signupBtn'
                   >
+                {this.props.currentUser.first_name}&nbsp;{this.props.currentUser.last_name}
+                </Button> :
+                  <Link to='/signup'>
+                  <Button
+                    color='secondary'
+                    size='small'
+                    style={{marginLeft: '10px', marginTop: '16px'}}
+                    className='signupBtn'
+                  >
                     Sign Up
                   </Button>
-                  </Link>
+                  </Link>}
                 </NavItem>
                 <NavItem >
                 <Link to='/'>
