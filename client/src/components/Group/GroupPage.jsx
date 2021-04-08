@@ -72,7 +72,7 @@ class GroupPage extends React.Component {
         {/* Activities Tabs */}
         <Row>
           <Col>
-            <ActivityList events={events} posts={posts}/>
+            <ActivityList groupInfo={groupInfo} events={events} posts={posts}/>
           </Col>
         </Row>
       </Container>
