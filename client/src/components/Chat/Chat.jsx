@@ -152,14 +152,6 @@ class Chat extends React.Component {
 
   changeActiveConversationAfterNewMessage(id) {
     this.setState({ active: id });
-    // if (Object.keys(this.state.chats).length) {
-    //   var newMessageCount = Object.keys(this.state.chats).reduce((newMessageCount, otherUserID) => {
-    //     return newMessageCount + this.state.chats[otherUserID].filter(chat => {
-    //       return (!this.props.modal || Number(this.state.active) !== Number(chat.sender.user_id)) && Number(chat.receiver.user_id) === Number(this.props.userID) && Number(chat.read) === 0;
-    //     }).length;
-    //   }, 0);
-    // } else {
-    // if (this.state.chats[])
   }
 
   getAllUsers() {
