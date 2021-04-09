@@ -37,9 +37,7 @@ class Chat extends React.Component {
   }
 
   componentDidMount() {
-    this.getMessages(() => {
-      this.setState({ disabled: false })
-    });
+    this.getMessages();
     setInterval(this.getMessages, 5000);
     this.getAllUsers();
   }
@@ -91,10 +89,10 @@ class Chat extends React.Component {
     return null;
   }
 
-  getMessages(callback) {
+  getMessages() {
     axios.get(`/api/users/${this.props.userID}/dms`)
     .then(response => {
-      if (response.data) {
+      if (JSON.stringify(response.data) !== '{}') {
         var orderedChats = [];
         Object.keys(response.data).forEach(chatID => {
           var chat = response.data[chatID];
@@ -116,18 +114,13 @@ class Chat extends React.Component {
 
         var oldChats = this.state.chats;
         if (this.state.active) {
-          this.setState({ chatIDsOrderedByTime: chatIDs, chats: response.data })
+          this.setState({ chatIDsOrderedByTime: chatIDs, chats: response.data, disabled: false })
         } else {
-          this.setState({ chatIDsOrderedByTime: chatIDs, chats: response.data, active: chatIDs[0] })
+          this.setState({ chatIDsOrderedByTime: chatIDs, chats: response.data, active: chatIDs[0], disabled: false })
         }
         if (JSON.stringify(oldChats[this.state.active]) !== JSON.stringify(this.state.chats[this.state.active])) {
           this.markConversationAsRead(this.state.active);
         }
-      }
-    })
-    .then(() => {
-      if (callback) {
-        callback();
       }
     })
     .catch(err => console.log('error:', err));
@@ -265,53 +258,58 @@ class Chat extends React.Component {
       var newMessageCount = null;
     }
 
-    return (
-      <div className="chat-icon">
-         <i className="fas fa-comment-alt" style={this.state.disabled ? {display: "none"} : {display: "inline-block"}} onClick={onClick}></i>
-         <div style={newMessageCount ? {display: "block"} : {display: "none"}} className="new-messages">
-          {newMessageCount}
+    if (this.state.disabled) {
+      return null;
+    } else {
+      return (
+        <div className="chat-icon">
+           <i className="fas fa-comment-alt" onClick={onClick}></i>
+           <div style={newMessageCount ? {display: "block"} : {display: "none"}} className="new-messages">
+            {newMessageCount}
+          </div>
+          <Modal isOpen={this.props.modal} toggle={onClick} className={"chat-modal"}>
+            <ModalHeader className={"modal-header"} toggle={onClick}>
+              Messages
+            </ModalHeader>
+            <ModalBody className={"modal-body"}>
+
+              <Sub_previews
+                userID={this.props.userID}
+                chats={this.state.chats}
+                active={activeID}
+                changeActiveConversation={this.changeActiveConversation}
+                openNewMessage={this.openNewMessage}
+                newRecipient={newRecipient}
+                chatIDsOrderedByTime={this.state.chatIDsOrderedByTime}
+                getProperTimestamp={this.getProperTimestamp}
+                modal={this.props.modal}
+              />
+
+              <Sub_conversation
+                userID={this.props.userID}
+                activeName={activeName}
+                chats={this.state.chats}
+                active={activeID}
+                newRecipient={newRecipient}
+                newRecipientID={this.state.newRecipientID}
+                allUsers={this.state.allUsers}
+                closeNewMessage={this.closeNewMessage}
+                memberNameClick={Boolean(this.props.chatMemberID) && !this.state.newMessageViaNameClickClose && !this.state.newRecipientChanged}
+                newMessage={this.state.newMessage}
+                newMessageChats={this.state.newMessageChats}
+                changeNewRecipient={this.changeNewRecipient}
+                updateNewMessage={this.updateNewMessage}
+                sendNewMessage={this.sendNewMessage}
+                getProperTimestamp={this.getProperTimestamp}
+                scrollDown={this.scrollDown}
+                showChat={this.showChat}
+              />
+
+            </ModalBody>
+          </Modal>
         </div>
-        <Modal isOpen={this.props.modal} toggle={onClick} className={"chat-modal"}>
-          <ModalHeader className={"modal-header"} toggle={onClick}>
-            Messages
-          </ModalHeader>
-          <ModalBody className={"modal-body"}>
-
-            <Sub_previews
-              userID={this.props.userID}
-              chats={this.state.chats}
-              active={activeID}
-              changeActiveConversation={this.changeActiveConversation}
-              openNewMessage={this.openNewMessage}
-              newRecipient={newRecipient}
-              chatIDsOrderedByTime={this.state.chatIDsOrderedByTime}
-              getProperTimestamp={this.getProperTimestamp}
-              modal={this.props.modal}
-            />
-
-            <Sub_conversation
-              userID={this.props.userID}
-              activeName={activeName}
-              chats={this.state.chats}
-              active={activeID}
-              newRecipient={newRecipient}
-              newRecipientID={this.state.newRecipientID}
-              allUsers={this.state.allUsers}
-              closeNewMessage={this.closeNewMessage}
-              memberNameClick={Boolean(this.props.chatMemberID) && !this.state.newMessageViaNameClickClose && !this.state.newRecipientChanged}
-              newMessage={this.state.newMessage}
-              newMessageChats={this.state.newMessageChats}
-              changeNewRecipient={this.changeNewRecipient}
-              updateNewMessage={this.updateNewMessage}
-              sendNewMessage={this.sendNewMessage}
-              getProperTimestamp={this.getProperTimestamp}
-              scrollDown={this.scrollDown}
-            />
-
-          </ModalBody>
-        </Modal>
-      </div>
-    );
+      );
+    }
   }
 }
 
