@@ -7,7 +7,7 @@
   font-size: 40px;
   top: calc(100vh - 60px);
   left: calc(100vw - 70px);
-  color: #6c757d;
+  color: #344e64;
   text-shadow: -3px 3px 4px #a1aebb, 1px -1px #fff;
   display: flex;
   justify-content: center;
@@ -46,7 +46,8 @@
 
 .chat-modal h5.modal-title {
   text-align: center;
-  width: 100%;
+  position: relative;
+  left: calc(45vw - 1rem - 81px);
   font-size: 36px;
   line-height: 36px;
 }
@@ -58,13 +59,18 @@
 .chat-modal .modal-body {
   background-color: #ccc;
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  column-gap: 10px;
-  grid-template-rows: 30px auto 40px;
+  grid-template-columns: 1fr 5px 2fr;
+  column-gap: 25px;
+  grid-template-rows: 38px auto 40px;
   grid-template-areas:
-    "new-message conversation-name"
-    "messages conversation-messages"
-    "messages conversation-input"
+    "new-message gap conversation-name"
+    "messages gap conversation-messages"
+    "messages gap conversation-input"
+}
+
+.gap {
+  grid-area: gap;
+  background-color: #eee;
 }
 
 .chat-modal .modal-body .new-message {
@@ -73,7 +79,6 @@
   left: 1%;
   margin-bottom: 10px;
   height: 30px;
-  line-height: 30px;
   font-size: 18px;
   padding: 0;
 }
@@ -83,6 +88,14 @@
   padding: 2px;
   max-height: calc(90vh - 2rem - 36px - 2rem - 45px);
   overflow-y: scroll;
+}
+
+.chat-modal .modal-body .messages-disabled {
+  background-color: rgba(221, 221, 221, 0.5);
+  position: absolute;
+  width: 100%;
+  height: calc(90vh - 2rem - 36px - 2rem - 45px);
+  z-index: 1;
 }
 
 .chat-modal .modal-body .message {
@@ -98,7 +111,7 @@
 
 .chat-modal .modal-body .active-bar {
   grid-area: active-bar;
-  background-color: #aaa;
+  background-color: #344e64;
   width: 10px;
   height: 55px;
   margin: 2.5px;
@@ -136,6 +149,20 @@
   padding: 10px 10px 0 0;
 }
 
+.chat-modal .modal-body .preview-unread-messages {
+  grid-area: timestamp;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin: 30px auto;
+  display: inline-block;
+  background-color: #344e64;
+  color: #fff;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+}
+
 .chat-modal .modal-body .last-message {
   font-size: 13px;
 }
@@ -151,15 +178,64 @@
   font-weight: bold;
 }
 
+.chat-modal .modal-body .select-new-message-recipient {
+  margin-bottom: 0 !important;
+}
+
 .chat-modal .modal-body .conversation-header {
   grid-area: conversation-name;
-  border-bottom: 5px solid #ccc;
+  min-height: 35px;
+  line-height: 35px;
+  border-bottom: 3px solid #ccc;
 }
 
 .chat-modal .conversation-content {
   display: inline-block;
   position: relative;
   top: 5px;
+}
+
+.chat-modal .modal-body .conversation-you .message-content,
+.chat-modal .modal-body .conversation-other .message-content {
+  display: inline-block;
+  padding: 5px 10px;
+  margin-top: 5px;
+  background-color: #344e64;
+  color: #fff;
+  font-size: 15px;
+  font-weight: normal;
+  position: relative;
+}
+
+.chat-modal .modal-body .conversation-you .message-content {
+  background-color: #344e64;
+  border-radius: 10px 0px 10px 10px;
+}
+
+.chat-modal .modal-body .conversation-other .message-content {
+  background-color: #7295a0;
+  border-radius: 0px 10px 10px 10px;
+}
+
+.arrow {
+  border-style: solid;
+  position: absolute;
+  width: 10px;
+  height: 8px;
+  top: -2px;
+  border-width: 0px 6px 8px 6px;
+}
+
+.right {
+  transform: rotate(45deg);
+  border-color: transparent transparent #344e64 transparent;
+  right: -4px;
+}
+
+.left {
+  transform: rotate(-45deg);
+  border-color: transparent transparent #7295a0 transparent;
+  left: -4px;
 }
 
 .chat-modal .modal-body .conversation-you,
@@ -179,16 +255,18 @@
 
 .chat-modal .modal-body .conversation-messages {
   grid-area: conversation-messages;
-  background-color: #ddd;
+  /* background-color: #ddd; */
   overflow-y: auto;
-  height: calc(90vh - 2rem - 30px - 45px - 36px - 2rem);
+  height: calc(90vh - 2rem - 38px - 45px - 36px - 2rem);
   overflow-y: auto;
-  border-bottom: 5px solid #ccc;
+  border-top: 3px solid #ccc;
+  border-bottom: 3px solid #ccc;
   padding: 0 20px;
 }
 
 .chat-modal .modal-body .conversation-messages .timestamp {
   font-size: 12px;
+  display: block;
 }
 
 .chat-modal .modal-body .input {
@@ -373,19 +451,31 @@
 
 .group-card-container {
   margin-bottom: 10px;
-  width: 100%;
+  width: 50%;
 }
 
 
 .card-img {
   width: 100%!important;
-  height: 350px!important;
+  height: 250px!important;
   object-fit: cover;
+}
+
+.card-columns {
+  column-count: 1;
+}
+.group-card-body {
+  height: 160px;
+  overflow: auto;
+}
+.group-card:hover {
+  background-color: rgb(238, 238, 238);
 }
 
 .group-list-container {
   display: flex;
   justify-content: center;
+  width: 100%
 }
 
 .group-heading-container {
@@ -396,6 +486,7 @@
 .group-list {
   display: flex;
   justify-content: center;
+  width: 60%;
 }
 
 
@@ -423,12 +514,15 @@
   object-fit: cover;
 }
 
+
+
 .groups-header {
   display: flex;
-  width: 90%;
+  width: 95%;
   margin: auto;
-  margin-top: 50px;
-  margin-bottom: 10pxpx;
+  margin-top: 40px;
+  border-radius: 3px;
+  margin-bottom: 10px;
   height: 60px;
   align-content: center;
   justify-content: center;
@@ -447,12 +541,28 @@
   color: grey;
 }
 
+.group-select-form {
+  width: 95%;
+  margin: auto;
+  height: fit-content;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .group-select {
-  width: 100%;
   margin-top: 10px;
-  margin-bottom: 10px;
-  display: inline-flex;
+  margin-bottom: 20px;
+  margin-right: 200px;
+  display: inline-block;
   justify-content: center;
+  vertical-align: top;
+}
+.group-view {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: inline-block;
+  justify-content: center;
+  vertical-align: top;
 }
 
 .filter-label {
@@ -481,3 +591,11 @@
 }
 
 /* HERE ENDS JOE'S STUFF ::::) */
+
+/* Login Modal */
+
+.google-container {
+  text-align: center;
+}
+
+/* End of Login Modal
