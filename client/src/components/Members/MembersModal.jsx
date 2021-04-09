@@ -104,11 +104,21 @@ class MembersModal extends React.Component {
             <ModalHeader toggle={this.toggleModal}>
               {`Members in ${name}`}
             </ModalHeader>
-            <ModalBody>
+            <ModalBody style={{ marginLeft: "20px" }}>
               {users.some(user => user.user_id === userID) ?
-              <MessageMember style={{ display: "inline-block" }} name={''} id={userID} onClick={messageMemberOnClick} userID={userID}/>
+              <div style={{ marginBottom: "10px" }}>
+                <i className="user-picture fas fa-user" style={{ marginRight: "10px" }}></i>
+                <MessageMember style={{ display: "inline-block" }} name={''} id={userID} onClick={messageMemberOnClick} userID={userID}/>
+              </div>
               : null}
-              {users.filter(user => user.user_id !== userID).map(user => <MessageMember key={user.user_id} name={`${user.first_name} ${user.last_name}`} id={user.user_id} onClick={messageMemberOnClick} userID={userID}/>)}
+              {users.filter(user => user.user_id !== userID).map(user => {
+                return (
+                  <div key={user.user_id} style={{ marginBottom: "10px" }}>
+                    <i className="user-picture fas fa-user" style={{ marginRight: "10px" }}></i>
+                    <MessageMember style={{ display: "inline-block" }} name={`${user.first_name} ${user.last_name}`} id={user.user_id} onClick={messageMemberOnClick} userID={userID}/>
+                  </div>
+                )
+              })}
             </ModalBody>
           </Modal>
         </span>
