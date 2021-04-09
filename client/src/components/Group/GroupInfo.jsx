@@ -15,12 +15,13 @@ class GroupInfo extends React.Component {
     this.leaveGroup = this.leaveGroup.bind(this);
 
     this.state = {
-      isJoined: false,
+      isMember: false,
+      isNotMember: false,
     }
   }
 
   componentDidMount() {
-    this.checkCurrentUserJoined();
+
   }
 
   // Checks if currently logged in user is a member of the group
@@ -31,48 +32,50 @@ class GroupInfo extends React.Component {
     members.map((member) => (
       attendingIds.push(member.user_id)
     ))
+    console.log(attendingIds);
+    console.log(currentUser.user_id);
+
     var isMember = attendingIds.includes(currentUser.user_id);
-    this.setState({
-      isJoined: isMember,
-    });
-    // returns boolean
+    console.log('isMember', isMember);
+
     return isMember;
   }
 
-  joinGroup() {
+  joinGroup(e) {
+    const { isMember, isNotMember } = this.state;
     const { currentUser, groupInfo } = this.props;
-    this.setState({
-      isJoined: true,
-    });
     axios.post(`/api/users/${currentUser.user_id}/groups/${groupInfo.group_id}`, {
       "status": 1,
     })
-      .then((result) => {
-        console.log('joinGroup POST result:', result);
-      })
-      .catch((err) => {
-        console.log('Join error:', err);
-      })
+    e.target.innerHTML = 'Joined!';
+    e.target.style.backgroundColor = '#28a745';
   }
 
-  leaveGroup() {
+  leaveGroup(e) {
+    const { isMember, isNotMember } = this.state;
     const { currentUser, groupInfo } = this.props;
-    this.setState({
-      isJoined: false,
-    });
     axios.post(`/api/users/${currentUser.user_id}/groups/${groupInfo.group_id}`, {
       "status": 0,
     })
-      .then((result) => {
-        console.log('leaveGroup POST result:', result);
-      })
-      .catch((err) => {
-        console.log('Leave error:', err);
-      })
+    e.target.innerHTML = 'Join!';
+    e.target.style.backgroundColor = '#007bff';
+  }
+
+  hoverOn(e) {
+    if (e.target.innerHTML === 'Joined!') {
+      e.target.innerHTML = 'Leave?';
+    }
+  }
+
+  hoverOff(e) {
+    if (e.target.innerHTML === 'Leave?') {
+      e.target.innerHTML = 'Joined!';
+    }
   }
 
   render() {
     const { groupInfo, members, currentUser, memberOnClick } = this.props;
+
     return (
       <div>
         <Card>
@@ -88,9 +91,8 @@ class GroupInfo extends React.Component {
 
             {/* {checkCurrentUserJoined() === false ? <Button onClick={toggleJoined} onMouseEnter={hoverOn} onMouseLeave={hoverOff} color="primary">Join!</Button> : <Button onClick={toggleJoined} onMouseEnter={hoverOn} onMouseLeave={hoverOff} color="success" className="group-joined-button">Joined!</Button>} */}
 
-            <Button onClick={this.joinGroup} color="primary">Join :D</Button>
-
-            <Button onClick={this.leaveGroup} color="primary">Leave :(</Button>
+            {this.checkCurrentUserJoined() === false ?
+            <Button onClick={this.joinGroup} color="primary">Join!</Button> : <Button onClick={this.leaveGroup} color="success" className="leave-group-button" onMouseEnter={this.hoverOn} onMouseLeave={this.hoverOff}>Joined!</Button>}
 
           </CardBody>
         </Card>

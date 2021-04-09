@@ -394,8 +394,12 @@
   margin-top: 11px;
 }
 
-.group-new-announcement-section {
+.leave-group-button {
+  background-color: #28a745;
+}
 
+.leave-group-button:hover {
+  background-color: indianred;
 }
 
 #announcement-title-textbox {
