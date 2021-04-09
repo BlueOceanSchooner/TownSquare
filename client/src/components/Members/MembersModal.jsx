@@ -104,7 +104,7 @@ class MembersModal extends React.Component {
             <ModalHeader toggle={this.toggleModal}>
               {`Members in ${name}`}
             </ModalHeader>
-            <ModalBody style={{ marginLeft: "20px" }}>
+            <ModalBody style={{ marginLeft: "20px", overflowY: "scroll" }}>
               {users.some(user => user.user_id === userID) ?
               <div style={{ marginBottom: "10px" }}>
                 <i className="user-picture fas fa-user" style={{ marginRight: "10px" }}></i>
