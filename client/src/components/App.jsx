@@ -28,6 +28,7 @@ class App extends React.Component {
         first_name: '',
         last_name: '',
         email: '',
+        oauth_provider: 'local'
       },
       loggedIn: false
     }
@@ -109,7 +110,7 @@ class App extends React.Component {
             loggedIn={this.state.loggedIn}
             currentUser={this.state.currentUser}
             handleLogout={this.handleLogout}/>
-          <Chat userID={userID} onClick={this.chatOnClick} modal={this.state.chatModal} chatMemberID={this.state.chatMemberID}/>
+          <Chat userID={this.state.loggedIn ? this.state.currentUser.user_id : null} onClick={this.chatOnClick} modal={this.state.chatModal} chatMemberID={this.state.chatMemberID}/>
         </div>
         <Switch>
           <Route exact path="/">

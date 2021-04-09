@@ -19,7 +19,6 @@ import DateTimePicker from 'react-datetime-picker';
 
 const CreateEventModal = (props) => {
 
-
     const [value, onChange] = useState(new Date());
     const [inputs, setInputs] = useState({});
 
@@ -34,6 +33,7 @@ const CreateEventModal = (props) => {
       data.event_date = value.toISOString().slice(0, 19);
       props.group.group_id = props.group.group_id.toString();
       data.group_id = props.group.group_id;
+      console.log(data);
       axios.post('/api/events', data)
         .then((res) => {
           // console.clear()
@@ -86,7 +86,6 @@ const CreateEventModal = (props) => {
                       required
                     />
                     <FormText>e.g. 123 Fake Street</FormText>
-                    {/* <FormFeedback valid>Great description!</FormFeedback> */}
                   </FormGroup>
                   <FormGroup>
                     <Label for='address_2'>Address 2</Label>

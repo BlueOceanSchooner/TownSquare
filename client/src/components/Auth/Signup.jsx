@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, Modal, Container, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import Google from './Google.jsx';
 
 const Signup = ({toggleLogin}) => {
   const [queries, setQueries] = useState({
@@ -17,6 +18,7 @@ const Signup = ({toggleLogin}) => {
   });
   const [showError, setShowError] = useState(false)
   const [showEmailUsed, setShowEmailUsed] = useState(false);
+  const [showGoogleError, setShowGoogleError] = useState(false);
 
   const handleChange = e => {
     setQueries({ ...queries, [e.target.name]: e.target.value })
@@ -29,6 +31,7 @@ const Signup = ({toggleLogin}) => {
     else if (e.target.name === 'email') {
       setInputValid({ ...inputValid, email: checkEmail(e.target.value)})
       setShowEmailUsed(false);
+      setShowGoogleError(false);
     }
   };
   const handleSubmit = e => {
@@ -39,6 +42,8 @@ const Signup = ({toggleLogin}) => {
         console.log(data)
         if (data.data.msg === 'used') {
           setShowEmailUsed(true);
+        } else if (data.data.msg === 'google') {
+          setShowGoogleError(true);
         } else if (data.data.msg === 'success') {
           window.location.href = '/login';
           toggleLogin();
@@ -89,6 +94,7 @@ const Signup = ({toggleLogin}) => {
               <Input type="email" name="email" value={queries.email} onChange={handleChange}/>
               { showError && !inputValid.email && <FormText color="danger">Please enter a valid email address.</FormText>}
               { showEmailUsed && <FormText color="danger">That email address is already in use.</FormText>}
+              { showGoogleError && <FormText color="danger">The email is registered via Google. Please log in using your Google account.</FormText>}
             </FormGroup>
             <FormGroup>
               <Label for="password">Password*:</Label>
@@ -100,8 +106,7 @@ const Signup = ({toggleLogin}) => {
           <Button color="primary" onClick={handleSubmit}>Sign up</Button>
           <br />
           <br />
-          <br />
-          <div className="g-signin2" data-width="470" data-height="50" data-longtitle="true" data-theme="dark"></div>
+        <Google />
       </Container>
   );
 };

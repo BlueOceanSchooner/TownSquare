@@ -52,6 +52,7 @@ CREATE TABLE `dms` (
   `receiver` int DEFAULT NULL,
   `sent` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `message` varchar(255) DEFAULT NULL,
+  `wasRead` boolean DEFAULT '0',
   PRIMARY KEY (`dm_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -62,7 +63,7 @@ CREATE TABLE `dms` (
 
 LOCK TABLES `dms` WRITE;
 /*!40000 ALTER TABLE `dms` DISABLE KEYS */;
-INSERT INTO `dms` VALUES (2,1,2,'2021-04-05 16:28:09','Hi'),(3,2,1,'2021-04-05 16:28:30','Oh, hello there man'),(4,1,2,'2021-04-05 16:28:42','May we have a conversation?'),(5,2,1,'2021-04-05 16:28:55','How can one converse at a time like this?'),(6,1,2,'2021-04-05 16:29:15','Like this: bing, bang, bing bang boom'),(7,2,1,'2021-04-05 16:29:29','Your song spoke to my heart'),(8,1,2,'2021-04-05 16:29:38','Okay'),(9,1,3,'2021-04-05 16:39:35','Knock Knock'),(10,3,1,'2021-04-05 16:39:47','Who dat?'),(11,1,3,'2021-04-05 16:40:07','Oh, I\'m sorry, I thought you were someone else'),(12,3,1,'2021-04-05 16:40:17','Oh, I\'m sorry, I thought you were someone else who?'),(13,1,3,'2021-04-05 16:40:40','Never message me again or I will contact the authorities'),(14,3,1,'2021-04-05 16:40:55','Okay');
+INSERT INTO `dms` VALUES (2,1,2,'2021-04-05 16:28:09','Hi',0),(3,2,1,'2021-04-05 16:28:30','Oh, hello there man',0),(4,1,2,'2021-04-05 16:28:42','May we have a conversation?',0),(5,2,1,'2021-04-05 16:28:55','How can one converse at a time like this?',0),(6,1,2,'2021-04-05 16:29:15','Like this: bing, bang, bing bang boom',0),(7,2,1,'2021-04-05 16:29:29','Your song spoke to my heart',0),(8,1,2,'2021-04-05 16:29:38','Okay',0),(9,1,3,'2021-04-05 16:39:35','Knock Knock',0),(10,3,1,'2021-04-05 16:39:47','Who dat?',0),(11,1,3,'2021-04-05 16:40:07','Oh, I\'m sorry, I thought you were someone else',0),(12,3,1,'2021-04-05 16:40:17','Oh, I\'m sorry, I thought you were someone else who?',0),(13,1,3,'2021-04-05 16:40:40','Never message me again or I will contact the authorities',0),(14,3,1,'2021-04-05 16:40:55','Okay',0);
 /*!40000 ALTER TABLE `dms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -264,6 +265,7 @@ CREATE TABLE `users` (
   `last_name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
+  `oauth_provider` varchar(255) DEFAULT 'local',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -274,7 +276,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Stephen','Hyde','stephen@friend.horse','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(2,'Fred','Flintstone','fred@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(3,'Sam','Smith','arbyslover@email.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(4,'Dante','Alghieri','author@inferno.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(5,'Thomas','McHorseradish','thomas@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(6,'Billy','Jones','billy@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(7,'Timmy','McLastname','timmy@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(8,'Jane','Waterson','jane@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(9,'Alfred','Freeman','alf@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(10,'Ezekial','McHarrypotter','em@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(11,'Colleen','McCohort','colleen@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(12,'JiHang','McCohort','jihang@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(13,'Adrian','McCohort','adrian@spelledright.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(14,'Joe','McCohort','joe@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2'),(15,'Ross','McCohort','ross@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2');
+INSERT INTO `users` VALUES (1,'Stephen','Hyde','stephen@friend.horse','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2','local'),(2,'Fred','Flintstone','fred@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2','local'),(3,'Sam','Smith','arbyslover@email.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2','local'),(4,'Dante','Alghieri','author@inferno.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2','local'),(5,'Thomas','McHorseradish','thomas@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2','local'),(6,'Billy','Jones','billy@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2','local'),(7,'Timmy','McLastname','timmy@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2','local'),(8,'Jane','Waterson','jane@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2','local'),(9,'Alfred','Freeman','alf@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2','local'),(10,'Ezekial','McHarrypotter','em@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2','local'),(11,'Colleen','McCohort','colleen@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2','local'),(12,'JiHang','McCohort','jihang@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2','local'),(13,'Adrian','McCohort','adrian@spelledright.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2','local'),(14,'Joe','McCohort','joe@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2','local'),(15,'Ross','McCohort','ross@gmail.com','$2y$10$tYJBwNCa/4rDspoPfNXBAeAzXdzmmMo9a8XaNICpZe7HJG2iKxbQ2','local');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

@@ -253,6 +253,7 @@ class Header extends Component {
                   </Link>
                 </NavItem>
                 <NavItem>
+                  {this.props.loggedIn?
                   <Button
                     color='secondary'
                     size='small'
@@ -261,7 +262,9 @@ class Header extends Component {
                     className='createGroupBtn'
                   >
                     Create New Group
-                  </Button>
+                  </Button>:
+                  <div></div>
+                  }
                 </NavItem>
                 <NavItem>
                   {this.props.loggedIn?
