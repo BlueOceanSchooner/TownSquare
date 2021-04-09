@@ -40,7 +40,7 @@ class Announcements extends React.Component {
           </TabList>
 
           <TabPanel>
-            <EventsList events={events} groupInfo={groupInfo} />
+            <EventsList events={events} groupInfo={groupInfo} currentUser={currentUser}/>
           </TabPanel>
           <TabPanel>
             <AnnouncementsList posts={posts} groupInfo={groupInfo} currentUser={currentUser} />

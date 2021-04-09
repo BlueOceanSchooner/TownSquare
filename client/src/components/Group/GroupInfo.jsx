@@ -20,10 +20,6 @@ class GroupInfo extends React.Component {
     }
   }
 
-  componentDidMount() {
-
-  }
-
   // Checks if currently logged in user is a member of the group
   checkCurrentUserJoined() {
     const { members, currentUser } = this.props;
@@ -32,12 +28,7 @@ class GroupInfo extends React.Component {
     members.map((member) => (
       attendingIds.push(member.user_id)
     ))
-    console.log(attendingIds);
-    console.log(currentUser.user_id);
-
     var isMember = attendingIds.includes(currentUser.user_id);
-    console.log('isMember', isMember);
-
     return isMember;
   }
 
@@ -75,7 +66,6 @@ class GroupInfo extends React.Component {
 
   render() {
     const { groupInfo, members, currentUser, memberOnClick } = this.props;
-
     return (
       <div>
         <Card>
@@ -87,12 +77,8 @@ class GroupInfo extends React.Component {
               <MembersModal event={false} name={groupInfo.group_name} users={members} currentUser={currentUser.user_id} messageMemberOnClick={memberOnClick} />
             </CardSubtitle>
             <CardText>{groupInfo.description}</CardText>
-            <div id="this-div"></div>
-
-            {/* {checkCurrentUserJoined() === false ? <Button onClick={toggleJoined} onMouseEnter={hoverOn} onMouseLeave={hoverOff} color="primary">Join!</Button> : <Button onClick={toggleJoined} onMouseEnter={hoverOn} onMouseLeave={hoverOff} color="success" className="group-joined-button">Joined!</Button>} */}
-
             {this.checkCurrentUserJoined() === false ?
-            <Button onClick={this.joinGroup} color="primary">Join!</Button> : <Button onClick={this.leaveGroup} color="success" className="leave-group-button" onMouseEnter={this.hoverOn} onMouseLeave={this.hoverOff}>Joined!</Button>}
+              <Button onClick={this.joinGroup} color="primary">Join!</Button> : <Button onClick={this.leaveGroup} color="success" className="leave-group-button" onMouseEnter={this.hoverOn} onMouseLeave={this.hoverOff}>Joined!</Button>}
 
           </CardBody>
         </Card>

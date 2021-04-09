@@ -22,6 +22,7 @@ const ParentMessage = ({ thread, groupId, currentUser, user }) => {
       "forum_post_id": `${thread.parent.forum_post_id}`,
       "message": childMessage,
     });
+    toggle();
   }
 
   return (

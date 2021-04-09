@@ -15,25 +15,34 @@ class AnnouncementsList extends React.Component {
     this.state = {
       announcementTitle: '',
       announcementBody: '',
+      orderedPosts: [],
     }
+  }
+
+  componentDidMount() {
+    const { posts } = this.props;
+
+    this.setState({
+      orderedPosts: posts.reverse(),
+    });
   }
 
   addAnnouncement() {
     const { announcementTitle, announcementBody } = this.state;
     const { groupInfo, currentUser } = this.props;
 
-    console.log('announcement added!');
-    console.log(announcementTitle);
-    console.log(announcementBody);
-    console.log(currentUser);
     axios.post(`/api/groups/${groupInfo.group_id}/posts`, {
       "title": announcementTitle,
       "user_id": currentUser.user_id,
       "body": announcementBody,
     })
+      .then((result) => {
+        console.log('result', result);
+      })
   }
 
   render() {
+    const { orderedPosts } = this.state;
     const { posts, groupInfo, currentUser } = this.props;
     return (
       <div className="announcements-container">
@@ -61,7 +70,7 @@ class AnnouncementsList extends React.Component {
         }
 
         {/* List of announcements for everyone to see */}
-        {posts.map((post) => (
+        {orderedPosts.map((post) => (
           <AnnouncementsItem key={post.post_id} post={post} />
         ))}
       </div >

@@ -14,7 +14,16 @@ class Forum extends React.Component {
     this.addForumPost = this.addForumPost.bind(this);
     this.state = {
       newForumPostText: '',
+      orderedForum: [],
     }
+  }
+
+  componentDidMount() {
+    const { forum } = this.props;
+
+    this.setState({
+      orderedForum: forum.reverse(),
+    });
   }
 
   addForumPost() {
@@ -30,6 +39,7 @@ class Forum extends React.Component {
   }
 
   render() {
+    const { orderedForum } = this.state;
     const { forum, groupId, currentUser, user } = this.props;
     return (
       <div className="forum-container">
@@ -47,7 +57,7 @@ class Forum extends React.Component {
           </Form>
         </Container>
 
-        {forum.map((thread) => (
+        {orderedForum.map((thread) => (
           <ParentMessage key={thread.parent.forum_post_id} thread={thread} groupId={groupId} currentUser={currentUser} user={user} />
         ))}
       </div>
