@@ -72,6 +72,9 @@ class Chat extends React.Component {
       });
       userID = this.props.userID;
     }
+    if (!this.props.userID && props.userID) {
+      this.setState({ disabled: true });
+    }
   }
 
   static getDerivedStateFromProps(props, state) {
