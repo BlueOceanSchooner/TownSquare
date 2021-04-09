@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Member = ({ name, id, onClick, userID, style }) => {
-  console.log(userID);
   if (Number(id) === Number(userID)) {
     return (
       <div style={style ?? null}>
