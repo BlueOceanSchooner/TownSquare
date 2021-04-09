@@ -23,6 +23,8 @@ import LoginModal from '../Auth/LoginModal.jsx';
 import axios from 'axios';
 import logo from '../../../assets/townsquare.png';
 import CreateEventModal from '../Events/CreateEventModal.jsx';
+require ('jquery');
+require('bootstrap');
 
 class Header extends Component {
   constructor(props) {
@@ -39,13 +41,14 @@ class Header extends Component {
       validations: {
         group_name: false,
         description: false,
-        category: false
+        category: false,
+        zipcode: false
       },
       nameTaken: false,
       group: {
         group_id: 1,
         group_name: "JavaScript Meet Up",
-        category: "religious"
+        category: "religious",
       }
     };
 
@@ -77,6 +80,7 @@ class Header extends Component {
       this.toggleModal();
       let data = this.state.input;
       data.owner_id = this.props.userID;
+      data.zipcode = parseInt(data.zipcode);
       axios.post('/api/groups', data)
         .catch((err) => console.log(err))
         .then((res) => {
@@ -136,6 +140,11 @@ class Header extends Component {
     } else if (e.target.value === '' && e.target.name === 'category') {
       newValid[e.target.name] = false;
     }
+    if (e.target.name === 'zipcode' && (e.target.value.length === 5 && !isNaN(Number(e.target.value)))) {
+      newValid[e.target.name] = true;
+    } else if (e.target.name === 'zipcode' && (e.target.value.length !== 5 || isNaN(Number(e.target.value)))){
+      newValid[e.target.name] = false;
+    }
     this.setState({
       input: newInput,
       validations: newValid
@@ -145,7 +154,6 @@ class Header extends Component {
   render() {
     return (
       <div className='main-header'>
-          <Navbar  className='py-3' color='secondary' expand='md'>
             <LoginModal toggleLogin={this.props.toggleLogin} isLoginOpen={this.props.isLoginOpen} />
             <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
               <ModalHeader toggle={this.toggleModal}>Create New Group</ModalHeader>
@@ -194,7 +202,7 @@ class Header extends Component {
                   <FormGroup>
                     <Label for='zipcode'>Zipcode</Label>
                     <Input
-                      type='number'
+                      type='text'
                       id='zipcode'
                       name='zipcode'
                       onChange={this.handleChange}
@@ -224,99 +232,102 @@ class Header extends Component {
                 </Form>
               </ModalBody>
             </Modal>
-              <Nav navbar>
-                <NavItem>
-                  <NavbarBrand
-                  className='mx-auto'
-                  style={{ color: '#fff', transform: 'translateX(-50%)',
-                  left: '50%',
-                  position: 'absolute',
-                  bottom: '15%',
-                  fontSize: '2em' }}
-                  href='/'
-                  >
-                  <img height="40px" id='logo' src={logo} alt='TownSquare Logo'/> TownSquare
-                  </NavbarBrand>
-                </NavItem>
-              </Nav>
-            <div className='ml-auto'>
-              <Nav navbar>
-                <NavItem>
-                  <Link to='/allgroups'>
-                    <Button
+          <nav className="navbar navbar-expand-md navbar-light bg" style={{backgroundColor: '#6c757d'}}>
+              <div className="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                <ul className="navbar-nav mr-auto">
+                    <li className="nav-item ">
+                      <Link to='/allgroups'>
+                        <Button
+                          eventKey="1"
+                          color='secondary'
+                          size='small'
+                          style={{ marginTop: '16px'}}
+                          >
+                          Browse All Groups
+                        </Button>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      {this.props.loggedIn?
+                        <Button
+                          color='secondary'
+                          size='small'
+                          onClick={this.toggleModal}
+                          style={{marginTop: '16px', marginLeft: '10px'}}
+                          className='createGroupBtn'
+                        >
+                          Create New Group
+                        </Button>:
+                        <div></div>
+                      }
+                    </li>
+                </ul>
+              </div>
+              <div className="mx-auto order-0">
+                <Link to='/'>
+                  <div className="navbar-brand mx-auto"  style={{ color: '#fff', fontSize: '2.2em', margin: 'auto'}} > <img height="45px" id='logo' src={logo} alt='TownSquare Logo'/> TownSquare</div>
+                </Link>
+                  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+                      <span className="navbar-toggler-icon"></span>
+                  </button>
+              </div>
+              <div className="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                <ul className="navbar-nav ml-auto">
+                  <li className="nav-item">
+                    {
+                      this.props.loggedIn?
+                      <Button
                       color='secondary'
                       size='small'
-                      style={{ marginTop: '16px'}}
+                      style={{marginLeft: '10px', marginTop: '16px'}}
+                      onClick={this.props.handleLogout}
+                      className='loginBtn'
+                    >
+                      Log Out
+                    </Button> :
+                      <Button
+                        color='secondary'
+                        size='small'
+                        style={{marginLeft: '10px', marginTop: '16px'}}
+                        onClick={this.props.toggleLogin}
+                        className='loginBtn'
                       >
-                      Browse All Groups
-                    </Button>
-                  </Link>
-                </NavItem>
-                <NavItem>
-                  {this.props.loggedIn?
-                  <Button
-                    color='secondary'
-                    size='small'
-                    onClick={this.toggleModal}
-                    style={{marginTop: '16px', marginLeft: '10px'}}
-                    className='createGroupBtn'
-                  >
-                    Create New Group
-                  </Button>:
-                  <div></div>
-                  }
-                </NavItem>
-                <NavItem>
-                  {this.props.loggedIn?
-                  <Button
-                  color='secondary'
-                  size='small'
-                  style={{marginLeft: '10px', marginTop: '16px'}}
-                  onClick={this.props.handleLogout}
-                  className='loginBtn'
-                >
-                  Log Out
-                </Button> :
-                  <Button
-                    color='secondary'
-                    size='small'
-                    style={{marginLeft: '10px', marginTop: '16px'}}
-                    onClick={this.props.toggleLogin}
-                    className='loginBtn'
-                  >
-                    Log In
-                  </Button>}
-                </NavItem>
-                <NavItem>
-                {this.props.loggedIn?
-                  <Button
+                        Log In
+                      </Button>
+                    }
+                  </li>
+                  <li className="nav-item">
+                  {
+                    this.props.loggedIn?
+                    <Button
                     outline
                     color='secondary'
                     size='small'
                     style={{ backgroundColor: '#fff', marginLeft: '10px', marginTop: '16px'}}
                     className='signupBtn'
-                  >
-                {this.props.currentUser.first_name}&nbsp;{this.props.currentUser.last_name}
-                </Button> :
-                  <Link to='/signup'>
-                  <Button
-                    color='secondary'
-                    size='small'
-                    style={{marginLeft: '10px', marginTop: '16px'}}
-                    className='signupBtn'
-                  >
-                    Sign Up
-                  </Button>
-                  </Link>}
-                </NavItem>
-                <NavItem >
+                    >
+                  {this.props.currentUser.first_name}&nbsp;{this.props.currentUser.last_name}
+                  </Button> :
+                    <Link to='/signup'>
+                    <Button
+                      color='secondary'
+                      size='small'
+                      style={{marginLeft: '10px', marginTop: '16px'}}
+                      className='signupBtn'
+                    >
+                      Sign Up
+                    </Button>
+                    </Link>
+                  }
+                </li>
+                <li className='nav-item'>
                 <Link to='/'>
-                    <i style={{color: '#fff', marginLeft: '10px', marginTop: '8px'}} className='fas fa-home fa-3x'></i>
-                  </Link>
-                </NavItem>
-              </Nav>
+                  <i style={{color: '#fff', marginLeft: '10px', marginTop: '8px'}} className='fas fa-home fa-3x'></i>
+                </Link>
+                </li>
+              </ul>
             </div>
-          </Navbar>
+          </nav>
       </div>
     );
   }

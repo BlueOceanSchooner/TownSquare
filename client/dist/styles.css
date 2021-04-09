@@ -499,6 +499,40 @@
   margin-bottom: 5px;
 }
 
+.main-header {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .navbar-brand.abs
+      {
+          position: absolute;
+          width: 100%;
+          left: 0;
+          text-align: center;
+      }
+  }
+
+/* .bg-light {
+  background-color: #6c757d!important;
+} */
+
+/* .logo {
+  position: absolute;
+  left: 50%;
+  margin-left: -50px !important;
+  display: block;
+}
+
+
+.nav-btn {
+   margin: 0 40px;
+} */
+
+.navbar-nav {
+  height: fit-content;
+}
+
 .createGroupBtn {
   margin-left: '10px';
   margin-top: '16px';
