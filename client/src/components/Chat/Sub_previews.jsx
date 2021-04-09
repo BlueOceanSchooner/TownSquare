@@ -3,10 +3,11 @@ import { Button } from 'reactstrap';
 
 const Sub_previews = ({ modal, userID, chats, active, changeActiveConversation, openNewMessage, newRecipient, chatIDsOrderedByTime, getProperTimestamp }) => {
   return (
-    <div>
+    <div style={{position: "relative"}}>
       <Button className={"new-message"} style={{backgroundColor: "#344e64"}} onClick={openNewMessage} disabled={newRecipient}>
         New Message
       </Button>
+      <div className={newRecipient ? "messages-disabled" : ""}></div>
       <div className="messages">
         {chatIDsOrderedByTime.map(otherUserID => {
           let conversation = chats[String(otherUserID)];

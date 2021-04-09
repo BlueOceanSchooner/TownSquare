@@ -38,7 +38,7 @@ class Chat extends React.Component {
 
   componentDidMount() {
     this.getMessages();
-    setInterval(this.getMessages, 5000);
+    setInterval(this.getMessages, 3000);
     this.getAllUsers();
   }
 
@@ -63,7 +63,6 @@ class Chat extends React.Component {
         chats: {},
         chatIDsOrderedByTime: [],
         active: 0,
-        allUsers: [],
         newRecipient: false,
         newRecipientChanged: false,
         newRecipientID: null,
@@ -72,6 +71,9 @@ class Chat extends React.Component {
         newMessage: ''
       });
       userID = this.props.userID;
+    }
+    if (!this.props.userID && props.userID) {
+      this.setState({ disabled: true });
     }
   }
 
@@ -272,6 +274,8 @@ class Chat extends React.Component {
               Messages
             </ModalHeader>
             <ModalBody className={"modal-body"}>
+
+              <div className="gap"></div>
 
               <Sub_previews
                 userID={this.props.userID}
