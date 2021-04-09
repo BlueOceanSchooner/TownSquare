@@ -65,7 +65,7 @@ class ExploreGroups extends React.Component {
 
   render() {
     if (!this.state.groups) {
-      return <div>loading...</div>
+      return <div></div>
     } else {
       return (
         <div className='groups-page'>
