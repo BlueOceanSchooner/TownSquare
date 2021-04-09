@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Input } from 'reactstrap';
+import { Badge, Button, Input } from 'reactstrap';
 import Select from 'react-select';
 
 var active = 0;
@@ -28,12 +28,11 @@ class Sub_conversation extends React.Component {
             <span className="name">
               {`${message.sender.first_name} ${message.sender.last_name}`}
             </span>
-            <br/>
             <span className="timestamp">
               {this.props.getProperTimestamp(message.timestamp)}
             </span>
-            <br />
             <span className="message-content">
+              <div className={message.sender.user_id === this.props.userID ? "arrow right" : "arrow left"}></div>
               {message.message}
             </span>
           </div>
