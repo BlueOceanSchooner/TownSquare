@@ -11,18 +11,30 @@ class GroupCarousel extends Component {
     this.pageLeft = this.pageLeft.bind(this);
   }
 
-  pageRight() {
+  pageRight(totalGroups) {
     const { groupPage } = this.state;
-    this.setState({
-      groupPage: groupPage + 1
-    });
+    if (totalGroups - groupPage === 1) {
+      this.setState({
+        groupPage: 0
+      });
+    } else {
+      this.setState({
+        groupPage: groupPage + 1
+      });
+    }
   }
 
-  pageLeft() {
+  pageLeft(totalGroups) {
     const { groupPage } = this.state;
-    this.setState({
-      groupPage: groupPage - 1
-    });
+    if (totalGroups + groupPage === 1) {
+      this.setState({
+        groupPage: 0
+      });
+    } else {
+      this.setState({
+        groupPage: groupPage - 1
+      });
+    }
   }
 
   render() {
@@ -38,7 +50,9 @@ class GroupCarousel extends Component {
       ));
     });
 
-    const groupItems = allGroupItems.slice((groupPage * 4), (4 * (groupPage + 1)));
+    // const groupItems = allGroupItems.slice((groupPage * 4), (4 * (groupPage + 1)));
+    let groupItems = [...allGroupItems.slice(groupPage), ...allGroupItems.slice(0)];
+    groupItems = groupItems.slice(0, 4);
 
     return (
       <div className="row mb-3 mt-3">
@@ -47,8 +61,8 @@ class GroupCarousel extends Component {
         </div>
         <div className="row justify-content-md-center position-relative">
           {groupItems.length > 0 && groupItems}
-          {groupPage > 0 && <i onClick={this.pageLeft} className="fa fa-chevron-left position-absolute" style={{left: '0', top: '50%', fontSize: '2em', marginLeft: '-1em', cursor: 'pointer'}}aria-hidden="true"></i>}
-          {(4 * (groupPage + 1) < allGroupItems.length) && <i onClick={this.pageRight} className="fa fa-chevron-right position-absolute" style={{right: '0', top: '50%', fontSize: '2em', marginRight: '-1em', cursor: 'pointer'}}aria-hidden="true"></i>}
+          {allGroupItems.length > 4 && <i onClick={() => this.pageLeft(allGroupItems.length)} className="fa fa-chevron-left position-absolute" style={{left: '0', top: '50%', fontSize: '2em', marginLeft: '-1em', cursor: 'pointer'}}aria-hidden="true"></i>}
+          {allGroupItems.length > 4 && <i onClick={() => this.pageRight(allGroupItems.length)} className="fa fa-chevron-right position-absolute" style={{right: '0', top: '50%', fontSize: '2em', marginRight: '-1em', cursor: 'pointer'}}aria-hidden="true"></i>}
         </div>
       </div>
     );
