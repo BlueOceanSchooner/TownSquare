@@ -10,12 +10,9 @@ class Sub_conversation extends React.Component {
     super(props);
   }
 
-  componentDidUpdate() {
-    if (Number(this.props.active) !== Number(active)) {
-      var messageBody = document.querySelector('.chat-modal .modal-body .conversation-messages');
-      if (messageBody) {
-      messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
-      }
+  componentDidUpdate(props) {
+    if (Number(this.props.active) !== Number(active) || JSON.stringify(this.props.chats[this.props.active]) !== JSON.stringify(props.chats[this.props.active])) {
+      this.props.scrollDown();
       active = this.props.active;
     }
   }
@@ -70,7 +67,7 @@ class Sub_conversation extends React.Component {
           </div>
 
           <Input className={"input"} type="text" onChange={updateNewMessage} value={newMessage}/>
-          <Button color="primary" disabled={newMessage === ''} onClick={sendNewMessage}>
+          <Button style={{backgroundColor: "#344e64"}} disabled={newMessage === ''} onClick={sendNewMessage}>
             <i className="send-message fas fa-paper-plane"></i>
             Send
           </Button>
@@ -84,7 +81,7 @@ class Sub_conversation extends React.Component {
           {chats[active] ? this.renderConversationMessages(chats[active]) : null}
         </div>
         <Input className={"input"} type="text" onChange={updateNewMessage} value={newMessage}/>
-        <Button color="primary" disabled={newMessage === ''} onClick={sendNewMessage}>
+        <Button style={{backgroundColor: "#344e64"}} disabled={newMessage === ''} onClick={sendNewMessage}>
           <i className="send-message fas fa-paper-plane"></i>
           Send
         </Button>
