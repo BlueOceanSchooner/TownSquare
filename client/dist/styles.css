@@ -461,8 +461,19 @@
   object-fit: cover;
 }
 
+@media (min-width: 34em) {
+  .card-columns {
+      -webkit-column-count:3;
+      -moz-column-count:3;
+      column-count:3;
+
+  }
+
+}
+
 .card-columns {
-  column-count: 1;
+  justify-content: center;
+  column-count:3;
 }
 .group-card-body {
   height: 160px;
@@ -591,21 +602,6 @@
       }
   }
 
-/* .bg-light {
-  background-color: #6c757d!important;
-} */
-
-/* .logo {
-  position: absolute;
-  left: 50%;
-  margin-left: -50px !important;
-  display: block;
-}
-
-
-.nav-btn {
-   margin: 0 40px;
-} */
 
 .navbar-nav {
   height: fit-content;
