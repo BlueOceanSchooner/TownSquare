@@ -234,6 +234,12 @@
   margin-right: 15px;
 }
 
+/* .group-joined-button:hover {
+  background-color: indianred !important;
+  border-color: indianred !important;
+  transition: .5s;
+} */
+
 .activities-container {
   margin-top: 40px;
 }

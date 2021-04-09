@@ -56,7 +56,7 @@ class GroupPage extends React.Component {
         const responsePosts = responses[3];
         const responseForum = responses[4];
         const responseUser = responses[5];
-        console.log('responseInfo', responseInfo.data);
+        // console.log('responseInfo', responseInfo.data);
         // console.log('responseMembers', responseMembers.data);
         // console.log('responseEvents', responseEvents.data);
         // console.log('responsePosts', responsePosts.data);
