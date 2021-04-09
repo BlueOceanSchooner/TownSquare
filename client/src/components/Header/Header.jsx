@@ -238,7 +238,6 @@ class Header extends Component {
                     <li className="nav-item ">
                       <Link to='/allgroups'>
                         <Button
-                          eventKey="1"
                           color='secondary'
                           size='small'
                           style={{ marginTop: '16px'}}
