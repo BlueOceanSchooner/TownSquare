@@ -63,7 +63,6 @@ class Chat extends React.Component {
         chats: {},
         chatIDsOrderedByTime: [],
         active: 0,
-        allUsers: [],
         newRecipient: false,
         newRecipientChanged: false,
         newRecipientID: null,
