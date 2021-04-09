@@ -46,7 +46,8 @@
 
 .chat-modal h5.modal-title {
   text-align: center;
-  width: 100%;
+  position: relative;
+  left: calc(45vw - 1rem - 81px);
   font-size: 36px;
   line-height: 36px;
 }
