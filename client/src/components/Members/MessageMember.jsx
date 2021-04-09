@@ -8,6 +8,13 @@ const Member = ({ name, id, onClick, userID, style }) => {
       </div>
     );
   }
+  if (!userID) {
+    return (
+      <div style={style ?? null}>
+        {name}
+      </div>
+    )
+  }
   return (
     <div style={style ?? null} name={id} onClick={onClick} className={'message-member'}>
       {name}
