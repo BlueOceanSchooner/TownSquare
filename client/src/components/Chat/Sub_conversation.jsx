@@ -8,6 +8,7 @@ var active = 0;
 class Sub_conversation extends React.Component {
   constructor(props) {
     super(props);
+    this.enterToSend = this.enterToSend.bind(this);
   }
 
   componentDidUpdate(props) {
@@ -44,6 +45,12 @@ class Sub_conversation extends React.Component {
     return null;
   }
 
+  enterToSend(e) {
+    if (e.key === "Enter") {
+      this.props.sendNewMessage();
+    }
+  }
+
   render() {
     const { userID, activeName, chats, active, newRecipient, newRecipientID, allUsers, closeNewMessage, memberNameClick, newMessage, newMessageChats, changeNewRecipient, updateNewMessage, sendNewMessage } = this.props;
     if (newRecipient) {
@@ -66,7 +73,7 @@ class Sub_conversation extends React.Component {
           {memberNameClick ? this.renderConversationMessages(chats[active]) : this.renderConversationMessages(newMessageChats)}
           </div>
 
-          <Input className={"input"} type="text" onChange={updateNewMessage} value={newMessage}/>
+          <Input className={"input"} type="text" onChange={updateNewMessage} value={newMessage} onKeyPress={this.enterToSend}/>
           <Button style={{backgroundColor: "#344e64"}} disabled={newMessage === ''} onClick={sendNewMessage}>
             <i className="send-message fas fa-paper-plane"></i>
             Send
@@ -80,7 +87,7 @@ class Sub_conversation extends React.Component {
         <div className="conversation-messages">
           {chats[active] ? this.renderConversationMessages(chats[active]) : null}
         </div>
-        <Input className={"input"} type="text" onChange={updateNewMessage} value={newMessage}/>
+        <Input className={"input"} type="text" onChange={updateNewMessage} value={newMessage} onKeyPress={this.enterToSend}/>
         <Button style={{backgroundColor: "#344e64"}} disabled={newMessage === ''} onClick={sendNewMessage}>
           <i className="send-message fas fa-paper-plane"></i>
           Send
