@@ -35,6 +35,8 @@
     "express-mysql-session": "^2.1.5",
     "express-session": "^1.17.1",
     "file-loader": "^6.2.0",
+    "googleapis": "^71.0.0",
+    "jquery": "^3.6.0",
     "mapbox-gl": "^2.2.0",
     "moment": "^2.29.1",
     "mysql": "^2.18.1",

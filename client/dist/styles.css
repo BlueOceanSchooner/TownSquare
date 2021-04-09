@@ -461,8 +461,19 @@
   object-fit: cover;
 }
 
+@media (min-width: 34em) {
+  .card-columns {
+      -webkit-column-count:3;
+      -moz-column-count:3;
+      column-count:3;
+
+  }
+
+}
+
 .card-columns {
-  column-count: 1;
+  justify-content: center;
+  column-count:3;
 }
 .group-card-body {
   height: 160px;
@@ -575,6 +586,25 @@
 
 #logo {
   margin-bottom: 5px;
+}
+
+.main-header {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .navbar-brand.abs
+      {
+          position: absolute;
+          width: 100%;
+          left: 0;
+          text-align: center;
+      }
+  }
+
+
+.navbar-nav {
+  height: fit-content;
 }
 
 .createGroupBtn {

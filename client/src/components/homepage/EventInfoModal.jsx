@@ -4,6 +4,7 @@ import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import axios from 'axios';
 import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import CalendarButton from '../Calendar/CalendarButton.jsx';
 
 // const Map = new ReactMapboxGl({
 //   accessToken: ''
@@ -73,6 +74,7 @@ class EventInfoModal extends Component {
         <ModalHeader toggle={toggleModal}>
           {event.title}
           <button type="button" className="btn btn-sm btn-success ml-3">Attending</button>
+          <CalendarButton event={this.props.event} />
         </ModalHeader>
         <ModalBody>
           <div className="row">
