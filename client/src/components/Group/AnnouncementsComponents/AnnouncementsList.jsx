@@ -27,9 +27,16 @@ class AnnouncementsList extends React.Component {
     });
   }
 
-  addAnnouncement() {
-    const { announcementTitle, announcementBody } = this.state;
+  addAnnouncement(e) {
+    const { announcementTitle, announcementBody, orderedPosts } = this.state;
     const { groupInfo, currentUser } = this.props;
+
+    e.target.innerHTML = 'Sent!';
+
+    this.setState({
+      announcementTitle: '',
+      announcementBody: '',
+    })
 
     axios.post(`/api/groups/${groupInfo.group_id}/posts`, {
       "title": announcementTitle,
@@ -37,12 +44,16 @@ class AnnouncementsList extends React.Component {
       "body": announcementBody,
     })
       .then((result) => {
-        console.log('result', result);
+        var arr = orderedPosts;
+        arr.unshift(result.data);
+        this.setState({
+          orderedPosts: arr,
+        })
       })
   }
 
   render() {
-    const { orderedPosts } = this.state;
+    const { announcementTitle, announcementBody, orderedPosts } = this.state;
     const { posts, groupInfo, currentUser } = this.props;
     return (
       <div className="announcements-container">
@@ -56,11 +67,11 @@ class AnnouncementsList extends React.Component {
                 <CardBody className="group-new-announcemnet-card">
                   <FormGroup>
                     <Label>Title</Label>
-                    <Input type="textarea" name="text" id="announcement-title-textbox" onChange={(e) => { this.setState({ announcementTitle: e.target.value }) }}></Input>
+                    <Input value={announcementTitle} type="textarea" name="text" id="announcement-title-textbox" onChange={(e) => { this.setState({ announcementTitle: e.target.value }) }}></Input>
                   </FormGroup>
                   <FormGroup>
                     <Label>Announcement</Label>
-                    <Input type="textarea" name="text" placeholder="Enter a new announcement for the group!" onChange={(e) => { this.setState({ announcementBody: e.target.value }) }}></Input>
+                    <Input value={announcementBody} type="textarea" name="text" placeholder="Enter a new announcement for the group!" onChange={(e) => { this.setState({ announcementBody: e.target.value }) }}></Input>
                   </FormGroup>
                   <Button onClick={this.addAnnouncement}>Send</Button>
                 </CardBody>
