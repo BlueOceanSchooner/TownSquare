@@ -53,7 +53,7 @@ class AnnouncementsList extends React.Component {
           <Container className="group-new-announcement-section">
             <Form>
               <Card>
-                <CardBody>
+                <CardBody className="group-new-announcemnet-card">
                   <FormGroup>
                     <Label>Title</Label>
                     <Input type="textarea" name="text" id="announcement-title-textbox" onChange={(e) => { this.setState({ announcementTitle: e.target.value }) }}></Input>

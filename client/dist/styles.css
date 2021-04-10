@@ -379,6 +379,8 @@
 
 .group-post-title {
   margin-right: 8px;
+  font-weight: 600;
+  font-size: 1.5rem;
 }
 
 .group-event-description {
@@ -398,18 +400,47 @@
   background-color: #28a745;
 }
 
-/* .leave-group-button:hover {
-  background-color: indianred;
-} */
+.group-new-announcement-section {
+  margin-top: 25px;
+}
+
+.group-new-announcemnet-card {
+  background-color: #dbe1e7;
+}
+
+.group-post-item {
+  margin-top: 25px;
+  width: 1000px !important;
+}
 
 #announcement-title-textbox {
   resize: none;
   height: 2.5em;
 }
 
+.announcement-card-body {
+  background-color: #eaeaea;
+}
+
+.announcement-card-body-text {
+  margin-top: 13px;
+  min-height: 80px;
+  padding: 0 40px;
+  text-align: center;
+}
+
+.announcement-card-headers-container {
+  text-align: center;
+}
+
 .announcement-card-header-section {
   display: flex;
   align-items: baseline;
+  justify-content: center;
+}
+
+.announcement-card-name-subtitle {
+  margin-right: 8px;
 }
 
 .announcements-container {

@@ -13,13 +13,15 @@ const AnnouncementsItem = ({ post }) => {
     <div>
       <Container className="group-post-item">
         <Card>
-          <CardBody>
-            <div className="announcement-card-header-section">
+          <CardBody className="announcement-card-body">
+            <div className="announcement-card-headers-container">
               <CardTitle tag="h5" className="group-post-title">{post.title}</CardTitle>
-              <CardSubtitle>{post.author.first_name} {post.author.last_name}</CardSubtitle>
-              <CardSubtitle tag="h6" className="mb-2 text-muted">{date}</CardSubtitle>
+              <div className="announcement-card-header-section">
+                <CardSubtitle className="announcement-card-name-subtitle">{post.author.first_name} {post.author.last_name}</CardSubtitle>
+                <CardSubtitle tag="h6" className="mb-2 text-muted">{date}</CardSubtitle>
+              </div>
             </div>
-            <CardText>{post.body}</CardText>
+            <CardText className="announcement-card-body-text">{post.body}</CardText>
           </CardBody>
         </Card>
       </Container>
