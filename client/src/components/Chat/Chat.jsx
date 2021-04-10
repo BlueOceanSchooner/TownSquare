@@ -120,7 +120,7 @@ class Chat extends React.Component {
         } else {
           this.setState({ chatIDsOrderedByTime: chatIDs, chats: response.data, active: chatIDs[0], disabled: false })
         }
-        if (JSON.stringify(oldChats[this.state.active]) !== JSON.stringify(this.state.chats[this.state.active])) {
+        if (JSON.stringify(oldChats[this.state.active]) !== JSON.stringify(this.state.chats[this.state.active]) && this.props.modal) {
           this.markConversationAsRead(this.state.active);
         }
       } else if (this.props.userID) {
