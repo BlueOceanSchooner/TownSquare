@@ -1,6 +1,43 @@
 const connection = require('../../db/connection.js');
 const axios = require('axios');
 
+const getAllLocalGroups = (req, res) => {
+  const lat = req.body.latitude;
+  const long = req.body.longitude;
+  const sql = `
+    SELECT
+      g.group_id, g.image_url, g.group_name, g.description, g.category, g.owner_id,
+      u.first_name, u.last_name, u.email
+    FROM
+      groups_table g LEFT JOIN users u ON g.owner_id = u.user_id
+    WHERE ST_Distance( ST_GeomFromText( 'POINT(? ?)', 4326), g.location) < 10000
+  `;
+  connection.query(sql, [latitude, longitude], (err, res) => {
+    if (err) {
+      return res.json({
+        error: err
+      });
+    }
+    results = results.map((row) => {
+      return {
+        group_id: row.group_id,
+        image_url: row.image_url,
+        group_name: row.group_name,
+        description: row.description,
+        category: row.category,
+        owner: {
+          user_id: row.owner_id,
+          first_name: row.first_name,
+          last_name: row.last_name,
+          email: row.email
+        }
+      }
+    });
+    return res.json(results);
+  })
+}
+
+
 const getAllGroups = (req, res) => {
   connection.query('SELECT g.group_id, g.image_url, g.group_name, g.description, g.category, g.owner_id, u.first_name, u.last_name, u.email FROM groups_table g LEFT JOIN users u ON g.owner_id = u.user_id', (err, results) => {
     if (err) {
@@ -312,6 +349,7 @@ const addGroup = (req, res) => {
 
 module.exports = {
   getAllGroups,
+  getAllLocalGroups,
   findGroupByName,
   getGroupById,
   getGroupsByOwnerId,
