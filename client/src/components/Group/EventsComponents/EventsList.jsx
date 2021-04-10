@@ -14,12 +14,12 @@ class EventsList extends React.Component {
   }
 
   render() {
-    const { events, groupInfo } = this.props;
+    const { events, groupInfo, currentUser } = this.props;
     return (
       <div>
         <ListGroup>
           {events.map((event) => (
-            <EventsItem key={event.event_id} event={event} />
+            <EventsItem key={event.event_id} event={event} currentUser={currentUser}/>
           ))}
         </ListGroup>
       </div>

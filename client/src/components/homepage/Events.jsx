@@ -1,13 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import EventItem from './EventItem.jsx';
 import EventInfoModal from './EventInfoModal.jsx';
+import axios from 'axios';
 
 class Events extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isModalOpen: false,
-      selectedEvent: null
+      selectedEvent: null,
     };
     this.updateSelectedEvent = this.updateSelectedEvent.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
@@ -16,7 +17,7 @@ class Events extends Component {
   updateSelectedEvent(event) {
     this.setState({
       selectedEvent: event,
-      isModalOpen: true
+      isModalOpen: true,
     });
   }
 
@@ -35,7 +36,7 @@ class Events extends Component {
     let keyCount = 0;
     events.forEach((event) => {
       eventItems.push((
-        <EventItem key={keyCount++} event={event} updateSelectedEvent={this.updateSelectedEvent} />
+        <EventItem key={keyCount++} event={event} updateSelectedEvent={this.updateSelectedEvent} userID={userID} />
       ));
     });
 

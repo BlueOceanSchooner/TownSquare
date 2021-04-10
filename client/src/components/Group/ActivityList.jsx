@@ -23,7 +23,7 @@ class Announcements extends React.Component {
   }
 
   render() {
-    const { events, posts, forum, groupId, userId, user, groupInfo } = this.props;
+    const { events, posts, forum, groupId, currentUser, user, groupInfo } = this.props;
     return (
       <div className="activities-container">
         <CreateEventModal group={groupInfo} isModalOpen={this.state.isModalOpen} toggleModal={this.toggleModal.bind(this)} />
@@ -31,20 +31,22 @@ class Announcements extends React.Component {
           <TabList className="tab-list-container">
             <Tab className="tab-name">
               Upcoming Events
-              <Button onClick={this.toggleModal.bind(this)} className="add-event-button">+</Button>
+              {/* Checking if current user is the group owner */}
+              {!groupInfo.owner || groupInfo.owner.user_id !== currentUser.user_id ? '' : <Button onClick={this.toggleModal.bind(this)} className="add-event-button">+</Button>}
+
             </Tab>
             <Tab className="tab-name">Announcements</Tab>
             <Tab className="tab-name">Community Forum</Tab>
           </TabList>
 
           <TabPanel>
-            <EventsList events={events} groupInfo={groupInfo} />
+            <EventsList events={events} groupInfo={groupInfo} currentUser={currentUser}/>
           </TabPanel>
           <TabPanel>
-            <AnnouncementsList posts={posts} />
+            <AnnouncementsList posts={posts.reverse()} groupInfo={groupInfo} currentUser={currentUser} />
           </TabPanel>
           <TabPanel>
-            <Forum forum={forum} groupId={groupId} userId={userId} user={user} />
+            <Forum forum={forum.reverse()} groupId={groupId} currentUser={currentUser} user={user} groupInfo={groupInfo} />
           </TabPanel>
         </Tabs>
       </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 import {
   Card, CardImg, CardText, CardBody,
@@ -6,9 +7,21 @@ import {
 } from 'reactstrap';
 import moment from 'moment';
 
-const EventsItem = ({ event }) => {
+const EventsItem = ({ event, currentUser }) => {
+  // const [attending, setAttending] = useState();
   const date = moment(event.time).format("dddd, MMMM Do");
   const time = moment(event.time).format("YYYY, h:mm a");
+
+  const rsvpEvent = () => {
+    // console.log('attending event!');
+    // console.log('event', event);
+    // TODO: make it so the user can also un-RSVP to an event
+    // (attending: 0)
+    axios.post(`/api/events/${event.event_id}/attendees`, {
+      "user_id": currentUser.user_id,
+      "attending": 1,
+    });
+  }
 
   return (
     <ListGroupItem className="group-event-item" >
@@ -20,7 +33,7 @@ const EventsItem = ({ event }) => {
             <Col>{time}</Col>
           </Col>
           <Col xs="9" className="group-event-description">{event.description}</Col>
-          <Col xs="3" className="group-event-button"><Button outline color="secondary">Attend</Button>{' '}</Col>
+          <Col xs="3" className="group-event-button"><Button outline color="secondary" onClick={rsvpEvent}>Attend</Button></Col>
         </Row>
       </Container>
     </ListGroupItem>

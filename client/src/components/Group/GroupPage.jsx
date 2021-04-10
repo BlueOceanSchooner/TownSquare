@@ -27,7 +27,7 @@ class GroupPage extends React.Component {
 
   // get information for a group
   getGroupInfo() {
-    const { groupId, userId } = this.props;
+    const { groupId, currentUser } = this.props;
     // get general group info
     const info = `/api/groups/${groupId}`;
     // get members of a group
@@ -39,7 +39,7 @@ class GroupPage extends React.Component {
     // get forum posts for a group
     const forum = `/api/groups/${groupId}/forum`;
     // get user information
-    const user = `/api/users/${userId}`;
+    const user = `/api/users/${currentUser.user_id}`;
 
     const requestInfo = axios.get(info);
     const requestMembers = axios.get(memb);
@@ -75,21 +75,21 @@ class GroupPage extends React.Component {
 
   render() {
     const { groupInfo, members, events, posts, forum, user } = this.state;
-    const { groupId, userId } = this.props;
+    const { groupId, currentUser } = this.props;
     return (
       <Container className="group-container">
         {/* Group Info */}
         <Row>
           <Col>
             {/* <GroupInfo groupInfo={groupInfo} members={members} /> */}
-            <GroupInfo groupInfo={groupInfo} members={members} userID={this.props.userID} memberOnClick={this.props.memberOnClick}/>
+            <GroupInfo groupInfo={groupInfo} members={members} currentUser={currentUser} memberOnClick={this.props.memberOnClick}/>
 
           </Col>
         </Row>
         {/* Activities Tabs */}
         <Row>
           <Col>
-            <ActivityList events={events} posts={posts} forum={forum} groupId={groupId} userId={userId} user={user} groupInfo={groupInfo}/>
+            <ActivityList events={events} posts={posts} forum={forum} groupId={groupId} currentUser={currentUser} user={user} groupInfo={groupInfo}/>
           </Col>
         </Row>
       </Container>

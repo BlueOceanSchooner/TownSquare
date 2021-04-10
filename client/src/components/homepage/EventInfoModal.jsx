@@ -2,13 +2,9 @@ import React, { Component } from 'react';
 import MessageMember from '../Members/MessageMember.jsx';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import axios from 'axios';
-import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
+import ReactMapboxGl, { Layer, Feature, Marker } from 'react-mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import CalendarButton from '../Calendar/CalendarButton.jsx';
-
-// const Map = new ReactMapboxGl({
-//   accessToken: ''
-// });
 
 var Map;
 
@@ -17,26 +13,35 @@ class EventInfoModal extends Component {
       super(props);
       this.state = {
         attendees: null,
-        mapReady: false
+        mapReady: false,
+        attending: 1
       };
+    this.updateRSVP = this.updateRSVP.bind(this);
   }
 
   componentDidMount() {
     axios.get(`/api/events/${this.props.event.event_id}/attendees`)
       .then((res) => {
+        let attending = 1;
+        for (let i = 0; i < res.data.length; i += 1) {
+          if (this.props.userID === res.data[i].user_id) {
+            attending = res.data[i].attending;
+            break;
+          }
+        }
         this.setState({
-          attendees: res.data
+          attendees: res.data,
+          attending
         });
       })
-    .catch((err) => console.log(err));
-
+      .catch((err) => console.log(err));
     axios.get(`/api/maps`)
       .then((res) => {
         console.log(res);
         if (res && res.data && res.data.key) {
           const API_KEY = res.data.key;
           Map = new ReactMapboxGl({
-            accessToken: API_KEY
+            accessToken: API_KEY,
           });
           this.setState({
             mapReady: true
@@ -46,9 +51,33 @@ class EventInfoModal extends Component {
       .catch((err) => console.log(err));
   }
 
+  updateRSVP() {
+    const { event, userID } = this.props;
+    let { attending } = this.state;
+    attending = attending === 1 ? 0 : 1;
+    axios.post(`/api/events/${event.event_id}/attendees`, {
+      user_id: userID,
+      attending
+    })
+      .then(() => {
+        axios.get(`/api/events/${event.event_id}/attendees`)
+          .then((results) => {
+            for (let i = 0; i < results.data.length; i += 1) {
+              if (userID === results.data[i].user_id) {
+                this.setState({
+                  attending: results.data[i].attending
+                });
+                break;
+              }
+            }
+          });
+      })
+      .catch((err) => console.log(err));
+  }
+
   render() {
     const { event, isModalOpen, toggleModal, chatOnClick, userID } = this.props;
-    const { attendees } = this.state;
+    const { attendees, attending } = this.state;
     const coords = [event.coords.lat, event.coords.long];
     console.log('coords', coords);
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -73,7 +102,11 @@ class EventInfoModal extends Component {
       <Modal isOpen={isModalOpen} toggle={toggleModal} style={{maxWidth: "60vw"}}>
         <ModalHeader toggle={toggleModal}>
           {event.title}
-          <button type="button" className="btn btn-sm btn-success ml-3">Attending</button>
+          {attending === 1 ? (
+            <button type="button" className="btn btn-sm btn-success ml-3" onClick={this.updateRSVP}>Attending</button>
+          ) : (
+            <button type="button" className="btn btn-sm btn-secondary ml-3" onClick={this.updateRSVP}>Not Attending</button>
+          )}
           <CalendarButton event={this.props.event} />
         </ModalHeader>
         <ModalBody>
@@ -100,18 +133,19 @@ class EventInfoModal extends Component {
               <div>
                 <Map
                   style="mapbox://styles/mapbox/streets-v9"
-                  centerPosition={{latitude: event.coords.lat, longitude: event.coords.long}}
+                  center={[event.coords.long, event.coords.lat]}
                   containerStyle={{
                     height: '25vw',
                     width: '25vw',
                   }}
                 >
-                <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-                    <Feature coordinates={coords} />
-                  </Layer>
+                  <Marker
+                    coordinates={[event.coords.long, event.coords.lat]}
+                    anchor="bottom">
+                      <i style={{color: 'red', fontSize: '2em'}} className="fas fa-map-marker-alt"></i>
+                  </Marker>
                 </Map>
               </div> }
-
             </div>
           </div>
         </ModalBody>
