@@ -13,11 +13,13 @@ const EventsItem = ({ event, currentUser }) => {
   const time = moment(event.time).format("YYYY, h:mm a");
 
   const rsvpEvent = () => {
-    console.log('attending event!');
-    console.log('event', event);
+    // console.log('attending event!');
+    // console.log('event', event);
+    // TODO: make it so the user can also un-RSVP to an event
+    // (attending: 0)
     axios.post(`/api/events/${event.event_id}/attendees`, {
       "user_id": currentUser.user_id,
-      "attending": 0,
+      "attending": 1,
     });
   }
 
