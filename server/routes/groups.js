@@ -6,13 +6,14 @@ const getAllLocalGroups = (req, res) => {
   const long = req.body.longitude;
   const sql = `
     SELECT
-      g.group_id, g.image_url, g.group_name, g.description, g.category, g.owner_id,
+      g.group_id, g.image_url, g.group_name, g.description, g.category, g.owner_id, g.location,
       u.first_name, u.last_name, u.email
     FROM
       groups_table g LEFT JOIN users u ON g.owner_id = u.user_id
-    WHERE ST_Distance( ST_GeomFromText( 'POINT(? ?)', 4326), g.location) < 10000
+    WHERE
+      ST_Distance( ST_GeomFromText( 'POINT(? ?)', 4326), g.location) < 100000
   `;
-  connection.query(sql, [latitude, longitude], (err, res) => {
+  connection.query(sql, [Number(lat), Number(long)], (err, results) => {
     if (err) {
       return res.json({
         error: err
