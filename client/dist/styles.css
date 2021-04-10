@@ -398,9 +398,9 @@
   background-color: #28a745;
 }
 
-.leave-group-button:hover {
+/* .leave-group-button:hover {
   background-color: indianred;
-}
+} */
 
 #announcement-title-textbox {
   resize: none;

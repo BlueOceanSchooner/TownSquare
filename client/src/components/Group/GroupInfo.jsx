@@ -50,17 +50,22 @@ class GroupInfo extends React.Component {
     })
     e.target.innerHTML = 'Join!';
     e.target.style.backgroundColor = '#007bff';
+    e.target.style.borderColor = '#007bff';
   }
 
   hoverOn(e) {
     if (e.target.innerHTML === 'Joined!') {
       e.target.innerHTML = 'Leave?';
+      e.target.style.backgroundColor = 'indianred';
+      e.target.style.borderColor = 'indianred';
     }
   }
 
   hoverOff(e) {
     if (e.target.innerHTML === 'Leave?') {
       e.target.innerHTML = 'Joined!';
+      e.target.style.backgroundColor = '#28a745';
+      e.target.style.borderColor = '#28a745';
     }
   }
 
