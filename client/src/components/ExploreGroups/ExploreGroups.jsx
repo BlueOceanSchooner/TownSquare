@@ -23,12 +23,30 @@ class ExploreGroups extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/groups')
-      .then((results) => {
+    // axios.get('/api/groups')
+    //   .then((results) => {
+    //     this.setState({
+    //       groups: results.data
+    //     })
+    //   })
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position);
+      const lat = position.coords.latitude;
+      const long = position.coords.longitude;
+      axios.post('/api/groups/local', {
+        latitude: lat,
+        longitude: long
+      }).then((results) => {
         this.setState({
           groups: results.data
-        })
+        });
       })
+    }, (error) => {
+      console.log(error);
+    });
+    // axios.post('/api/groups', {
+      // lat
+    // })
   }
 
   handleFilter(val) {

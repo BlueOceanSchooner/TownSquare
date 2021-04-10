@@ -33,6 +33,7 @@ router.get('/groups/:group_id/members', members.getGroupMembers);
 router.get('/groups/:group_id/posts', posts.getPostsByGroupId);
 router.get('/groups/:group_id/forum', forum.getForumPostsByGroupId);
 
+router.post('/groups/local', groups.getAllLocalGroups);
 router.post('/groups', groups.addGroup);
 router.post('/groups/:group_id/posts', posts.addPost);
 router.post('/groups/:group_id/forum', forum.postOnForum);
