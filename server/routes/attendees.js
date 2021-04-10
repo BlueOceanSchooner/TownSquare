@@ -72,20 +72,32 @@ const doRsvp = (req, res) => {
   const event_id = req.params.event_id;
   const user_id = req.body.user_id;
   const status = Number(req.body.attending) === 1 ? 1 : 0;
-  sql = `INSERT INTO attendees SET ?`;
-  const data = {
-    event_id: event_id,
-    user_id: user_id,
-    attending: status
-  }
-  connection.query(sql, data, (err, results) => {
+
+  const sqlDelete = `DELETE FROM attendees WHERE event_id = ? AND user_id = ?`;
+  connection.query(sqlDelete, [event_id, user_id], (err, results) => {
     if (err) {
       return res.json({
-        error: err
+        errors: [err]
       });
     }
-    return res.json(results);
-  });
+    sql = `INSERT INTO attendees SET ?`;
+    const data = {
+      event_id: event_id,
+      user_id: user_id,
+      attending: status
+    }
+    connection.query(sql, data, (err, results) => {
+      if (err) {
+        return res.json({
+          error: err
+        });
+      }
+      return res.json(results);
+    });
+  })
+
+
+
 };
 
 module.exports = {
