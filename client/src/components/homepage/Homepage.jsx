@@ -15,27 +15,41 @@ class Homepage extends Component {
   }
 
   componentDidMount() {
-    axios.get(`/api/users/${this.props.userID}/groups`)
+    axios.get(`/api/users/${this.props.userID}/groups-owned`)
       .then((results) => {
         const groups = results.data;
-        axios.get(`/api/users/${this.props.userID}/events`)
-          .then((res) => {
-            const events = res.data;
-            let announcements = [];
-            groups.forEach((g) => {
-              axios.get(`/api/groups/${g.group_id}/posts`)
-                .then((r) => {
-                  if (r.data.length > 0) {
-                    announcements = [...announcements, ...r.data];
-                    this.setState({
-                      groups,
-                      events,
-                      announcements
-                    });
-                  }
-                });
+        axios.get(`/api/users/${this.props.userID}/groups-member`)
+          .then((result) => {
+            result.data.forEach((group) => {
+              let groupAlreadyExists = false;
+              groups.forEach((g) => {
+                if (g.group_id === group.group_id) {
+                  groupAlreadyExists = true;
+                }
+              });
+              if (!groupAlreadyExists) {
+                groups.push(g);
+              }
             });
-          });
+            axios.get(`/api/users/${this.props.userID}/events`)
+              .then((res) => {
+                const events = res.data;
+                let announcements = [];
+                groups.forEach((g) => {
+                  axios.get(`/api/groups/${g.group_id}/posts`)
+                    .then((r) => {
+                      if (r.data.length > 0) {
+                        announcements = [...announcements, ...r.data];
+                        this.setState({
+                          groups,
+                          events,
+                          announcements
+                        });
+                      }
+                    });
+                });
+              });
+          })
       })
       .catch(err => console.log('error:', err));
   }
@@ -45,7 +59,7 @@ class Homepage extends Component {
     const { chatOnClick, userID } = this.props;
     return (
       <div className="container">
-        <GroupCarousel groups={groups} />
+        <GroupCarousel groups={groups} userID={userID} />
         <div className="row">
           <Events events={events} chatOnClick={chatOnClick} userID={userID} />
           <Announcements announcements={announcements} groups={groups}/>
