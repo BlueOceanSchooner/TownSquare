@@ -41,8 +41,6 @@ class EventItem extends Component {
               if (userID === results.data[i].user_id) {
                 this.setState({
                   attending: results.data[i].attending
-                }, () => {
-                  console.log('SECOND API CALL MADE!');
                 });
                 break;
               }
@@ -74,7 +72,7 @@ class EventItem extends Component {
             {attending === 1 ? (
               <button type="button" className="btn btn-sm btn-success" onClick={this.updateRSVP}>Attending</button>
             ) : (
-              <button type="button" className="btn btn-sm btn-secondary" onClick={this.updateRSVP}>Attend</button>
+              <button type="button" className="btn btn-sm btn-secondary" onClick={this.updateRSVP}>Not Attending</button>
             )}
           </div>
         </div>
