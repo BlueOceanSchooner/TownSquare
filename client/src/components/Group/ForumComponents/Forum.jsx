@@ -22,12 +22,12 @@ class Forum extends React.Component {
     const { forum } = this.props;
 
     this.setState({
-      orderedForum: forum.reverse(),
+      orderedForum: forum,
     });
   }
 
   addForumPost(e) {
-    const { newForumPostText } = this.state;
+    const { newForumPostText, orderedForum } = this.state;
     const { groupInfo, currentUser } = this.props;
 
     e.target.innerHTML = 'Sent!';
@@ -41,6 +41,13 @@ class Forum extends React.Component {
       "user_id": currentUser.user_id,
       "message": newForumPostText,
     })
+      .then((result) => {
+        var arr = orderedForum;
+        arr.unshift(result.data);
+        this.setState({
+          orderedForum: arr,
+        })
+      })
   }
 
   render() {

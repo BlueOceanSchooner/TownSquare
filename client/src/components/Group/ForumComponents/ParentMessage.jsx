@@ -8,66 +8,111 @@ import {
 } from 'reactstrap';
 import moment from 'moment';
 
-const ParentMessage = ({ thread, groupId, currentUser, user }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [childMessage, setChildMessage] = useState('');
-  const date = moment(thread.parent.posted).format("MMMM Do h:mm a");
+class ParentMessage extends React.Component {
+  constructor(props) {
+    super(props);
 
-  const toggle = () => setIsOpen(!isOpen);
+    this.toggle = this.toggle.bind(this);
+    this.addChildPost = this.addChildPost.bind(this);
+    this.state = {
+      isOpen: false,
+      childMessage: '',
+      postChildren: [],
+    }
+  }
 
-  const addChildPost = function () {
+  componentDidMount() {
+    const { thread } = this.props;
+
+    this.setState({
+      postChildren: thread.children,
+    })
+  }
+
+  // toggle dropdown text area
+  toggle() {
+    const { isOpen } = this.state;
+    this.setState({
+      isOpen: !isOpen,
+    })
+  }
+
+  addChildPost(e) {
+    const { thread, currentUser, groupId } = this.props;
+    const { childMessage, postChildren } = this.state;
+
+    e.target.innerHTML = 'Sent!';
+
+    this.setState({
+      childMessage: '',
+    })
+
     axios.post(`/api/groups/${thread.parent.group_id}/forum-reply`, {
       "group_id": groupId,
       "user_id": currentUser.user_id,
       "forum_post_id": `${thread.parent.forum_post_id}`,
       "message": childMessage,
-    });
-    toggle();
+    })
+      .then((result) => {
+        console.log('result', result);
+        var arr = postChildren;
+        arr.push(result.data);
+        this.setState({
+          postChildren: arr,
+        })
+      })
+    this.toggle();
   }
 
-  return (
-    <div>
-      <Container>
-        <Row>
-          <Col>
-            {/* Parent forum post */}
-            <Card className="forum-parent-card">
-              <CardBody>
-                <div className="forum-card-header-section">
-                  <CardTitle tag="h5" className="forum-card-title">{thread.parent.author.first_name} {thread.parent.author.last_name}</CardTitle>
-                  <CardSubtitle tag="h6" className="mb-2 text-muted">{date}</CardSubtitle>
-                </div>
-                <CardText>{thread.parent.message}</CardText>
-                <Button className="forum-reply-button" color="primary" onClick={toggle}>Reply</Button>
-              </CardBody>
-            </Card>
-            {/* Reply dropdown section */}
-            <Collapse isOpen={isOpen}>
-              <Form>
-                <Container>
-                  <Row>
-                    <Col xs="11">
-                      <FormGroup className="forum-reply-area">
-                        <Input type="textarea" name="text" placeholder="Reply.." onChange={(e) => { setChildMessage(e.target.value) }} />
-                      </FormGroup>
-                    </Col>
-                    <Col xs="1">
-                      {/* adding a child forum post */}
-                      <Button className="forum-send-button" onClick={addChildPost}>Send</Button>
-                    </Col>
-                  </Row>
-                </Container>
-              </Form>
-            </Collapse>
-          </Col>
-        </Row>
-        {/* Children reply posts to the parent */}
-        {thread.children.map((child) => (
-          <ChildMessage key={child.reply_id} child={child} />
-        ))}
-      </Container>
-    </div>
-  )
+  render() {
+    const { thread, groupId, currentUser, user } = this.props;
+    const { childMessage, isOpen, postChildren } = this.state;
+    const date = moment(thread.parent.posted).format("MMMM Do h:mm a");
+
+    return (
+      <div>
+        <Container>
+          <Row>
+            <Col>
+              {/* Parent forum post */}
+              <Card className="forum-parent-card">
+                <CardBody>
+                  <div className="forum-card-header-section">
+                    <CardTitle tag="h5" className="forum-card-title">{thread.parent.author.first_name} {thread.parent.author.last_name}</CardTitle>
+                    <CardSubtitle tag="h6" className="mb-2 text-muted">{date}</CardSubtitle>
+                  </div>
+                  <CardText>{thread.parent.message}</CardText>
+                  <Button className="forum-reply-button" color="primary" onClick={this.toggle}>Reply</Button>
+                </CardBody>
+              </Card>
+              {/* Reply dropdown section */}
+              <Collapse isOpen={isOpen}>
+                <Form>
+                  <Container>
+                    <Row>
+                      <Col xs="11">
+                        <FormGroup className="forum-reply-area">
+                          <Input className="forum-reply-textbox" value={childMessage} type="textarea" name="text" placeholder="Reply.." onChange={(e) => { this.setState({ childMessage: e.target.value }) }} />
+                        </FormGroup>
+                      </Col>
+                      <Col xs="1">
+                        {/* adding a child forum post */}
+                        <Button className="forum-send-button" onClick={this.addChildPost}>Send</Button>
+                      </Col>
+                    </Row>
+                  </Container>
+                </Form>
+              </Collapse>
+            </Col>
+          </Row>
+          {/* Children reply posts to the parent */}
+          {postChildren.map((child) => (
+            <ChildMessage key={child.reply_id} child={child} />
+          ))}
+        </Container>
+      </div>
+    )
+  }
 }
 
 export default ParentMessage;

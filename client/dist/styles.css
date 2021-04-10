@@ -501,6 +501,10 @@
   margin: 10px 0;
 }
 
+.forum-reply-textbox {
+  min-height: 80px;
+}
+
 .forum-reply-button {
   position: absolute;
   bottom: 10px;

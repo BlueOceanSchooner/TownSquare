@@ -46,7 +46,7 @@ class Announcements extends React.Component {
             <AnnouncementsList posts={posts.reverse()} groupInfo={groupInfo} currentUser={currentUser} />
           </TabPanel>
           <TabPanel>
-            <Forum forum={forum} groupId={groupId} currentUser={currentUser} user={user} groupInfo={groupInfo} />
+            <Forum forum={forum.reverse()} groupId={groupId} currentUser={currentUser} user={user} groupInfo={groupInfo} />
           </TabPanel>
         </Tabs>
       </div>
