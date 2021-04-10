@@ -461,24 +461,43 @@
   object-fit: cover;
 }
 
-@media (min-width: 34em) {
-  .card-columns {
-      -webkit-column-count:3;
-      -moz-column-count:3;
-      column-count:3;
+/* .group-cont {
+  display: flex;
+  justify-items: center;
+} */
 
-  }
-
+.container .row {
+  margin-bottom: 3rem;
 }
 
-.card-columns {
-  justify-content: center;
-  column-count:3;
+.container .row > [class^="col"] {
+  padding-right: 0;
+  padding-left: 0;
 }
+
+.group-card {
+  margin-right: 25px;
+  margin-bottom: 1em!important;
+}
+
+.col-xs-3 {
+  margin-bottom: 1em!important;
+}
+
+.list-group {
+  margin-bottom: 2rem;
+}
+
+
 .group-card-body {
   height: 160px;
   overflow: auto;
 }
+
+.group-card-body::-webkit-scrollbar {
+  display: none;
+}
+
 .group-card:hover {
   background-color: rgb(238, 238, 238);
 }
@@ -486,7 +505,7 @@
 .group-list-container {
   display: flex;
   justify-content: center;
-  width: 100%
+  width: 100%;
 }
 
 .group-heading-container {
@@ -553,7 +572,7 @@
 }
 
 .group-select-form {
-  width: 95%;
+  width: 100%;
   margin: auto;
   height: fit-content;
   text-align: center;
@@ -563,7 +582,7 @@
 .group-select {
   margin-top: 10px;
   margin-bottom: 20px;
-  margin-right: 200px;
+  margin-right: 250px;
   display: inline-block;
   justify-content: center;
   vertical-align: top;
@@ -582,6 +601,7 @@
 
 .select-box-option {
   height: 10px;
+  width: 100%;
 }
 
 #logo {
