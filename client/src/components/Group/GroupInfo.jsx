@@ -71,10 +71,13 @@ class GroupInfo extends React.Component {
 
   render() {
     const { groupInfo, members, currentUser, memberOnClick } = this.props;
+    const imagePath = `../${groupInfo.image_url}`.substring(3);
     return (
       <div>
         <Card>
-          <CardImg top width="100%" src={`../${groupInfo.image_url}`} alt="Group poster" className="group-poster" />
+          {imagePath !== 'undefined' ?
+            <CardImg top width="100%" src={groupInfo.image_url} alt="Group poster" className="group-poster" /> :
+            <CardImg top width="100%" src={`../${groupInfo.image_url}`} alt="Group poster" className="group-poster" />}
           <CardBody>
             <CardTitle tag="h5">{groupInfo.group_name}</CardTitle>
             <CardSubtitle tag="h6" className="mb-2 text-muted">
