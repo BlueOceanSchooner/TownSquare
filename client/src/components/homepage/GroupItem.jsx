@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const GroupItem = ({ group, userID }) => {
   return (
-    <div className="col-3" style={{cursor: 'pointer'}}>
+    <div style={{cursor: 'pointer', width: '23%', marginLeft: '0.5em', marginRight: '0.5em'}}>
       <Link to={`/groups/${group.group_id}`}>
         <div className="card border border-dark mt-3 position-relative">
           <img className="card-img-top" src={group.image_url} alt="group image" style={{height: '12em'}}/>
