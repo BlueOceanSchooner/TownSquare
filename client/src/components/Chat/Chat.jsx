@@ -123,6 +123,8 @@ class Chat extends React.Component {
         if (JSON.stringify(oldChats[this.state.active]) !== JSON.stringify(this.state.chats[this.state.active])) {
           this.markConversationAsRead(this.state.active);
         }
+      } else if (this.props.userID) {
+        this.setState({ disabled: false });
       }
     })
     .catch(err => console.log('error:', err));

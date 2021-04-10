@@ -12,6 +12,7 @@ const login = require('./login.js');
 const isAuth = require('../auth/isAuth.js');
 const maps = require('./map.js');
 
+
 router.get('/users', users.getAllUsers);
 router.get('/users/:user_id', users.getUserById);
 router.get('/users/:user_id/groups', members.getUserGroups);
