@@ -70,7 +70,7 @@ class ParentMessage extends React.Component {
     const date = moment(thread.parent.posted).format("MMMM Do h:mm a");
 
     return (
-      <div>
+      <div className="forum-parent-message-container">
         <Container>
           <Row>
             <Col>
@@ -82,7 +82,7 @@ class ParentMessage extends React.Component {
                     <CardSubtitle tag="h6" className="mb-2 text-muted">{date}</CardSubtitle>
                   </div>
                   <CardText>{thread.parent.message}</CardText>
-                  <Button className="forum-reply-button" color="primary" onClick={this.toggle}>Reply</Button>
+                  <Button className="forum-reply-button" outline color="secondary" onClick={this.toggle}>Reply</Button>
                 </CardBody>
               </Card>
               {/* Reply dropdown section */}

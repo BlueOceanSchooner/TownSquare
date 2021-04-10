@@ -60,8 +60,8 @@ class Forum extends React.Component {
             <Card className="forum-new-post-section">
               <CardBody className="forum-new-post-card">
                 <FormGroup>
-                  <Label>Message</Label>
-                  <Input value={newForumPostText} type="textarea" name="text" onChange={(e) => { this.setState({ newForumPostText: e.target.value }) }}></Input>
+                  <Label>Forum Post</Label>
+                  <Input value={newForumPostText} type="textarea" name="text" placeholder="Enter a post on the community forum" onChange={(e) => { this.setState({ newForumPostText: e.target.value }) }}></Input>
                 </FormGroup>
                 <div className="new-forum-post-button-container">
                   <Button className="new-forum-post-button" onClick={this.addForumPost}>Send</Button>

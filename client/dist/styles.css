@@ -425,7 +425,7 @@
 }
 
 .announcement-card-body-text {
-  margin-top: 13px;
+  margin-top: 20px;
   min-height: 80px;
   padding: 0 40px;
   text-align: center;
@@ -433,6 +433,9 @@
 
 .announcement-card-headers-container {
   text-align: center;
+  background-color: #cacaca;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
+  padding: 13px 10px 8px 10px;
 }
 
 .announcement-card-header-section {
@@ -450,8 +453,13 @@
 }
 
 .new-announcement-button {
+  background-color: #344e64 !important;
   width: 220px;
   height: 40px;
+}
+
+.new-announcement-button:hover {
+  background-color: #3c5b75 !important;
 }
 
 .announcements-container {
@@ -475,17 +483,29 @@
 }
 
 .new-forum-post-button {
+  background-color: #344e64 !important;
   width: 220px;
   height: 40px;
 }
 
+.new-forum-post-button:hover {
+  background-color: #3c5b75 !important;
+}
+
+.forum-parent-message-container {
+  background-color: #eaeaea;
+}
+
 .forum-parent-card {
   margin-top: 25px;
-  background-color: #d0d0d0 !important;
+  background-color: #344e64 !important;
+  color: #eaeaea;
 }
 
 .forum-child-card {
-  background-color: #eaeaea !important;
+  background-color: #bfc8d2 !important;
+  float: right;
+  max-width: 100%;
 }
 
 .forum-card-header-section {
@@ -509,6 +529,13 @@
   position: absolute;
   bottom: 10px;
   right: 10px;
+  border-color: #eaeaea !important;
+  color: #eaeaea !important;
+}
+
+.forum-reply-button:hover {
+  background-color: #eeeeee !important;
+  color: #444444 !important;
 }
 
 .forum-send-button {
