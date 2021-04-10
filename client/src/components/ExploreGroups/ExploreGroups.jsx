@@ -65,11 +65,11 @@ class ExploreGroups extends React.Component {
 
   render() {
     if (!this.state.groups) {
-      return <div>loading...</div>
+      return <div></div>
     } else {
       return (
         <div className='groups-page'>
-          <div className='groups-header'>
+          <div className='groups-header rounded-pill'>
               <h3 className='g-header'>Groups In Your Area</h3>
           </div>
           <div className='group-select-form'>

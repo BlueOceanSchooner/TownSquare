@@ -21,7 +21,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       chatModal: false,
-      chatMemberID: null,
+      chatMemberID: 0,
       isLoginOpen: false,
       currentUser: {
         user_id: 0,
@@ -128,7 +128,7 @@ class App extends React.Component {
             // replace <h1> tags with your component
             return (
               // <GroupPage groupId={group_id} userId={userID}/>
-              <GroupPage groupId={group_id} userID={userID} memberOnClick={this.chatOnClick}/>
+              <GroupPage groupId={group_id} currentUser={this.state.currentUser} memberOnClick={this.chatOnClick}/>
             );
           }} />
           <Route path="/signup">

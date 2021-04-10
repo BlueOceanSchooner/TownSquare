@@ -63,7 +63,9 @@ const googleCallback = (accessToken, refreshToken, profile, done) => {
           first_name: profile.name.givenName,
           last_name: profile.name.familyName,
           email: profile.emails[0].value,
-          oauth_provider: 'google'
+          oauth_provider: 'google',
+          access_token: accessToken,
+          refresh_token: refreshToken
         }
         connection.query('INSERT INTO users SET ?', user, (err, results) => {
           if (err) {
@@ -73,6 +75,8 @@ const googleCallback = (accessToken, refreshToken, profile, done) => {
         });
       }
       var user = users[0];
+      user.access_token = accessToken;
+      user.refresh_token = refreshToken;
       return done(null, user, {message: 'Logged in with google'});
     })
 }
