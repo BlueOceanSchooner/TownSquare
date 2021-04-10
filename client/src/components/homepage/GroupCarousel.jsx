@@ -50,7 +50,6 @@ class GroupCarousel extends Component {
       ));
     });
 
-    // const groupItems = allGroupItems.slice((groupPage * 4), (4 * (groupPage + 1)));
     let groupItems = [...allGroupItems.slice(groupPage), ...allGroupItems.slice(0)];
     groupItems = groupItems.slice(0, 4);
 

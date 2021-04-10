@@ -76,7 +76,7 @@ const doRsvp = (req, res) => {
   const data = {
     event_id: event_id,
     user_id: user_id,
-    attending: attending
+    attending: status
   }
   connection.query(sql, data, (err, results) => {
     if (err) {

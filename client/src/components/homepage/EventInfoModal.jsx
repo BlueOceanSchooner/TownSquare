@@ -2,12 +2,8 @@ import React, { Component } from 'react';
 import MessageMember from '../Members/MessageMember.jsx';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import axios from 'axios';
-import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
+import ReactMapboxGl, { Layer, Feature, Marker } from 'react-mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-
-// const Map = new ReactMapboxGl({
-//   accessToken: ''
-// });
 
 var Map;
 
@@ -28,14 +24,13 @@ class EventInfoModal extends Component {
         });
       })
     .catch((err) => console.log(err));
-
     axios.get(`/api/maps`)
       .then((res) => {
         console.log(res);
         if (res && res.data && res.data.key) {
           const API_KEY = res.data.key;
           Map = new ReactMapboxGl({
-            accessToken: API_KEY
+            accessToken: API_KEY,
           });
           this.setState({
             mapReady: true
@@ -98,15 +93,17 @@ class EventInfoModal extends Component {
               <div>
                 <Map
                   style="mapbox://styles/mapbox/streets-v9"
-                  centerPosition={{latitude: event.coords.lat, longitude: event.coords.long}}
+                  center={[event.coords.long, event.coords.lat]}
                   containerStyle={{
                     height: '25vw',
                     width: '25vw',
                   }}
                 >
-                <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-                    <Feature coordinates={coords} />
-                  </Layer>
+                  <Marker
+                    coordinates={[event.coords.long, event.coords.lat]}
+                    anchor="bottom">
+                      <i style={{color: 'red', fontSize: '2em'}} className="fas fa-map-marker-alt"></i>
+                  </Marker>
                 </Map>
               </div> }
 
