@@ -3,7 +3,6 @@ const { OAuth2 } = google.auth;
 
 const addEvent = (req, res) => {
    // req.user is the login user
-
   var oauth2Client = new OAuth2(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_SECRET,
