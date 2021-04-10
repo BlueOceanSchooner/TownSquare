@@ -23,7 +23,7 @@ class AnnouncementsList extends React.Component {
     const { posts } = this.props;
 
     this.setState({
-      orderedPosts: posts.reverse(),
+      orderedPosts: posts,
     });
   }
 
@@ -73,7 +73,9 @@ class AnnouncementsList extends React.Component {
                     <Label>Announcement</Label>
                     <Input value={announcementBody} type="textarea" name="text" placeholder="Enter a new announcement for the group!" onChange={(e) => { this.setState({ announcementBody: e.target.value }) }}></Input>
                   </FormGroup>
-                  <Button onClick={this.addAnnouncement}>Send</Button>
+                  <div className="new-announcement-button-container">
+                    <Button className="new-announcement-button" onClick={this.addAnnouncement}>Send</Button>
+                  </div>
                 </CardBody>
               </Card>
             </Form>

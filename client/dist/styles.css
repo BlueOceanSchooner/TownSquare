@@ -377,8 +377,11 @@
   border-right: 1px solid black;
 }
 
+.group-announcement-item-container {
+  margin: 0 10%;
+}
+
 .group-post-title {
-  margin-right: 8px;
   font-weight: 600;
   font-size: 1.5rem;
 }
@@ -410,7 +413,6 @@
 
 .group-post-item {
   margin-top: 25px;
-  width: 1000px !important;
 }
 
 #announcement-title-textbox {
@@ -443,6 +445,15 @@
   margin-right: 8px;
 }
 
+.new-announcement-button-container {
+  text-align: center;
+}
+
+.new-announcement-button {
+  width: 220px;
+  height: 40px;
+}
+
 .announcements-container {
   border: 1px solid rgba(0,0,0,.125);
   border-radius: .25rem;
@@ -453,6 +464,19 @@
   border: 1px solid rgba(0,0,0,.125);
   border-radius: .25rem;
   padding-bottom: 25px
+}
+
+.forum-new-post-card {
+  background-color: #dbe1e7;
+}
+
+.new-forum-post-button-container {
+  text-align: center;
+}
+
+.new-forum-post-button {
+  width: 220px;
+  height: 40px;
 }
 
 .forum-parent-card {

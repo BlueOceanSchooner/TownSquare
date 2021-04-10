@@ -26,11 +26,16 @@ class Forum extends React.Component {
     });
   }
 
-  addForumPost() {
+  addForumPost(e) {
     const { newForumPostText } = this.state;
     const { groupInfo, currentUser } = this.props;
 
-    console.log('forum post submitted!', newForumPostText);
+    e.target.innerHTML = 'Sent!';
+
+    this.setState({
+      newForumPostText: '',
+    })
+
     axios.post(`/api/groups/${groupInfo.group_id}/forum`, {
       "group_id": groupInfo.group_id,
       "user_id": currentUser.user_id,
@@ -39,19 +44,21 @@ class Forum extends React.Component {
   }
 
   render() {
-    const { orderedForum } = this.state;
+    const { orderedForum, newForumPostText } = this.state;
     const { forum, groupId, currentUser, user } = this.props;
     return (
       <div className="forum-container">
         <Container>
           <Form>
             <Card className="forum-new-post-section">
-              <CardBody>
+              <CardBody className="forum-new-post-card">
                 <FormGroup>
                   <Label>Message</Label>
-                  <Input type="textarea" name="text" onChange={(e) => {this.setState({newForumPostText: e.target.value})}}></Input>
+                  <Input value={newForumPostText} type="textarea" name="text" onChange={(e) => { this.setState({ newForumPostText: e.target.value }) }}></Input>
                 </FormGroup>
-                <Button onClick={this.addForumPost}>Send</Button>
+                <div className="new-forum-post-button-container">
+                  <Button className="new-forum-post-button" onClick={this.addForumPost}>Send</Button>
+                </div>
               </CardBody>
             </Card>
           </Form>

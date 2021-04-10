@@ -43,7 +43,7 @@ class Announcements extends React.Component {
             <EventsList events={events} groupInfo={groupInfo} currentUser={currentUser}/>
           </TabPanel>
           <TabPanel>
-            <AnnouncementsList posts={posts} groupInfo={groupInfo} currentUser={currentUser} />
+            <AnnouncementsList posts={posts.reverse()} groupInfo={groupInfo} currentUser={currentUser} />
           </TabPanel>
           <TabPanel>
             <Forum forum={forum} groupId={groupId} currentUser={currentUser} user={user} groupInfo={groupInfo} />

@@ -10,7 +10,7 @@ const AnnouncementsItem = ({ post }) => {
   const date = moment(post.created_at).format("MMMM Do h:mm a");
 
   return (
-    <div>
+    <div className="group-announcement-item-container">
       <Container className="group-post-item">
         <Card>
           <CardBody className="announcement-card-body">
