@@ -21,7 +21,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       chatModal: false,
-      chatMemberID: null,
+      chatMemberID: 0,
       isLoginOpen: false,
       currentUser: {
         user_id: 0,
