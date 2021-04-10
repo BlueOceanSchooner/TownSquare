@@ -63,9 +63,7 @@ const googleCallback = (accessToken, refreshToken, profile, done) => {
           first_name: profile.name.givenName,
           last_name: profile.name.familyName,
           email: profile.emails[0].value,
-          oauth_provider: 'google',
-          access_token: accessToken,
-          refresh_token: refreshToken
+          oauth_provider: 'google'
         }
         connection.query('INSERT INTO users SET ?', user, (err, results) => {
           if (err) {
@@ -73,11 +71,12 @@ const googleCallback = (accessToken, refreshToken, profile, done) => {
           }
           return done(null, user, {message: 'New account created'});
         });
+      } else {
+        var user = users[0];
+        user.access_token = accessToken;
+        user.refresh_token = refreshToken;
+        return done(null, user, {message: 'Logged in with google'});
       }
-      var user = users[0];
-      user.access_token = accessToken;
-      user.refresh_token = refreshToken;
-      return done(null, user, {message: 'Logged in with google'});
     })
 }
 passport.use(new GoogleStrategy(googleConfig, googleCallback));
@@ -87,13 +86,13 @@ passport.use(new GoogleStrategy(googleConfig, googleCallback));
 // /////////////////////////////////////////////////////
 
 passport.serializeUser((user, done) => {
-  done(null, user.user_id);
+  done(null, user.email);
 })
 
-passport.deserializeUser((user_id, done) => {
+passport.deserializeUser((email, done) => {
   connection.query(
-    'SELECT * FROM users WHERE user_id = ?',
-    user_id,
+    'SELECT * FROM users WHERE email = ?',
+    email,
     (err, user) => {
       if (err) {
         return done(err);

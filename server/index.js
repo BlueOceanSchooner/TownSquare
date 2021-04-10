@@ -35,7 +35,7 @@ app.get("/google-login", passport.authenticate("google", {
   scope: ["profile", "email"]
 }));
 app.get("/google-login/redirect", passport.authenticate('google'), auth.googleLogin);
-app.post('/calendar', passport.authenticate('google'), calendar.addEvent);
+app.post('/calendar', calendar.addEvent);
 
 const file = path.join(__dirname, '../client/dist/index.html');
 app.get('*', (req, res) => {
